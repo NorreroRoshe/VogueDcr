@@ -169,11 +169,11 @@ export const GoodsCatalogue: React.FC<ICatalogCategories> = observer(({ sitePath
 
   useEffect(() => {
     CategoriesArray.map((category) => {
-      productStore.setCategories(category);
+      productStore.setCategories(category - 1);
     })
 
     ProductTypesArray.map((productType) => {
-      productStore.setProductTypes(productType);
+      productStore.setProductTypes(productType - 1);
     })
 
   //@ts-ignore
@@ -243,13 +243,13 @@ export const GoodsCatalogue: React.FC<ICatalogCategories> = observer(({ sitePath
       isEntryArray(item)
         ? arrayToString(item)
         : `${item[0]}=${item[1]}`
-    )
+    ) 
     .join("&")?.replace('&&', '&')
     const sort_by = searchParams.get('sort_by');
     if(sort_by !== null) {
-      router.push(`${pathname}?${searchCategoriesAr.length !== 0 ? `Categories=${searchCategoriesAr}&` : ''}${newSearchParams}&sort_by=${sort_by}`)
+      router.push(`${pathname}?${newSearchParams}&sort_by=${sort_by}`)
     }else {
-      router.push(`${pathname}?${searchCategoriesAr.length !== 0 ? `Categories=${searchCategoriesAr}&` : ''}${newSearchParams}`)
+      router.push(`${pathname}?${newSearchParams}`)
     }
   };
 

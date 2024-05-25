@@ -9,6 +9,7 @@ export interface IProductStore {
   items: Product[];
   detItem: Product;
   collectionItems: Product[];
+  collectionName: string;
   brandItems: Product[];
   cartCount: number;
   favouritesCount: number;

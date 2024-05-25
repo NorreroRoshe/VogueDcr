@@ -10,6 +10,7 @@ export class ProductStore implements IProductStore {
   items: Product[] = [];
   detItem: Product = {} as Product;
   collectionItems: Product[] = [];
+  collectionName: string = '';
   brandItems: Product[] = [];
   cartCount: number = 0;
   favouritesCount: number = 0;
@@ -254,6 +255,7 @@ export class ProductStore implements IProductStore {
       this.isLoading = false;
       this.cartCount = response.data.cartCount;
       this.collectionItems = response.data.products;
+      this.collectionName = response.data.collectionName;
       this.favouritesCount = response.data.favouritesCount;
       this.totalCount = response.data.totalCount;
     }

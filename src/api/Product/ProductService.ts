@@ -3,7 +3,7 @@ import makeRequest from '@/api/makeRequest';
 // import {ProductsResponse} from "@/types/types";
 import {AxiosResponse} from "axios";
 import { COUNT_PER_PAGE } from "@/components/Pagination/pagination-lib";
-import { IGetProductDetReq, IGetProductsReq, IGetProductsRes } from '@/types/Product/product.dtos';
+import { IGetProductDetReq, IGetProductsReq, IGetProductsRes, IGetProductsCollRes } from '@/types/Product/product.dtos';
 import { IFilter } from '@/types/Product/filter.types';
 import { Product } from '@/types/Product/product.types';
 
@@ -53,7 +53,7 @@ class ProductService {
   };
   getCollectionProducts({data} :
     {data: IFilter}) {
-    return makeRequest<IGetProductsRes>({
+    return makeRequest<IGetProductsCollRes>({
       url: "/product",
       method: "GET",
       params: {

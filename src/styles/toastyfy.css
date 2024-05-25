@@ -9725,3 +9725,11 @@ body>.os-scrollbar {
       transform: rotate(1turn)
   }
 }
+
+
+.diaplaynonemobile {
+  display: none;
+  @media(max-width: 1199px) {
+    display: flex;
+  }
+}

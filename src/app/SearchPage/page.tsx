@@ -39,10 +39,11 @@ const SearchPage = observer (() => {
       }
     }
   }, [searchParams]);
-
+  // %2B
   const [page, setPage] = useState(0);
 
   useEffect(() => {
+    console.log(searchParams.toString(),'searchParams.get')
     productStore.getSearchProducts({
       SearchQuery: searchParams.get('SearchQuery') ?? '',
       From: page * COUNT_PER_PAGE,

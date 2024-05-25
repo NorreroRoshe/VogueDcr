@@ -38,7 +38,7 @@ const CollectionPage: React.FC = observer(() => {
       <div className={`${cls.container} ${cls.brand__container}`}>
         <Breadcrumb />
         <div className={cls.brand__mt}>
-          <h2 className={cls.brand__title}>Коллекция {collection?.name}</h2>
+          <h2 className={cls.brand__title}>Коллекция {productStore?.collectionName}</h2>
           {/* {isLoading && <p>Загрузка...</p>} */}
           {/* TODO фикс */}
           <ul style={{ display: "flex", flexWrap: "wrap", gap: '30px 0' }}>

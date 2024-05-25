@@ -76,7 +76,7 @@ const Search = observer(({
     };
 
     const onButtonClick = () => {
-      router.push(`/SearchPage?SearchQuery=${inputValue}`);
+      router.push(`/SearchPage?SearchQuery=${inputValue.replace('+', '%2B')}`);
       handleGetSearchProducts();
 
       setInputFocus(false);
@@ -87,7 +87,7 @@ const Search = observer(({
 
     const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
-        router.push(`/SearchPage?SearchQuery=${inputValue}`);
+        router.push(`/SearchPage?SearchQuery=${inputValue.replace('+', '%2B')}`);
         handleGetSearchProducts();
 
         setInputFocus(false);

@@ -9,6 +9,14 @@ export interface IGetProductsRes {
   totalCount: number;
 }
 
+export interface IGetProductsCollRes {
+  cartCount: number;
+  favouritesCount: number;
+  collectionName: string;
+  products: Product[];
+  totalCount: number;
+}
+
 export interface IGetProductsReq extends IFilter {
   SortType?: number;
 }
