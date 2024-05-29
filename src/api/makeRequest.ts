@@ -21,6 +21,13 @@ const makeRequest = <Type>({
 }: TMakeRequestParams): APIResponse<Type> => {
   url = `${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`;
 
+  // headers.append("Content-Type", "application/json");
+  // headers.append("Accept", "application/json");
+  headers.authorization = (
+    "Authorization",
+    `Bearer ${localStorage.getItem("access_token") || ""}`
+  );
+
   return axios
   .request<Type>({
     url,

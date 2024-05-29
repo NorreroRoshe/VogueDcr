@@ -4,8 +4,9 @@ import AccountLayout from '@/components/my-account/account-layout';
 import AccountDetails from '@/components/my-account/account-details';
 // import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 // import { GetStaticProps } from 'next';
+import { observer } from "mobx-react";
 
-export default function AccountDetailsPage() {
+export default const AccountDetailsPage = observer(() => {
   return (
     <>
       <Breadcrumb />
@@ -19,7 +20,7 @@ export default function AccountDetailsPage() {
       </AccountLayout>
     </>
   );
-}
+});
 
 // export const getStaticProps: GetStaticProps = async ({ locale }) => {
 //   return {

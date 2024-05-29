@@ -3,8 +3,9 @@ import AccountLayout from '@/components/my-account/account-layout';
 import Help from '@/components/my-account/help';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
+import { observer } from "mobx-react";
 
-export default function HelpCenter() {
+const HelpCenter = observer(() => {
   return (
     <>
       {/* <Seo
@@ -17,17 +18,19 @@ export default function HelpCenter() {
       </AccountLayout>
     </>
   );
-}
+});
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  if (!locale) {
-    // Если locale не передан, установите значение по умолчанию
-    locale = 'en'; // или другой язык по умолчанию
-  }
+export default HelpCenter;
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'forms', 'menu', 'footer'])),
-    },
-  };
-};
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+//   if (!locale) {
+//     // Если locale не передан, установите значение по умолчанию
+//     locale = 'en'; // или другой язык по умолчанию
+//   }
+
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common', 'forms', 'menu', 'footer'])),
+//     },
+//   };
+// };

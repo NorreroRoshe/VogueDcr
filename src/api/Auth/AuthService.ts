@@ -41,15 +41,15 @@ class AuthService {
     return makeRequest<IResendConfirmRes>({
       url: "/auth/email-confirm-resend",
       method: "GET",
-      data: data,
+      params: data,
     });
   };
   passwordForgot({data} :
     {data: IPasswodForgotReq}) {
     return makeRequest<IPasswodForgotRes>({
-      url: "auth/password-forgot",
+      url: "/auth/password-forgot",
       method: "GET",
-      data: data,
+      params: data,
     });
   };
   passwordReset({data} :
@@ -65,7 +65,7 @@ class AuthService {
     return makeRequest<IGetUserDetailsRes>({
       url: `/user/details`,
       method: "GET",
-      data: data,
+      params: data,
     });
   };
   putUserDetails({data} :

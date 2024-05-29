@@ -73,7 +73,7 @@ const EmailConfirmForm = () => {
   
 
   function onResetSubmit({ Email }: IResendConfirmReq) {
-    authStore.emailConfirm({ email: Email })
+    authStore.emailResendConfirm({ Email: Email })
     .then(() => {
       setOpenResetCode(false);
       setIfCode(true);

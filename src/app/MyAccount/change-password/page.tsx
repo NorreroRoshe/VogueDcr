@@ -3,8 +3,9 @@ import AccountLayout from '@/components/my-account/account-layout';
 import ChangePassword from '@/components/my-account/change-password';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
+import { observer } from "mobx-react";
 
-export default function ChangePasswordPage() {
+const ChangePasswordPage = observer(() => {
   return (
     <>
       {/* <Seo
@@ -17,17 +18,19 @@ export default function ChangePasswordPage() {
       </AccountLayout>
     </>
   );
-}
+});
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  if (!locale) {
-    // Если locale не передан, установите значение по умолчанию
-    locale = 'en'; // или другой язык по умолчанию
-  }
+export default ChangePasswordPage;
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'forms', 'menu', 'footer'])),
-    },
-  };
-};
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+//   if (!locale) {
+//     // Если locale не передан, установите значение по умолчанию
+//     locale = 'en'; // или другой язык по умолчанию
+//   }
+
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['common', 'forms', 'menu', 'footer'])),
+//     },
+//   };
+// };

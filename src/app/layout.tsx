@@ -10,6 +10,7 @@ import "@/styles/ImgSlick.scss";
 import "@/styles/allCategories.scss";
 import "@/styles/custom-plugins.css";
 import "@/styles/toastyfy.css";
+import React, { Suspense, useEffect } from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import HighlightedBar from "@/components/layouts/header0/highlighted-bar";
@@ -24,7 +25,7 @@ import ManagedModal from "@/components/common/modal/managed-modal";
 import ManagedDrawer from "@/components/common/drawer/managed-drawer";
 import Header0 from "@/components/layouts/header0/header0";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import { useStore } from "@/hooks/useStore";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,49 +35,45 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+  const store = useStore();
+  const authStore = store.auth;
+  const cartStore = store.cart;
+  const favoritesStore = store.favorites;
 
 
 
 
 	const queryClient = new QueryClient();
 
-  // const dispatch = useAppDispatch();
+  const isAuth = !!authStore.userId;
 
-  // const isAuth = useAppSelector(isAuthSelector);
-
-
-  // const [getUserCart] = useGetUserCartMutation();
-  // const [getUserFavorites] = useGetUserFavoritesMutation();
-
-  // const [refresh] = useRefreshTokenMutation();
-  // const state = useAppSelector((state) => state);
-
-  // useEffect(() => {
+  useEffect(() => {
 
 
-  //   //del cart
-  //   // localStorage.removeItem("cart");
+    //del cart
+    // localStorage.removeItem("cart");
 
-  //   if (isAuth) {
-  //   dispatch(clearItems());
-  //   dispatch(clearCart());
-  //     getUserCart();
-  //     getUserFavorites();
-  //   }
-  // }, [isAuth]);
+    if (isAuth) {
+      favoritesStore.clearItems();
+      cartStore.clearCart();
+      cartStore.getUserCart();
+      favoritesStore.getUserFavorites();
+    }
+  }, [isAuth]);
 
-  // useEffect(() => {
-  //   refresh();
-  // }, []);
+  useEffect(() => {
+    authStore.refreshToken();
+  }, []);
 
-  // // useEffect(() => {            //когда неавторизованные то приходят сильно много ошибок в нетворке
-  // //   const interval = setInterval(() => {
-  // //     if(+new Date() > +localStorage.getItem("access_token_expires") || 0){
-  // //     refresh()
-  // //   }}, 1000
-  // //   ) 
-  // //   return () => clearInterval(interval)
-  // // }, [])
+  // useEffect(() => {            //когда неавторизованные то приходят сильно много ошибок в нетворке
+  //   const interval = setInterval(() => {
+  //     if(+new Date() > +localStorage.getItem("access_token_expires") || 0){
+  //     refresh()
+  //   }}, 1000
+  //   ) 
+  //   return () => clearInterval(interval)
+  // }, [])
 
   // useEffect(() => { }, [state]);
 
@@ -92,41 +89,43 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-				<QueryClientProvider client={queryClient}>
-        <CartProvider>
-          <UIProvider>
-            <ModalProvider>
-              <div className="wrapper">
-                <HighlightedBar />
-                <Header0 />
-                <div className="content">
-                  {children}
-                  </div>
-                <Footer />
-                <MobileNavigation />
-                <ScrollToTop
-                  style={{
-                    backgroundColor: '#424246',
-                    borderRadius: '50%',
-                    height: '65px',
-                    width: '65px',
-                    zIndex: 50,
-                    bottom: '115px'
-                    // bottom: '75px'
-                  }}
-                  className="scrollCustom"
-                  smooth
-                  top={250}
-                  svgPath={''}
-                />
-                <ToastContainer />
-                <ManagedModal />
-                <ManagedDrawer />
-              </div>
-            </ModalProvider>
-          </UIProvider>
-        </CartProvider>
-				</QueryClientProvider>
+        <Suspense>
+          <QueryClientProvider client={queryClient}>
+          <CartProvider>
+            <UIProvider>
+              <ModalProvider>
+                <div className="wrapper">
+                  <HighlightedBar />
+                  <Header0 />
+                  <div className="content">
+                    {children}
+                    </div>
+                  <Footer />
+                  <MobileNavigation />
+                  <ScrollToTop
+                    style={{
+                      backgroundColor: '#424246',
+                      borderRadius: '50%',
+                      height: '65px',
+                      width: '65px',
+                      zIndex: 50,
+                      bottom: '115px'
+                      // bottom: '75px'
+                    }}
+                    className="scrollCustom"
+                    smooth
+                    top={250}
+                    svgPath={''}
+                  />
+                  <ToastContainer />
+                  <ManagedModal />
+                  <ManagedDrawer />
+                </div>
+              </ModalProvider>
+            </UIProvider>
+          </CartProvider>
+          </QueryClientProvider>
+        </Suspense>
       </body>
     </html>
   );

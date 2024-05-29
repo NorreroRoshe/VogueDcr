@@ -3,8 +3,9 @@ import AccountLayout from '@/components/my-account/account-layout';
 import AccountDetails from '@/components/my-account/account-details';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
+import { observer } from "mobx-react";
 
-export default function AccountDetailsPage() {
+export const AccountDetailsPage = observer(() => {
   return (
     <>
       {/* <Seo
@@ -17,7 +18,9 @@ export default function AccountDetailsPage() {
       </AccountLayout>
     </>
   );
-}
+});
+
+export default AccountDetailsPage;
 
 // export const getStaticProps: GetStaticProps = async ({ locale }) => {
 //   if (!locale) {

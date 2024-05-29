@@ -16,7 +16,7 @@ export default function SignInPage() {
       /> */}
       <Divider />
       <div className="flex justify-center items-center">
-        <Breadcrumb />
+        {/* <Breadcrumb /> */}
         <div className="py-12 sm:py-16 lg:py-20">
           <LoginForm isPopup={false} className="border border-skin-base rounded-lg" />{' '}
         </div>

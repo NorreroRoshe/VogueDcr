@@ -7,6 +7,7 @@ import cn from 'classnames';
 import { useModalAction } from "@/components/common/modal/modal.context";
 import { useStore } from "@/hooks/useStore";
 const AuthMenu = dynamic(() => import("@/components/layouts/Header/AuthMenu"), { ssr: false });
+import { observer } from "mobx-react";
 
 type AuthButtonProps = {
   className?: string;
@@ -15,7 +16,7 @@ type AuthButtonProps = {
   isShowing?: boolean;
 };
 
-const AuthButton: React.FC<AuthButtonProps> = ({ className }) => {
+const AuthButton: React.FC<AuthButtonProps> = observer(({ className }) => {
   const store = useStore();
   const authStore = store.auth
 
@@ -72,6 +73,6 @@ const AuthButton: React.FC<AuthButtonProps> = ({ className }) => {
       </div>
     </button>
   );
-};
+});
 
 export default AuthButton;

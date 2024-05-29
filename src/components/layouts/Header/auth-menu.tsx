@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link';
 import React from 'react';
+import {observer} from "mobx-react";
 
 interface Props {
   href: string;
@@ -9,12 +10,14 @@ interface Props {
   children: string;
 }
 
-const AuthMenu: React.FC<Props> = ({
+const AuthMenu: React.FC<Props> = observer(({
   isAuthorized,
   href,
   btnProps,
   children,
 }) => {
+  console.log(isAuthorized,'isAuthorized')
+
   return isAuthorized ? (
     <Link
       href={href}
@@ -29,6 +32,6 @@ const AuthMenu: React.FC<Props> = ({
       {...btnProps}
     />
   );
-};
+});
 
 export default AuthMenu;

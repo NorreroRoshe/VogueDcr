@@ -18,6 +18,7 @@ import Link from 'next/link';
 import signupphoto from '@/assets/img/ButtImg/SignUp.jpg';
 import { useStore } from '@/hooks/useStore';
 import { IPasswordResetReq } from '@/types/Auth/auth.dtos';
+import { useRouter } from 'next/navigation';
 
 interface PasswordResetProps {
   isPopup?: boolean;
@@ -42,6 +43,8 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
     formState: { errors },
   } = useForm<IPasswordResetReq>();
 
+  const router = useRouter();
+  
   function onSubmit({ code, email, password }: IPasswordResetReq) {
     authStore.passwordReset({
       code,
@@ -49,14 +52,8 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
       password,
     })
       .then((data) => {
-        authStore.signIn({
-          email: 'norikas995@gmail.com',
-          password: '134679zxZ!',
-          rememberMe: true,
-        })
-          .then(() => {
-            openModal('SUCCESS_CHANGE_PASSWORD');
-          })
+          openModal('SUCCESS_CHANGE_PASSWORD');
+          router.replace('/Signin');
       })
       .catch((error) => {
         if (error?.data?.errors?.Password) {

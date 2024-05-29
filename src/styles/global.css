@@ -783,3 +783,9 @@
 .accorquestion_titleto {
   font-size: 16px;
 }
+
+.passwewsss {
+  cursor: pointer;
+  border-bottom: 1px solid #000;
+  width: fit-content;
+}

@@ -45,6 +45,9 @@ const ChangePassword: React.FC = () => {
       });
   };
 
+  function handleEmConf() {
+    return openModal('PASSWORD_RESET');
+  }
   return (
     <>
       <Heading variant="titleLarge">
@@ -115,6 +118,8 @@ const ChangePassword: React.FC = () => {
           >
             {t(`Восстановить пароль`)}
           </Button>
+          <br/>
+          <p onClick={handleEmConf} className='passwewsss'>У меня уже есть код</p>
         </form>
       </div>
     </>

@@ -6,7 +6,6 @@ import { makeAutoObservable } from 'mobx';
 
 export class AuthStore implements IAuthStore {
   userId: string = "";
-  id: string = "";
   name: string = "";
   email: string = "";
   phoneNumber: string = "";
@@ -31,15 +30,15 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.signIn({ data });
 
     if ('data' in response) {
-      this.isLoading = false;
       this.userId = response.data.userId;
       this.isAuth = true;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      localStorage.setItem("access_token_expires", response.data.access_token_expires);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        localStorage.setItem("access_token_expires", response.data.access_token_expires);
+      }
     }
-    }
+    this.isLoading = false;
     return response;
   }
 
@@ -48,9 +47,9 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.signUp({ data });
 
     if ('data' in response) {
-        this.isLoading = false;
-        this.userId = response.data.userId;
+      this.userId = response.data.userId;
     }
+    this.isLoading = false;
     return response;
   }
 
@@ -61,15 +60,15 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.refreshToken();
 
     if ('data' in response) {
+      this.userId = response.data.userId;
+      this.isAuth = true;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        localStorage.setItem("access_token_expires", response.data.access_token_expires);
+      }
+    }
     this.isLoading = false;
-    this.userId = this.userId ? response.data.userId : "";
-    this.isAuth = true;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      localStorage.setItem("access_token_expires", response.data.access_token_expires);
-    }
-    }
     return response;
   }
 
@@ -79,9 +78,9 @@ export class AuthStore implements IAuthStore {
     this.isLoading = true;
     const response = await AuthService.emailConfirm({data});
 
-    if ('data' in response) {
+    // if ('data' in response) {
       this.isLoading = false;
-    }
+    // }
     return response;
   }
 
@@ -92,15 +91,15 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.emailResendConfirm({data});
 
     if ('data' in response) {
-      this.isLoading = false;
-        this.userId = response.data.userId;
-        this.isAuth = true;
-    if (typeof window !== 'undefined') {
+      this.userId = response.data.userId;
+      this.isAuth = false;
+      if (typeof window !== 'undefined') {
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("refresh_token", response.data.refresh_token);
         localStorage.setItem("access_token_expires", response.data.access_token_expires);
+      }
     }
-    }
+    this.isLoading = false;
     return response;
   }
 
@@ -110,15 +109,10 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.passwordForgot({data});
 
     if ('data' in response) {
-      this.isLoading = false;
       this.userId = response.data.userId;
-      this.isAuth = true;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      localStorage.setItem("access_token_expires", response.data.access_token_expires);
+      this.isAuth = false;
     }
-    }
+    this.isLoading = false;
     return response;
   }
 
@@ -128,15 +122,15 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.passwordReset({data});
 
     if ('data' in response) {
-      this.isLoading = false;
       this.userId = response.data.userId;
-      this.isAuth = true;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("refresh_token", response.data.refresh_token);
-      localStorage.setItem("access_token_expires", response.data.access_token_expires);
-    }
-    }
+      this.isAuth = false;
+    // if (typeof window !== 'undefined') {
+      // localStorage.setItem("access_token", response.data.access_token);
+      // localStorage.setItem("refresh_token", response.data.refresh_token);
+      // localStorage.setItem("access_token_expires", response.data.access_token_expires);
+    // }
+  }
+  this.isLoading = false;
     return response;
   }
 
@@ -145,12 +139,12 @@ export class AuthStore implements IAuthStore {
     const response = await AuthService.getUserDetails({data});
 
     if ('data' in response) {
-      this.isLoading = false;
-      this.id = response.data.id;
+      this.userId = response.data.id;
       this.name = response.data.name;
       this.email = response.data.email;
       this.phoneNumber = response.data.phoneNumber;
     }
+      this.isLoading = false;
     return response;
 
   }
@@ -159,9 +153,9 @@ export class AuthStore implements IAuthStore {
     this.isLoading = true;
     const response = await AuthService.putUserDetails({data});
 
-    if ('data' in response) {
+    // if ('data' in response) {
       this.isLoading = false;
-    }
+    // }
     return response;
   }
 }

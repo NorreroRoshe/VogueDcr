@@ -15,6 +15,7 @@ import SearchIcon from '@/components/iconsCode/search-icon';
 import { useModalAction } from '@/components/common/modal/modal.context';
 import useOnClickOutside from '@/utils/use-click-outside';
 import cls from './header.module.scss';
+import {observer} from "mobx-react";
 import HeaderPhone from "../Header/HeaderPhone";
 const CartButton = dynamic(() => import('@/components/cart/cart-button'), {
   ssr: false,
@@ -29,7 +30,7 @@ const AuthButton = dynamic(() => import('@/components/auth/auth-button'), {
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
 
-const Header0: React.FC = () => {
+const Header0: React.FC = observer(() => {
   const {
     displaySearch,
     displayMobileSearch,
@@ -135,6 +136,6 @@ const Header0: React.FC = () => {
       </Container>
     </header>
   );
-};
+});
 
 export default Header0;

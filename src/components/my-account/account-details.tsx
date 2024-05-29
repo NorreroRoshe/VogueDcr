@@ -27,9 +27,6 @@ const AccountDetails: React.FC = observer(() => {
   const { t } = useTranslation();
 
 
-  console.log(authName,'authName')
-
-
   const {
     register,
     handleSubmit,
@@ -80,7 +77,14 @@ const AccountDetails: React.FC = observer(() => {
     };
 
     fetchData();
+    console.log(authName, 'authname');
+
   }, [authName]);
+
+      useEffect(() => { 
+        console.log(data, 'ads');
+          
+        }, []);
 
   return (
     <div className="w-full flex flex-col">

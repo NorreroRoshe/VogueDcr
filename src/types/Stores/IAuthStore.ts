@@ -5,7 +5,6 @@ import { AxiosResponse } from "axios";
 
 export interface IAuthStore {
   userId: string;
-  id: string;
   name: string,
   email: string,
   phoneNumber: string,
