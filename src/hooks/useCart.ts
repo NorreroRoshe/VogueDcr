@@ -11,14 +11,14 @@ export const useCart = () => {
   
   const isAuth = !!authStore.userId;
     
-    useEffect(() => {
-    if (isAuth) {
-      cartStore.clearCart();
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem("cart");
-    }
-    }
-  }, [isAuth]);
+  //   useEffect(() => {
+  //   if (isAuth) {
+  //     cartStore.clearCart();
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.removeItem("cart");
+  //   }
+  //   }
+  // }, [isAuth]);
 
   const handleAddToCart = (productId: string) => {
     if (isAuth) {

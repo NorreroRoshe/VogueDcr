@@ -27,7 +27,13 @@ const CartItem: React.FC<CartItemProps> = observer(({
   article,
   count,
 }) => {
-
+  console.log( id,
+    name,
+    price,
+    discount,
+    files,
+    article,
+    count,)
 
   const store = useStore();
   const cartStore = store.cart

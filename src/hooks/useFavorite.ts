@@ -8,11 +8,11 @@ export const useFavorite = () => {
   const favoritesStore = store.favorites;
   const authStore = store.auth;
 
-  const isAuth = !!authStore.userId;
+  const isAuth = authStore.isAuth;
 
   const handleAddToFavorite = (productId: string) => {
     if (isAuth) {
-      favoritesStore.addFavorite(productId );
+      favoritesStore.addFavoriteProd(productId );
       return;
     }
     favoritesStore.addFavorite(productId);

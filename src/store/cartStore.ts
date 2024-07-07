@@ -2,15 +2,15 @@
 import CartService from '@/api/Cart/CartService';
 import { CartItem, ICartLocalState } from '@/types/Cart/cart.types';
 import { ICartStore } from '@/types/Stores/ICartStore';
-import { makeAutoObservable } from 'mobx';
+import {makeAutoObservable, observable} from 'mobx';
+import Cookies from 'js-cookie';
 
 const KEY = "cart";
 
 const getCart = (): ICartLocalState => {
   if (typeof window !== "undefined") {
-    return JSON.parse(localStorage.getItem(KEY) || JSON.stringify([]));
+    return JSON.parse(Cookies.get(KEY) || JSON.stringify([]));
   }
-
   return [];
 };
 
@@ -39,60 +39,40 @@ export class CartStore implements ICartStore {
   totalCount: number = 0;
   totalDiscountPrice: number = 0;
   totalPrice: number = 0;
-  cart: ICartLocalState = getCart();
+  cart: ICartLocalState = observable.array([]);
   isLoading: boolean = false;
 
 
   constructor() {
     makeAutoObservable(this);
   }
-
-
-
-
-
   addLocalItem(localItemProd: string) {
     const productId = localItemProd;
     const cart = this.cart;
     const { productInd } = getProduct(cart, productId);
-    console.log(productInd)
+
     if (productInd !== -1) {
       const productCart = cart[productInd];
-      const newCartRows: ICartLocalState = updateArr(
-        productInd,
-        { ...productCart, count: productCart.count + 1 },
-        cart
-      );
+      this.cart[productInd]= { ...productCart, count: productCart.count + 1 }
+
     if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, JSON.stringify(newCartRows));
+      localStorage.setItem(KEY, JSON.stringify(this.cart));
     }
-      this.cart = newCartRows;
     } else {
-      const newLocalCart: ICartLocalState = [
-        ...cart,
-        {
-          count: 1,
-          id: productId,
-        },
-      ];
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, JSON.stringify(newLocalCart));
-    }
-      this.cart = newLocalCart;
+
+      this.cart = [...this.cart, {
+        count: 1,
+        id: productId,
+      }]
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(KEY, JSON.stringify(this.cart));
+      }
     }
   };
 
   addItem(addItemProd: CartItem) {
-    const product = addItemProd;
-    const cart = this.items;
-    const productInd = cart.findIndex((row) => row?.id === product?.id);
-    const localCartProductId = getProduct(this.cart, product?.id).productInd;
-    if (productInd !== -1) {
-      const productCart = cart[productInd];
-      const newCartRows = updateArr(productInd, productCart, cart);
-      this.items = newCartRows;
-    } else {
-      this.items = [...this.items, product];
+    if(!this.items.find((item)=> item.id=== addItemProd.id)){
+      this.items.push(addItemProd)
     }
   };
   deleteProductFromCart(deleteProductFromCartProd: string) {
@@ -101,13 +81,12 @@ export class CartStore implements ICartStore {
     const { productInd } = getProduct(cart, productId);
 
     if (productInd !== -1) {
-      const newCartRows = delFromArr(productInd, cart);
+      this.cart.splice(productInd,1);
     if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, JSON.stringify(newCartRows));
+      localStorage.setItem(KEY, JSON.stringify(this.cart));
     }
-      this.cart = newCartRows;
       const itemInd = this.items.findIndex((item) => item?.id === productId);
-      if (itemInd !== -1) this.items = delFromArr(itemInd, this.items);
+      if (itemInd !== -1) this.items.splice(itemInd,1);
     }
   };
   minusItemFromCart(minusItemFromCartProd: string) {
@@ -118,20 +97,16 @@ export class CartStore implements ICartStore {
     if (productInd !== -1) {
       const productCart = cart[productInd];
 
-      const newCartRows: ICartLocalState = updateArr(
-        productInd,
-        { ...productCart, count: productCart.count - 1 },
-        cart
-      );
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, JSON.stringify(newCartRows));
-    }
-      this.cart = newCartRows;
+      this.cart[productInd]= { ...productCart, count: productCart.count - 1 }
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(KEY, JSON.stringify(this.cart));
+      }
       this.items.map((item) =>
         item.id === productId ? { ...item, count: item.count - 1 } : item
       );
     }
   };
+
   removeItem(removeItemProd: string) {
     const findItem = this.items.findIndex(
       (obj) => obj.id === removeItemProd
@@ -145,8 +120,6 @@ export class CartStore implements ICartStore {
     this.items = [];
   };
 
-
-
   async getUserCart() {
     this.isLoading = true;
     const response = await CartService.getUserCart();
@@ -158,12 +131,25 @@ export class CartStore implements ICartStore {
       }));
       this.items = response.data.products.map((product) => ({
         ...product,
-        count: 0,
       }));
     }
     this.isLoading = false;
   };
 
+   getUserLocalCart() {
+     this.isLoading = true;
+     const carts =JSON.parse(localStorage.getItem('cart') ?? '[]');
+      // @ts-ignore
+       this.cart = carts.map((item) => ({
+        count: item.count,
+        id: item.id,
+      }));
+     // @ts-ignore
+     this.items = carts.map((product) => ({
+       ...product,
+     }));
+     this.isLoading = false;
+  };
 
   async clearUserCart() {
     this.isLoading = true;
@@ -197,11 +183,10 @@ export class CartStore implements ICartStore {
         ];
         return;
       }
-      const newItem = {
+      this.cart[ind] = {
         id: productId,
         count: this.cart[ind].count + 1,
       };
-      this.cart = updateArr(ind, newItem, this.cart);
     }
     this.isLoading = false;
   }
@@ -209,18 +194,14 @@ export class CartStore implements ICartStore {
   async minusProductCart(productId: string, isRemovingAll?: boolean) {
     this.isLoading = true;
     const response = await CartService.minusProductCart(productId, isRemovingAll);
-
     if ('data' in response) {
       const ind = this.cart.findIndex((item) => productId === item.id);
+
       if (isRemovingAll) {
-        this.cart = delFromArr(ind, this.cart);
+        this.cart.splice(ind,1);
         return;
       }
-      const newItem = {
-        ...this.cart[ind],
-        count: this.cart[ind].count - 1,
-      };
-      this.cart = updateArr(ind, newItem, this.cart);
+      this.cart[ind].count = this.cart[ind].count - 1
     }
     this.isLoading = false;
   }

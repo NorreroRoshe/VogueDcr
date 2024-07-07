@@ -23,7 +23,8 @@ const CartButton: React.FC<CartButtonProps> = observer(({ className }) => {
     // isShowing;
     return openDrawer();
   } 
-  const cartCount = cartStore.cart.reduce((sum, curr) => sum + curr.count, 0);;
+  const cartCount = cartStore.cart.reduce((sum, curr) => sum + curr.count, 0);
+  console.log(cartStore.cart)
 
   return (
     <button

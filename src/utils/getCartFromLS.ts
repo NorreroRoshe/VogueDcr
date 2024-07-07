@@ -6,6 +6,7 @@ import {
   calcTotalPrice,
   calcTruePrice,
 } from "./calcTotalPrice";
+import Cookies from 'js-cookie';
 
 // export const setLocalStorage = (id: string, obj: Object) => {
 //   const data =localStorage.setItem()
@@ -18,7 +19,7 @@ import {
 
 export const getCartFromLS = () => {
   if (typeof window !== 'undefined') {
-    const data = localStorage.getItem("cart");
+    const data = Cookies.get("cart");
     const items = data ? JSON.parse(data) : [];
     // const totalDiscountPrice = calcTotalPrice(items);
     const totalDiscountPrice = 0;

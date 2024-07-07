@@ -9,6 +9,7 @@ import { ROUTES } from "@/utils/routes";
 import { useTranslation } from "react-i18next";
 import { useModalAction } from "@/components/common/modal/modal.context";
 import { useStore } from "@/hooks/useStore";
+import Cookies from 'js-cookie';
 const AuthMenu = dynamic(() => import("./AuthMenu"), { ssr: false });
 
 function HeaderSignPhone() {
@@ -28,7 +29,7 @@ function HeaderSignPhone() {
   }
 
 
-  const isLocalAuth = typeof window !== 'undefined' && !!localStorage.getItem("refresh_token");
+  const isLocalAuth =!!Cookies.get("refresh_token");
 
   useEffect(() => {
     const fetchData = async () => {

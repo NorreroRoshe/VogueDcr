@@ -22,7 +22,7 @@ class CartService {
     return makeRequest<CartItem>({
       url: "/product/cart",
       method: "POST",
-      data: productId,
+      data: {productId: productId},
     });
   };
 

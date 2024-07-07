@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import 'overlayscrollbars/overlayscrollbars.css';
+import {observer} from 'mobx-react';
 
 type ScrollbarProps = {
   options?: any;
@@ -9,7 +10,7 @@ type ScrollbarProps = {
   className?: string;
 };
 
-const Scrollbar: React.FC<ScrollbarProps> = ({
+const Scrollbar: React.FC<ScrollbarProps> = observer(({
   options,
   children,
   style,
@@ -31,6 +32,6 @@ const Scrollbar: React.FC<ScrollbarProps> = ({
       {children}
     </OverlayScrollbarsComponent>
   );
-};
+});
 
 export default Scrollbar;

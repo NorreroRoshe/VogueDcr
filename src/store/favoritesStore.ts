@@ -4,6 +4,7 @@ import { FavoritesItem } from '@/types/Favorites/favorites.types';
 import { Product } from '@/types/Product/product.types';
 import { IFavoritesStore } from '@/types/Stores/IFavoritesStore';
 import { makeAutoObservable } from 'mobx';
+import Cookies from 'js-cookie';
 
 const KEY = "favorites";
 
@@ -11,7 +12,6 @@ const delFromArr = <T>(index: number, array: T[]) => [
   ...array.slice(0, index),
   ...array.slice(index + 1, array.length),
 ];
-
 
 export class FavoritesStore implements IFavoritesStore {
   items: FavoritesItem[] = [];
@@ -22,18 +22,16 @@ export class FavoritesStore implements IFavoritesStore {
   constructor() {
     makeAutoObservable(this);
     if (typeof window !== 'undefined') {
-      this.ids = JSON.parse(localStorage.getItem('favorites') ?? '[]')
+      this.ids = JSON.parse(Cookies.get('favorites') ?? '[]')
     }
   }
-
-
 
   addFavorite(addFavoriteProd: string) {
     if (this.ids.includes(addFavoriteProd)) return;
     const ids = this.ids.concat(addFavoriteProd);
     this.ids = ids;
     if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, JSON.stringify(ids));
+      Cookies.set(KEY, JSON.stringify(ids));
     }
   };
 
@@ -47,17 +45,16 @@ export class FavoritesStore implements IFavoritesStore {
     const ids = delFromArr(idsInd, this.ids);
     this.ids = ids;
     if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, JSON.stringify(ids));
+      Cookies.set(KEY, JSON.stringify(ids));
     }
   };
   clearItems() {
     this.items = [];
     this.ids = [];
     if (typeof window !== 'undefined') {
-      localStorage.setItem(KEY, `[]`);
+      Cookies.set(KEY, `[]`);
     }
   };
-
 
   async getUserFavorites() {
     this.isLoading = true;
@@ -66,7 +63,7 @@ export class FavoritesStore implements IFavoritesStore {
     if ('data' in response) {
       this.isLoading = false;
     if (typeof window !== 'undefined') {
-      localStorage.removeItem("favorites");
+      Cookies.remove("favorites");
     }
       this.ids = response.data.products.map((item: Product) => item.id);
       this.items = response.data.products;

@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
 import cn from 'classnames';
@@ -17,6 +17,7 @@ import useOnClickOutside from '@/utils/use-click-outside';
 import cls from './header.module.scss';
 import {observer} from "mobx-react";
 import HeaderPhone from "../Header/HeaderPhone";
+import {useStore} from '@/hooks/useStore';
 const CartButton = dynamic(() => import('@/components/cart/cart-button'), {
   ssr: false,
 });
@@ -40,6 +41,31 @@ const Header0: React.FC = observer(() => {
   const { openModal } = useModalAction();
   const siteHeaderRef = useRef() as DivElementRef;
   const siteSearchRef = useRef() as DivElementRef;
+  const store = useStore();
+  const authStore = store.auth;
+  const cartStore = store.cart;
+  const favoritesStore = store.favorites;
+  const isAuth = authStore.isAuth;
+
+  useEffect(() => {
+
+
+    //del cart
+    // localStorage.removeItem("cart");
+
+    if (isAuth) {
+      favoritesStore.clearItems();
+      cartStore.clearCart();
+      cartStore.getUserCart();
+      favoritesStore.getUserFavorites();
+    }
+  }, [isAuth]);
+
+  useEffect(() => {
+    authStore.refreshToken();
+  }, []);
+
+
   useActiveScroll(siteHeaderRef, 40);
   useOnClickOutside(siteSearchRef, () => closeSearch());
   function handleLogin() {

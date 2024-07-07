@@ -6,7 +6,7 @@ import AccountDetails from '@/components/my-account/account-details';
 // import { GetStaticProps } from 'next';
 import { observer } from "mobx-react";
 
-export default const AccountDetailsPage = observer(() => {
+const AccountDetailsPage = observer(() => {
   return (
     <>
       <Breadcrumb />
@@ -47,3 +47,4 @@ export default const AccountDetailsPage = observer(() => {
 //     },
 //   };
 // };
+export default AccountDetailsPage

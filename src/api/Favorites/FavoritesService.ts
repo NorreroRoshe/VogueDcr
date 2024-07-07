@@ -17,14 +17,14 @@ class FavoritesService {
     return makeRequest<Product>({
       url: "/product/favourite",
       method: "POST",
-      data: productId,
+      data: {productId: productId},
     });
   };
   minusFavorite(productId: string) {
     return makeRequest<Product> ({
       url: "/product/favourite",
       method: "DELETE",
-      data: productId,
+      data: {productId: productId},
     });
   };
 }

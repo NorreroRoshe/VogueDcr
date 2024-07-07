@@ -8,6 +8,7 @@ import { useModalAction } from "@/components/common/modal/modal.context";
 import { useStore } from "@/hooks/useStore";
 const AuthMenu = dynamic(() => import("@/components/layouts/Header/AuthMenu"), { ssr: false });
 import { observer } from "mobx-react";
+import Cookies from 'js-cookie';
 
 type AuthButtonProps = {
   className?: string;
@@ -27,7 +28,7 @@ const AuthButton: React.FC<AuthButtonProps> = observer(({ className }) => {
   }
 
     
-  const isLocalAuth = typeof window !== 'undefined' && !!localStorage.getItem("refresh_token");
+  const isLocalAuth = !!Cookies.get("refresh_token");
       
 
   useEffect(() => {

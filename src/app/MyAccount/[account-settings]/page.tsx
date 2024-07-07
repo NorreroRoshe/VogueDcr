@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
 import { observer } from "mobx-react";
 
-export const AccountDetailsPage = observer(() => {
+const AccountDetailsPage = observer(() => {
   return (
     <>
       {/* <Seo

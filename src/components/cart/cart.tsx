@@ -24,10 +24,7 @@ const Cart = observer(() => {
   const cartStore = store.cart
   const authStore = store.auth
   const productStore = store.product
-  
-  useEffect(() => {
-    cartStore.getUserCart();
-  }, []);
+
   const cart = cartStore.items.map((cartItem) => {
     const count =
     cartStore.cart.find((countItem) => countItem.id === cartItem?.id)?.count || 0;
@@ -41,31 +38,31 @@ const Cart = observer(() => {
     }
   };
 
+  useEffect(() => {
+    if(!authStore.isAuth) {
+      cartStore.items = [];
+      console.log(cartStore.cart);
+      cartStore.cart.length > 0 &&
+      cartStore.cart.map(
+        (row) =>
+          productStore.getDetProduct({ ProductId: row.id }).then((pld) => {
+            //@ts-ignore
+            cartStore.addItem(pld?.data);
+          }),
+      );
+
+    }
+
+  }, [cartStore.cart]);
+
+
+
   const totalDiscountPrice = cartStore.items.reduce((sum, curr) => {
     const truePrice = curr.price - (curr.price * curr.discount) / 100;
     return truePrice * (cartStore.cart.find((item) => item.id === curr.id)?.count ?? 1) + sum;
   }, 0);
 
-  useEffect(() => {
-    cartStore.cart.length > 0 &&
-      cartStore.cart.map(
-        (row) =>
-          !cart.map((item) => item.id).includes(row.id) &&
-          productStore.getDetProduct({ ProductId: row.id }).then((pld) => {
-            // TODO fix
-            // @ts-ignore
-            cartStore.addItem(pld.data);
-          }),
-      );
-
-  }, [cartStore.cart]);
-
-  useEffect(() => {
-    if (authStore.isAuth && !authStore.isLoading) {
-      cartStore.cart &&
-        cartStore.cart.map((row) => !cart.map((item) => item.id).includes(row.id) && addToCart(row.id));
-    }
-  }, [authStore.isAuth, !authStore.isLoading]);
+  console.log(cart)
 
   if (cartStore.cart.length === 0) {
     return <EmptyCart />;
@@ -79,7 +76,7 @@ const Cart = observer(() => {
           <button
             className="flex flex-shrink items-center text-15px transition duration-150 ease-in focus:outline-none text-skin-base opacity-50 hover:opacity-100 -me-1.5"
             aria-label={t('Очистить корзину')}
-            onClick={onClickClear}>
+            onClick={()=>onClickClear}>
             <DeleteIcon />
             <span className="ps-1">{t('Очистить корзину')}</span>
           </button>

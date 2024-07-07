@@ -1,5 +1,6 @@
 "use client"
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import Cookies from 'js-cookie';
 interface TMakeRequestParams extends AxiosRequestConfig {
   authToken?: boolean;
 }
@@ -23,9 +24,9 @@ const makeRequest = <Type>({
 
   // headers.append("Content-Type", "application/json");
   // headers.append("Accept", "application/json");
+
   headers.authorization = (
-    "Authorization",
-    `Bearer ${localStorage.getItem("access_token") || ""}`
+    `Bearer ${Cookies.get("access_token") || ""}`
   );
 
   return axios

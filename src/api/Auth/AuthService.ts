@@ -3,6 +3,7 @@ import makeRequest from '@/api/makeRequest';
 import { IConfirmReq, IGetUserDetailsReq, IGetUserDetailsRes, IPasswodForgotReq, IPasswodForgotRes, IPasswordResetReq, IPasswordResetRes, IPutUserDetailsReq, IResendConfirmReq, IResendConfirmRes, ISingInReq, ISingInRes, ISingUpReq, ISingUpRes } from '@/types/Auth/auth.dtos';
 // import {ProductsResponse} from "@/types/types";
 import {AxiosResponse} from "axios";
+import Cookies from 'js-cookie';
 
 class AuthService {
 
@@ -24,7 +25,7 @@ class AuthService {
   };
   refreshToken() {
     return makeRequest<ISingInRes>({
-      url: `/auth/token-refresh?refreshToken=${typeof window !== 'undefined' && localStorage.getItem("refresh_token")}`,
+      url: `/auth/token-refresh?refreshToken=${Cookies.get("refresh_token")}`,
       method: "POST",
     })
   };

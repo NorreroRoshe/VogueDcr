@@ -8,6 +8,7 @@ import cls from "./Header.module.scss";
 
 import { useRouter } from "next/navigation";
 import { useStore } from "@/hooks/useStore";
+import Cookies from 'js-cookie';
 
 interface ISearchWindowProps {
   searchOpen: boolean;
@@ -28,7 +29,7 @@ const SearchWindow: React.FC<ISearchWindowProps> = ({ searchOpen, setSearchOpen 
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      setSearchQuery(localStorage.getItem("handleSearch") || "");
+      setSearchQuery(Cookies.get("handleSearch") || "");
     }
   }, [search]);
 

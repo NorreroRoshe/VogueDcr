@@ -46,7 +46,7 @@ export default function RootLayout({
 
 	const queryClient = new QueryClient();
 
-  const isAuth = !!authStore.userId;
+  const isAuth = authStore.isAuth;
 
   useEffect(() => {
 
@@ -78,7 +78,13 @@ export default function RootLayout({
   // useEffect(() => { }, [state]);
 
 
-
+  useEffect(()=> {
+    if(authStore.isAuth) {
+      cartStore.getUserCart();
+    }else {
+      cartStore.getUserLocalCart();
+    }
+  },[])
 
 
 

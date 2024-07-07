@@ -16,6 +16,7 @@ export interface ICartStore {
   removeItem:(removeItemProd: string) => void;
   clearCart: () => void;
   getUserCart: () => void;
+  getUserLocalCart: () => void;
   clearUserCart: () => void;
   addProductToCart: (productId: string) => void;
   minusProductCart: (productId: string, isRemovingAll?: boolean) => void;

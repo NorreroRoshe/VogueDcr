@@ -23,9 +23,6 @@ const Favourites: React.FC = observer(() => {
   const { deleteFromFavorite } = useFavorite();
 
   useEffect(() => {
-
-
-
     ids &&
       ids.map(
         (id) =>
@@ -36,13 +33,8 @@ const Favourites: React.FC = observer(() => {
             favoritesStore.getFavorite(pld.data);
           }),
       );
+    console.log(ids)
   }, [ids]);
-
-  
-  // useEffect(() => {
-
-    
-  // }, []);
 
   if (ids.length === 0) {
     return <FavEmpty />;

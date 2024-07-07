@@ -17,13 +17,6 @@ const CartCounter: React.FC<CIBProps> = observer(({ id, count }) => {
   const authStore = store.auth;
   const isAuth = !!authStore.userId;
 
-  useEffect(() => {
-    if (isAuth) {
-      cartStore.clearCart();
-      localStorage.removeItem("cart");
-    }
-  }, [isAuth]);
-
   const handleAddToCart = (productId: string) => {
     if (isAuth) {
       cartStore.addProductToCart(productId);

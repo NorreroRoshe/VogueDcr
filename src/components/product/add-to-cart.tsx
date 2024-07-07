@@ -25,14 +25,12 @@ export const AddToCart = observer(({ cartCount, product }: Props) => {
       {cartCount > 0 ? (
         // <Counter className={cls.add_to_coun} product={product} />
         <button
-        disabled={isLoading}
-        onClick={handleDeleteFromCart}
+        onClick={()=>handleDeleteFromCart()}
         className={`${cls.cartlike__btn1} ${ cartCount ? cls.cartlike__btn1_active : ''}`}>
         </button>
       ) : (
         <button
-          disabled={isLoading}
-          onClick={handleAddToCart}
+          onClick={()=>handleAddToCart()}
           className={`${cls.cartlike__btn1} ${
             cartCount ? cls.cartlike__btn1_active : ''
           }`}></button>

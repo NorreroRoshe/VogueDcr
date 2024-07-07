@@ -3,6 +3,8 @@ import AuthService from '@/api/Auth/AuthService';
 import { IConfirmReq, IGetUserDetailsReq, IPasswodForgotReq, IPasswordResetReq, IPutUserDetailsReq, IResendConfirmReq, ISingInReq, ISingUpReq } from '@/types/Auth/auth.dtos';
 import { IAuthStore } from '@/types/Stores/IAuthStore';
 import { makeAutoObservable } from 'mobx';
+import {cookies} from 'next/headers';
+import Cookies from 'js-cookie';
 
 export class AuthStore implements IAuthStore {
   userId: string = "";
@@ -18,10 +20,8 @@ export class AuthStore implements IAuthStore {
   signOut() {
     this.userId = "";
     this.isAuth = false;
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-    }
+      Cookies.remove("access_token")
+      Cookies.remove("refresh_token")
   }
 
 
@@ -32,11 +32,9 @@ export class AuthStore implements IAuthStore {
     if ('data' in response) {
       this.userId = response.data.userId;
       this.isAuth = true;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("refresh_token", response.data.refresh_token);
-        localStorage.setItem("access_token_expires", response.data.access_token_expires);
-      }
+      Cookies.set("access_token", response.data.access_token)
+      Cookies.set("refresh_token", response.data.refresh_token)
+      Cookies.set("access_token_expires", response.data.access_token_expires)
     }
     this.isLoading = false;
     return response;
@@ -62,11 +60,9 @@ export class AuthStore implements IAuthStore {
     if ('data' in response) {
       this.userId = response.data.userId;
       this.isAuth = true;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("refresh_token", response.data.refresh_token);
-        localStorage.setItem("access_token_expires", response.data.access_token_expires);
-      }
+        Cookies.set("access_token", response.data.access_token)
+        Cookies.set("refresh_token", response.data.refresh_token)
+        Cookies.set("access_token_expires", response.data.access_token_expires)
     }
     this.isLoading = false;
     return response;
@@ -93,11 +89,9 @@ export class AuthStore implements IAuthStore {
     if ('data' in response) {
       this.userId = response.data.userId;
       this.isAuth = false;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("refresh_token", response.data.refresh_token);
-        localStorage.setItem("access_token_expires", response.data.access_token_expires);
-      }
+      Cookies.set("access_token", response.data.access_token)
+      Cookies.set("refresh_token", response.data.refresh_token)
+      Cookies.set("access_token_expires", response.data.access_token_expires)
     }
     this.isLoading = false;
     return response;
@@ -124,11 +118,6 @@ export class AuthStore implements IAuthStore {
     if ('data' in response) {
       this.userId = response.data.userId;
       this.isAuth = false;
-    // if (typeof window !== 'undefined') {
-      // localStorage.setItem("access_token", response.data.access_token);
-      // localStorage.setItem("refresh_token", response.data.refresh_token);
-      // localStorage.setItem("access_token_expires", response.data.access_token_expires);
-    // }
   }
   this.isLoading = false;
     return response;

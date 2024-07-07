@@ -25,6 +25,7 @@ import { IoClose } from 'react-icons/io5';
 import { Product } from '@/types/Product/product.types';
 import { useStore } from '@/hooks/useStore';
 import { chandelierTypeArray } from './product-details/product-tab';
+import {observer} from 'mobx-react';
 
 export const RelatedBreakpoints = {
   '1536': {
@@ -51,7 +52,7 @@ export type ProductPopupProps = {
   popupProduct?: Product;
 };
 
-const ProductPopup: React.FC<ProductPopupProps> = ({ popupProduct }) => {
+const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) => {
 
 
   const store = useStore();
@@ -381,6 +382,6 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ popupProduct }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProductPopup;
