@@ -19,7 +19,7 @@ export const LightCatalogue: React.FC = () => {
 
   useEffect(() => {
     setIsWideScreen(window.innerWidth >= 1150)
-  }, []) 
+  }, [])
 
 
 
@@ -54,36 +54,36 @@ export const LightCatalogue: React.FC = () => {
               <div className="ui-j6Lq6 ygpOv">
                 <div className="I_nj2 RtDRX">
                   <div className="FgYkG">
-                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Light?ProductTypes=1">
-                      <div className="Pk6w8 Zs10P">
-                        <Image width={1920} height={1440} src={svet} alt='Свет' />
+                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Lights">
+                      <div style={{borderRadius: '5px'}} className="Pk6w8 Zs10P">
+                        <Image style={{borderRadius: '5px'}} width={1920} height={1440} src={svet} alt='Свет' />
                       </div>
                       <div className="fANJ9">Свет</div>
                       <div className="Lwh0E">от <span className="ui-LD-ZU">19 290<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>
                     </Link>
                   </div>
                   <div className="FgYkG">
-                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Mirrors?ProductTypes=3">
-                      <div className="Pk6w8 Zs10P">
-                        <Image width={1920} height={1440} src={zerkala} alt='Зеркала' className="c9h0M Az1S_" />
+                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Mirrors">
+                      <div style={{borderRadius: '5px'}} className="Pk6w8 Zs10P">
+                        <Image style={{borderRadius: '5px'}} width={1920} height={1440} src={zerkala} alt='Зеркала' className="c9h0M Az1S_" />
                       </div>
                       <div className="fANJ9">Зеркала</div>
                       <div className="Lwh0E">от <span className="ui-LD-ZU">3490<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>
                     </Link>
                   </div>
                   <div className="FgYkG">
-                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Carpets?ProductTypes=4">
-                      <div className="Pk6w8 Zs10P">
-                        <Image width={1920} height={1440} src={carpets} alt='Ковры' className="c9h0M Az1S_" />
+                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Carpets">
+                      <div style={{borderRadius: '5px'}} className="Pk6w8 Zs10P">
+                        <Image style={{borderRadius: '5px'}} width={1920} height={1440} src={carpets} alt='Ковры' className="c9h0M Az1S_" />
                       </div>
                       <div className="fANJ9">Ковры</div>
-                      <div className="Lwh0E">от <span className="ui-LD-ZU">390<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>
+                      <div className="Lwh0E">от <span className="ui-LD-ZU">3890<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>
                     </Link>
                   </div>
                   <div className="FgYkG">
-                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Furniture?ProductTypes=2">
-                      <div className="Pk6w8 Zs10P">
-                        <Image width={1920} height={1440} src={mebel} alt='Мебель' className="c9h0M Az1S_" />
+                    <Link className="ui-GPFV8 BE2NI" href="/Chapter/Furniture">
+                      <div style={{borderRadius: '5px'}} className="Pk6w8 Zs10P">
+                        <Image style={{borderRadius: '5px'}} width={1920} height={1440} src={mebel} alt='Мебель' className="c9h0M Az1S_" />
                       </div>
                       <div className="fANJ9">Мебель</div>
                       <div className="Lwh0E">от <span className="ui-LD-ZU">14 690<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>
@@ -103,8 +103,8 @@ export const LightCatalogue: React.FC = () => {
                   </div>
                   <div className="FgYkG FgYkG1">
                     <Link className="ui-GPFV8 BE2NI" href="/Chapter?ProductTypes=6&ProductTypes=7">
-                      <div className="Pk6w8 Zs10P">
-                        <Image width={1920} height={1440} src={acsess} alt='Картины и аксессуары' className="c9h0M Az1S_" />
+                      <div style={{borderRadius: '5px'}} className="Pk6w8 Zs10P">
+                        <Image style={{borderRadius: '5px'}} width={1920} height={1440} src={acsess} alt='Картины и аксессуары' className="c9h0M Az1S_" />
                       </div>
                       <div className="fANJ9">Картины и аксессуары</div>
                       <div className="Lwh0E">от <span className="ui-LD-ZU">390<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>
@@ -113,7 +113,7 @@ export const LightCatalogue: React.FC = () => {
 
                   <div className="w9Dm_">
                     <div className="mYX0Y">
-                      <Link className="ui-GPFV8 E52PT" href="/Chapter/GoodsForHome?ProductTypes=5">
+                      <Link className="ui-GPFV8 E52PT" href="/Chapter/TovariDlyaDoma">
                         <div className="XyfHc">
                           <div className="_xn4i">Товары для дома</div>
                           <div className="Lwh0E">от <span className="ui-LD-ZU">390<span className="ui-i5wwi ui-VDyJR ui-VWOa-">руб.</span></span></div>

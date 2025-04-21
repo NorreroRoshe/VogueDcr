@@ -26,7 +26,6 @@ const AuthMenu: React.FC<Props> = observer(({ isAuthorized, href, btnProps, chil
   const store = useStore();
   const authStore = store.auth
   
-  console.log(isAuthorized,'isAuthorized')
 
 	return authStore.isAuth ? (
 		<Link

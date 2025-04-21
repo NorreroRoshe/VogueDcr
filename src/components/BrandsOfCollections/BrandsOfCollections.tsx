@@ -4,6 +4,7 @@ import Link from 'next/link';
 import cls from './BrandsOfCollections.module.scss';
 import { useStore } from '@/hooks/useStore';
 import {observer} from "mobx-react";
+import Image from "next/image";
 
 export const BrandsOfCollections: React.FC = observer(() => {
 
@@ -29,8 +30,11 @@ export const BrandsOfCollections: React.FC = observer(() => {
               key={brand.id}
               className={cls.product__categories_item}>
               <span className={cls.product__categories_link}>
-                <img
+                <Image
+                  width={290}
+                  height={223}
                   src={brand.file.url ?? 'default_image_url'}
+                  alt={brand.file.name ?? 'Коллекция бренда'}
                   className={cls.product__categories_img}
                 />
                 <p className={cls.product__categories_description}>{brand.name}</p>

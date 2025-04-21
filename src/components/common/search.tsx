@@ -1,74 +1,45 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import cn from 'classnames';
-import { useSearchQuery } from '@/framework/basic-rest/product/use-search';
 import SearchBoxModal from '@/components/common/search-box-modal';
 import SearchProduct from '@/components/common/search-product';
 import SearchProductHits from '@/components/common/search-product-hits';
 import useFreezeBodyScroll from '@/utils/use-freeze-body-scroll';
 import { useUI } from '@/contexts/ui.context';
 import cls from './Common.module.scss';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useStore } from '@/hooks/useStore';
 import { observer } from "mobx-react";
+import SearchBigModal from "@/components/common/search-big-modal";
+import SearchProductHitsBig from "@/components/common/search-product-hits-big";
+
 type Props = {
   className?: string;
   searchId?: string;
   variant?: 'border' | 'fill';
+  inputValue: string;
+  setInputValue: (inputValue: string) => void;
+  inputFocus: boolean;
+  setInputFocus: (inputFocus: boolean) => void;
+  handleGetSearchProducts: () => void;
 };
 
-function useDebounce(value: string, delay: number) {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-}
-
 const Search = observer(({
-      className = 'md:w-[730px] 2xl:w-[800px]',
-      searchId = 'search',
-      variant = 'border'}: Props) => {
-    const searchParams = useSearchParams();
+                           handleGetSearchProducts,
+                           inputFocus,
+                           setInputFocus,
+                           inputValue,
+                           setInputValue,
+                           className = 'md:w-[730px] 2xl:w-[800px]',
+                           searchId = 'search',
+                           variant = 'border'}: Props) => {
 
     const store = useStore();
     const productStore = store.product;
 
     const router = useRouter();
     const pathname = usePathname();
-
-    const [searchOpen, setSearchOpen] = React.useState<boolean>(false);
-    const [inputValue, setInputValue] = useState(searchParams.get('SearchQuery') ?? '');
-
-
-    const debouncedString = useDebounce(inputValue || '', 1000);
-
-    const handleGetSearchProducts = () => {
-      //Какую фуннкцию он выполняет ?
-      //Эта функция для того чтобы ее повесить на кнопку поиска , чтобы он начал искать
-      if (debouncedString !== '') {
-        productStore.getSearchProducts({
-          SearchQuery: debouncedString,
-          Count: 3,
-        });
-      };
-    };
-
-    useEffect(() => {
-      // if (debouncedString !== '')             Делаем так чтобы отправлялся запрос с пустой строкой на сервер
-      handleGetSearchProducts();
-    }, [debouncedString]);
-
-
-
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
       productStore.setSearchName(e.target.value);
@@ -94,7 +65,6 @@ const Search = observer(({
         closeMobileSearch();
         closeSearch();
       }
-
     };
 
 
@@ -106,6 +76,8 @@ const Search = observer(({
           break;
       }
     };
+
+
 
     React.useEffect(() => {
       document.addEventListener('keydown', onKeydown);
@@ -127,20 +99,9 @@ const Search = observer(({
       closeSearch,
     } = useUI();
 
-    const [searchText, setSearchText] = useState('');
-    const [inputFocus, setInputFocus] = useState<boolean>(false);
-    const { data, isLoading } = useSearchQuery({
-      text: searchText,
-    });
     useFreezeBodyScroll(
       inputFocus === true || displaySearch || displayMobileSearch
     );
-    // function handleSearch(e: React.SyntheticEvent) {
-    //   e.preventDefault();
-    // }
-    function handleAutoSearch(e: React.FormEvent<HTMLInputElement>) {
-      setSearchText(e.currentTarget.value);
-    }
 
     function clear() {
       setInputValue('');
@@ -159,12 +120,11 @@ const Search = observer(({
     }
     function enableInputFocus() {
       setInputFocus(true);
-      setSearchOpen(true)
     }
 
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1200px)' });
     return (
       <div
-        // ref={ref}
         className={cn(
           'w-full transition-all duration-200 ease-in-out',
           className
@@ -178,26 +138,41 @@ const Search = observer(({
           })}
           onClick={handleCloseSearch}
         />
-        {/* End of overlay */}
 
         <div className="w-full flex flex-col justify-center flex-shrink-0 relative z-30">
-          <div className="flex flex-col mx-auto w-full" style={{ zIndex: 31 }}>
-            <SearchBoxModal
-              searchId={searchId}
-              name="search"
-              value={inputValue}
-              onSubmit={handleSearch}
-              // onChange={handleAutoSearch}
-              onKeyDown={handleEnterKeyPress}
-              onClear={clearText}
-              onFocus={() => enableInputFocus()}
-              variant={variant}
-            />
+          <div
+            className={`flex flex-col mx-auto w-full ${isSmallScreen ? `${inputFocus ? cls.search_big_zpad_nat : ''} ${cls.search_big_zpad}` : ''}`}
+            style={isSmallScreen ? {} : {zIndex: 31}}
+          >
+            {isSmallScreen ? (
+              <SearchBigModal
+                searchId={searchId}
+                inputFocus={inputFocus}
+                name="search"
+                value={inputValue}
+                onSubmit={handleSearch}
+                onKeyDown={handleEnterKeyPress}
+                onClear={clearText}
+                onFocus={() => enableInputFocus()}
+                variant={variant}
+              />
+            ) : (
+              <SearchBoxModal
+                searchId={searchId}
+                name="search"
+                value={inputValue}
+                onSubmit={handleSearch}
+                onKeyDown={handleEnterKeyPress}
+                onClear={clearText}
+                onFocus={() => enableInputFocus()}
+                variant={variant}
+              />
+            )}
           </div>
-          {/* End of searchbox */}
 
           {inputFocus && (
-            <div className={`w-full absolute top-[56px] start-0 py-2.5 bg-skin-fill rounded-md flex flex-col overflow-hidden shadow-dropDown z-30 ${cls.searchmodal_wrapp}`}>
+            <div
+              className={`w-full absolute top-[56px] start-0 py-2.5 bg-skin-fill rounded-md flex flex-col overflow-hidden shadow-dropDown z-30 ${cls.searchmodal_wrapp} ${isSmallScreen ? cls.searchmodal_wrapp_big : ''}`}>
               <div className={cls.searchmodal_butflex}>
                 <button
                   type="submit"
@@ -211,54 +186,45 @@ const Search = observer(({
                   className={cls.butflex_close_btn}
                   onClick={handleCloseSearch}
                 >
-                  <svg className="ui-9F9ST" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1.00045 24L24 0.999999M23.9995 24L0.999999 1" stroke="currentColor" stroke-miterlimit="10"></path>
+                  <svg className="ui-9F9ST" width="25" height="25" viewBox="0 0 25 25" fill="none"
+                       xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.00045 24L24 0.999999M23.9995 24L0.999999 1" stroke="currentColor"
+                          stroke-miterlimit="10"></path>
                   </svg>
                 </button>
               </div>
-              {/* <SearchWindow setSearchOpen={setSearchOpen} searchOpen={searchOpen} /> */}
 
               {inputValue.length > 0 && (
                 <div>
-                  {/* <div className={cls.searchproduct_title}>Результат поиска</div> */}
-                  {/* <div className={`w-full ${cls.product_serch_present}`}> */}
                   <div
                     className={`py-2.5 ps-5 pe-10 scroll-snap-align-start transition-colors duration-200 ${cls.serch_present_sec}`}
-                    onClick={clear}
                   >
-                    <SearchProduct handleSearch={onButtonClick} />
+                    <SearchProduct handleSearch={onButtonClick}/>
                   </div>
                 </div>
-                // </div>
               )}
-              {/* Хиты продаж */}
               {inputValue === '' && (
                 <div>
                   <div className={cls.searchproduct_title}>Хиты продаж</div>
-                  {/* {isLoading
-                      ? Array.from({ length: 3 }).map((_, idx) => (
-                        <div className={`w-full ${cls.product_serch_present}`}>
-                      <div
-                        key={`search-result-loader-key-${idx}`}
-                        className="py-2.5 ps-5 pe-10 scroll-snap-align-start"
-                      >
-                        <SearchResultLoader
-                          key={idx}
-                          uniqueKey={`top-search-${idx}`}
-                        />
-                      </div>
-                </div>
-                    ))
-                    :  */}
+
                   <div className={`w-full ${cls.product_serch_present}`}>
-                    {data?.slice(0, 3).map((item, index) => (
-                      <div
-                        key={`search-result-key-${index}`}
-                        className={`py-2.5 ps-5 pe-10 scroll-snap-align-start transition-colors duration-200 ${cls.serch_present_secs}`}
-                        onClick={clear}
-                      >
-                        <SearchProductHits item={item} key={index} />
-                      </div>
+                    {productStore.defSearchItems?.map((item, index) => (
+                      isSmallScreen ? (
+                        <div
+                          key={`search-result-key-${index}`}
+                          className={`py-2.5 ps-5 pe-10 scroll-snap-align-start transition-colors duration-200 ${cls.serch_present_sec}`}
+                          onClick={clear}
+                        >
+                          <SearchProductHitsBig item={item} key={index}/>
+                        </div>
+                      ) : (
+                        <div
+                          key={`search-result-key-${index}`}
+                          onClick={clear}
+                        >
+                          <SearchProductHits item={item}/>
+                        </div>
+                      )
                     ))}
                   </div>
                 </div>
@@ -270,7 +236,5 @@ const Search = observer(({
     );
   }
 );
-
-// Search.displayName = 'Search';
 
 export default Search;

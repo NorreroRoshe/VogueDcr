@@ -11,6 +11,7 @@ import { getDirection } from '@/utils/get-direction';
 import cls from '../Header/Header.module.scss';
 import { useModalAction } from '@/components/common/modal/modal.context';
 import { useTranslation } from 'next-i18next';
+import {useEffect} from "react";
 const CartButton = dynamic(() => import('@/components/cart/cart-button'), {
   ssr: false,
 });
@@ -43,6 +44,18 @@ const BottomNavigation: React.FC = () => {
   const openFeedback = () => {
     openModal('FEEDBACK_PHONE');
   }
+
+  useEffect(() => {
+    if (displaySidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [displaySidebar]);
 
   return (
     <>

@@ -8,6 +8,7 @@ import React from 'react';
 export interface State {
   isAuthorized: boolean;
   displaySidebar: boolean;
+  displayShop: boolean;
   displayFilter: boolean;
   displayCart: boolean;
   displaySearch: boolean;
@@ -23,6 +24,7 @@ const initialState = {
   // isAuthorized: getToken(),
   isAuthorized: false,
   displaySidebar: false,
+  displayShop: false,
   displayFilter: false,
   displayCart: false,
   displaySearch: false,
@@ -261,6 +263,12 @@ export const UIProvider: React.FC <IUIProvider> = ({ children }) => {
   const closeSidebar = () => dispatch({ type: 'CLOSE_SIDEBAR' });
   const openShop = () => dispatch({ type: 'OPEN_SHOP' });
   const closeShop = () => dispatch({ type: 'CLOSE_SHOP' });
+
+  const toggleShop = () =>
+    state.displayShop
+      ? dispatch({ type: 'OPEN_SHOP' })
+      : dispatch({ type: 'CLOSE_SHOP' });
+
   const toggleSidebar = () =>
     state.displaySidebar
       ? dispatch({ type: 'CLOSE_SIDEBAR' })
@@ -308,6 +316,7 @@ export const UIProvider: React.FC <IUIProvider> = ({ children }) => {
       openShop,
       closeShop,
       toggleSidebar,
+      toggleShop,
       closeSidebarIfPresent,
       openCart,
       closeCart,

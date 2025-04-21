@@ -7,6 +7,7 @@ import cn from 'classnames';
 import Link from 'next/link';
 import cls from './header.module.scss';
 import PupularItemMenu from '@/components/ui/popular-item-menu';
+import {useStore} from "@/hooks/useStore";
 
 interface MenuProps {
   data: any;
@@ -15,8 +16,17 @@ interface MenuProps {
 
 const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
   const { t } = useTranslation('menu');
-
   const [screenWidth, setScreenWidth] = useState(0);
+
+  const store = useStore();
+
+  const productStore = store.product;
+
+
+  const filterСategories = productStore.categoriesFil;
+
+  const filterProdTyp = productStore.prodTypFil;
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +47,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
     >
       {data?.map((item: any) => (
         <div
-          className={`menuItem group py-3 ${item.subMenu ? '' : ''
+          className={`menuItem group py-2 ${item.subMenu ? '' : ''
             }`}
           key={item.id}
         >

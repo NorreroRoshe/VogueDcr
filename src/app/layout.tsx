@@ -109,15 +109,6 @@ export default function RootLayout({
                   <Footer />
                   <MobileNavigation />
                   <ScrollToTop
-                    style={{
-                      backgroundColor: '#424246',
-                      borderRadius: '50%',
-                      height: '65px',
-                      width: '65px',
-                      zIndex: 50,
-                      bottom: '115px'
-                      // bottom: '75px'
-                    }}
                     className="scrollCustom"
                     smooth
                     top={250}

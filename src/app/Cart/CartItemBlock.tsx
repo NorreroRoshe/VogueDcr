@@ -1,3 +1,135 @@
+// "use client"
+//
+// import React from 'react';
+// import cls from './Cart.module.scss';
+// // import "./Cart.scss";
+// // import "slick-carousel/slick/slick.css"; // путь к slick.css
+// // import "slick-carousel/slick/slick-theme.css"; // путь к slick-theme.css
+// import { useCart } from '../../hooks/useCart';
+// import Link from 'next/link';
+// import CartCounter from './CartCounter';
+// import Slider from 'react-slick';
+// import Scrollbar from '@/components/ui/scrollbar';
+// import CartElseProduct from './CartElseProduct'
+// import { IFileUrl } from '@/types/Product/product.types';
+// import {observer} from "mobx-react";
+//
+// type ICollection = {
+//   id?: string;
+//   name?: string;
+// }
+//
+// type CIBProps = {
+//   id: string;
+//   name: string;
+//   price: number;
+//   files: IFileUrl[];
+//   article: string;
+//   discount: number;
+//   count: number;
+//   height: number;
+//   diameter: number;
+//   width: number;
+//   length: number;
+//   collection: ICollection;
+// };
+//
+// const CartItemBlock: React.FC<CIBProps> = observer(({
+//   id,
+//   name,
+//   price,
+//   count,
+//   discount,
+//   files,
+//   article,
+//   height,
+//   diameter,
+//   width,
+//   length,
+//   collection
+// }) => {
+//   const { deleteFromCart } = useCart();
+//
+//   const onClickRemove = () => {
+//     if (window.confirm('Вы действительно хотите удалить данную позицию ?')) {
+//       deleteFromCart(id);
+//     }
+//   };
+//
+//   const truePrice = price - (price * discount) / 100;
+//
+//   return (
+//     <>
+//       <div className={cls.root_main}>
+//         <div className={cls.root_main_left}>
+//           <div className={cls.root_main_imgblock}>
+//             <Link href={`/Product/${id}`} className={cls.main_img}>
+//               {files && files.length > 0 && (
+//                 <img src={files[0].url} alt={files[0].name} className={cls.root_main_imgblock} />
+//               )}
+//             </Link>
+//           </div>
+//           <div className={cls.desc_first_insaid}>
+//             <h2 className={cls.root_main_title}>
+//               <Link href={`/Product/${id}`} className={cls.root_main_link}>
+//                 {name}
+//               </Link>
+//             </h2>
+//             <span className={cls.root_main_artikul}>
+//               Арт.:&nbsp; <strong> {article}</strong>
+//             </span>
+//             <div className={cls.root_main_params}>
+//               {!!height && (
+//                 <p className={cls.root_main_params_desc}>
+//                   Высота: <span>{height} см.</span>
+//                 </p>
+//               )}
+//               {!!diameter && (
+//                 <p className={cls.root_main_params_desc}>
+//                   Диаметр: <span>{diameter} см.</span>
+//                 </p>
+//               )}
+//               {!!width && (
+//                 <p className={cls.root_main_params_desc}>
+//                   Диаметр: <span>{width} см.</span>
+//                 </p>
+//               )}
+//               {!!length && (
+//                 <p className={cls.root_main_params_desc}>
+//                   Диаметр: <span>{length} см.</span>
+//                 </p>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//         <div className={cls.root_main_right}>
+//           <div className={cls.root_main_prices}>
+//             {/* {isLoading && 'load'} */}
+//             <CartCounter id={id} count={count}/>
+//             <div className={cls.root_main_price}>
+//               {discount ? (
+//               <span className={cls.price_discount}>{count * price} ₽.</span>
+//               ):(<div style={{marginTop: '12px'}}></div>
+//               )}
+//               <span className={cls.price_desc}>
+//                 {truePrice * count}
+//                 <span> ₽.</span>
+//               </span>
+//             </div>
+//           </div>
+//           <div onClick={onClickRemove} className={cls.root_main_end}>
+//             <span className={cls.main_end_remove}>Удалить позицию</span>
+//           </div>
+//         </div>
+//       </div>
+//       <CartElseProduct colId={collection?.id} />
+//     </>
+//   );
+// });
+//
+// export default CartItemBlock;
+
+
 "use client"
 
 import React from 'react';
@@ -31,23 +163,25 @@ type CIBProps = {
   diameter: number;
   width: number;
   length: number;
+  indent: number;
   collection: ICollection;
 };
 
 const CartItemBlock: React.FC<CIBProps> = observer(({
-  id,
-  name,
-  price,
-  count,
-  discount,
-  files,
-  article,
-  height,
-  diameter,
-  width,
-  length,
-  collection
-}) => {
+    id,
+    name,
+    price,
+    count,
+    discount,
+    files,
+    article,
+    height,
+    diameter,
+    width,
+    length,
+    indent,
+    collection
+  }) => {
   const { deleteFromCart } = useCart();
 
   const onClickRemove = () => {
@@ -60,45 +194,62 @@ const CartItemBlock: React.FC<CIBProps> = observer(({
 
   return (
     <>
-      <div className={cls.root_main}>
+      <div className={`${cls.root_main} ${cls.root_mainqwefvr}`}>
         <div className={cls.root_main_left}>
           <div className={cls.root_main_imgblock}>
             <Link href={`/Product/${id}`} className={cls.main_img}>
               {files && files.length > 0 && (
-                <img src={files[0].url} alt={files[0].name} className={cls.root_main_imgblock} />
+                  <img src={
+                    // process.env.NEXT_PUBLIC_PHOTO_URL1 +
+                    files[0].url} alt={files[0].name} className={cls.root_main_imgblock} />
               )}
             </Link>
           </div>
           <div className={cls.desc_first_insaid}>
             <h2 className={cls.root_main_title}>
               <Link href={`/Product/${id}`} className={cls.root_main_link}>
-                {name}
+                {name} {article}
               </Link>
             </h2>
-            <span className={cls.root_main_artikul}>
+            {/* <span className={cls.root_main_artikul}>
               Арт.:&nbsp; <strong> {article}</strong>
-            </span>
+            </span> */}
             <div className={cls.root_main_params}>
               {!!height && (
-                <p className={cls.root_main_params_desc}>
-                  Высота: <span>{height} см.</span>
-                </p>
+                  <p className={cls.root_main_params_desc}>
+                    Высота: <span>{height} см.</span>
+                  </p>
               )}
               {!!diameter && (
+                  <p className={cls.root_main_params_desc}>
+                    Диаметр: <span>{diameter} см.</span>
+                  </p>
+              )}
+              {!!length && (
                 <p className={cls.root_main_params_desc}>
-                  Диаметр: <span>{diameter} см.</span>
+                  Длинна: <span>{length} см.</span>
                 </p>
               )}
               {!!width && (
                 <p className={cls.root_main_params_desc}>
-                  Диаметр: <span>{width} см.</span>
+                  Ширина: <span>{width} см.</span>
                 </p>
               )}
-              {!!length && (
+              {!!indent && (
                 <p className={cls.root_main_params_desc}>
-                  Диаметр: <span>{length} см.</span>
+                  Отступ: <span>{indent} см.</span>
                 </p>
               )}
+              {/* {!!width && width.length > 0 && (
+                <p className={cls.root_main_params_desc}>
+                  Длинна: <span>{width} см.</span>
+                </p>
+              )}
+              {!!length && length.length > 0 && (
+                <p className={cls.root_main_params_desc}>
+                  Ширина: <span>{length} см.</span>
+                </p>
+              )} */}
             </div>
           </div>
         </div>
@@ -108,12 +259,12 @@ const CartItemBlock: React.FC<CIBProps> = observer(({
             <CartCounter id={id} count={count}/>
             <div className={cls.root_main_price}>
               {discount ? (
-              <span className={cls.price_discount}>{count * price} ₽.</span>
+                  <span className={cls.price_discount}>{Math.round(count * price)}₽.</span>
               ):(<div style={{marginTop: '12px'}}></div>
               )}
               <span className={cls.price_desc}>
-                {truePrice * count}
-                <span> ₽.</span>
+                {Math.round(truePrice * count)}
+                <span>₽</span>
               </span>
             </div>
           </div>
@@ -122,7 +273,7 @@ const CartItemBlock: React.FC<CIBProps> = observer(({
           </div>
         </div>
       </div>
-      <CartElseProduct colId={collection?.id} />
+      {/*<CartElseProduct colId={collection?.id} />*/}
     </>
   );
 });

@@ -13,11 +13,13 @@ import { useState } from 'react';
 import { useModalAction } from '../common/modal/modal.context';
 import { useStore } from '@/hooks/useStore';
 import { IPasswodForgotReq } from '@/types/Auth/auth.dtos';
+import {useRouter} from "next/navigation";
 
 const ChangePassword: React.FC = () => {
 
   const store = useStore();
   const authStore = store.auth;
+  const router = useRouter();
 
   const { t } = useTranslation();
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -33,7 +35,8 @@ const ChangePassword: React.FC = () => {
       Email
     })
       .then(() => {
-        openModal('PASSWORD_RESET')
+        // openModal('PASSWORD_RESET')
+        router.push('/PasswordReset');
       })
       .catch((error) => {
         if (error.data.Message === "Пользователь не найден") {
@@ -46,7 +49,7 @@ const ChangePassword: React.FC = () => {
   };
 
   function handleEmConf() {
-    return openModal('PASSWORD_RESET');
+    return router.push('/PasswordReset');
   }
   return (
     <>

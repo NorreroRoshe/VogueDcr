@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
                 <Link href="/Chapter" className={cls.nav_link}>
                   Все товары
                 </Link>
-                <Link href="/Chapter/Light" className={cls.nav_link}>
+                <Link href="/Chapter/Lights" className={cls.nav_link}>
                   Свет
                 </Link>
                 <Link href="/Chapter/Furniture" className={cls.nav_link}>
@@ -60,13 +60,13 @@ export const Footer: React.FC = () => {
                 <Link href="/Chapter/Carpets" className={cls.nav_link}>
                   Ковры
                 </Link>
-                <Link href="/Chapter/GoodsForHome" className={cls.nav_link}>
+                <Link href="/Chapter/TovariDlyaDoma" className={cls.nav_link}>
                   Товары для дома
                 </Link>
                 <Link href="/Chapter/Accessories" className={cls.nav_link}>
                   Аксессуары
                 </Link>
-                <Link href="/Chapter/Paintings" className={cls.nav_link}>
+                <Link href="/Chapter/Paints" className={cls.nav_link}>
                   Картины
                 </Link>
                 <p className={`${cls.nav_link} ${cls.nav_link_default}`}>
@@ -79,13 +79,13 @@ export const Footer: React.FC = () => {
           <div className={cls.footer_nav}>
             <h4 className={cls.footer_nav__title}>Контакты</h4>
             <div className={cls.footer_nav_nytime}>
-              <h5 className={cls.nav_nytime_title}>Режим работы</h5>
+              <h5 className={`${cls.nav_nytime_title} ${cls.nav__callwu_title}`}>Режим работы</h5>
               <p className={cls.nav_nytime_time}>Пн-Вс 10:00-22:00</p>
             </div>
             <div className={cls.footer_nav__callwu}>
               <h5 className={cls.nav__callwu_title}>Свяжитесь с нами</h5>
-              <a href="tel:+79999902020" className={cls.footer_callwu_link}>
-                <svg className={cls.footer_callwu__icon} height="24" width="30">
+              <a href="tel:+79999902020" className={`${cls.footer_callwu_link} ${cls.footer_callwu_linaewr}`}>
+                <svg className={cls.footer_callwu__icon} height="24" width="20">
                   <g transform="matrix(1,0,0,1,0,0)">
                     <svg height="24" viewBox="0 0 30 24" width="24">
                       <path
@@ -94,7 +94,7 @@ export const Footer: React.FC = () => {
                     </svg>
                   </g>
                 </svg>
-                <svg className={cls.footer_callwu__icon_foot} height="24" width="15">
+                <svg className={cls.footer_callwu__icon_foot} height="24" width="30">
                   <g transform="matrix(1,0,0,1,0,0)">
                     <svg height="24" viewBox="0 0 30 24" width="20">
                       <path
@@ -105,7 +105,7 @@ export const Footer: React.FC = () => {
                 </svg>
                 <span className={cls.footer_callwu__phonenum}> +7 (999) 990-20-20 </span>
               </a>
-              <a href="mailto:info@Vogue Decor.ru" className={cls.footer_callwu_link}>
+              <a href="mailto:info@Vogue-Decor.ru" className={cls.footer_callwu_link}>
                 <svg
                   className={cls.footer_communic__icon}
                   height="24"
@@ -186,7 +186,7 @@ export const Footer: React.FC = () => {
                     </g>
                   </g>
                 </svg>
-                <span className={cls.footer_callwu__phonenum}> info@Vogue Decor.ru</span>
+                <span className={cls.footer_callwu__phonenum}> info@Vogue-Decor.ru</span>
               </a>
               <div className={cls.footer_callwu_wrapper_media}>
                 <a href="tel:+79999902020" className={cls.footer_callwu_link_media}>
@@ -200,7 +200,7 @@ export const Footer: React.FC = () => {
                     </g>
                   </svg>
                 </a>
-                <a href="mailto:info@Vogue Decor.ru" className={cls.footer_callwu_link_media}>
+                <a href="mailto:info@Vogue-Decor.ru" className={cls.footer_callwu_link_media}>
                   <svg
                     className={cls.footer_communic__icon}
                     height="24"
@@ -276,14 +276,14 @@ export const Footer: React.FC = () => {
             </div>
           </div>
           <div className={cls.footer_priv_log_dessa}>
-          <Link href='/Home' className={cls.logo_main}>Vogue<span>Decor.com</span></Link>
-          <p className={cls.footer_create}>© Designed by Galoyan, 2022</p>
+          <Link href='/Home' className={cls.logo_main}>Vogue<span>-Decor.ru</span></Link>
+          <p className={cls.footer_create}>© Designed by Galoyan, 2024</p>
           <Link href='/Privacy' className={cls.footer_privacy}>Политика конфеднциальности</Link>
         </div>
         </div>
         <div className={cls.footer_priv_log_des}>
-          <Link href='/Home' className={cls.logo_main}>Vogue<span>Decor.com</span></Link>
-          <p className={cls.footer_create}>© Designed by Galoyan, 2022</p>
+          <Link href='/Home' className={cls.logo_main}>Vogue<span>-Decor.ru</span></Link>
+          <p className={cls.footer_create}>© Designed by Galoyan, 2024</p>
           <Link href='/Privacy' className={cls.footer_privacy}>Политика конфеднциальности</Link>
         </div>
       </footer>

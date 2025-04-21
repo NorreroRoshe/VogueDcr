@@ -30,7 +30,7 @@ const BundleCard: React.FC<Props> = ({
               <div className="ui-j6Lq6 ygpOv">
                 <div className="I_nj2 I_nj3 RtDRX">
                   <div className="FgYkG">
-                    <Link className="ui-GPFV8 BE2NI" href={`${slug} ?? ''`}>
+                    <Link className="ui-GPFV8 BE2NI" href={`${slug}`}>
                       <div className="Pk6w8 Zs10P">
                         <Image width={1920} height={1440} src={image ?? '/assets/placeholder/collection.svg'} alt='as' />
                       </div>
@@ -43,7 +43,7 @@ const BundleCard: React.FC<Props> = ({
             </div>
           </div>
         </section>
-          
+
   );
 };
 

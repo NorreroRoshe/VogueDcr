@@ -33,7 +33,7 @@ export const CollectionsOfBrands: React.FC = observer(() => {
         <div className={cls.product__categories}>
           {brandStore?.brandCollection?.map((collections) => (
             <Link
-              href={`/Collections/${collections.id}`}
+              href={`${brandId}/${collections.id}`}
               key={collections.id}
               className={cls.product__categories_item}>
               <span className={cls.product__categories_link}>

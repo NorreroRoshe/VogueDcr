@@ -35,17 +35,20 @@ const getProduct = (cart: ICartLocalState, productId: string) => {
 
 export class CartStore implements ICartStore {
 
-  items: CartItem[] = [];
+  cartItems: CartItem[] = [];
   totalCount: number = 0;
   totalDiscountPrice: number = 0;
   totalPrice: number = 0;
+  discount: number = 0;
+  saledPrice: number = 0;
+  salePercent: string = '';
   cart: ICartLocalState = observable.array([]);
   isLoading: boolean = false;
-
-
+  cartCount: number = 0;
   constructor() {
     makeAutoObservable(this);
   }
+  
   addLocalItem(localItemProd: string) {
     const productId = localItemProd;
     const cart = this.cart;
@@ -71,8 +74,8 @@ export class CartStore implements ICartStore {
   };
 
   addItem(addItemProd: CartItem) {
-    if(!this.items.find((item)=> item.id=== addItemProd.id)){
-      this.items.push(addItemProd)
+    if(!this.cartItems.find((item)=> item.id=== addItemProd.id)){
+      this.cartItems.push(addItemProd)
     }
   };
   deleteProductFromCart(deleteProductFromCartProd: string) {
@@ -85,8 +88,8 @@ export class CartStore implements ICartStore {
     if (typeof window !== 'undefined') {
       localStorage.setItem(KEY, JSON.stringify(this.cart));
     }
-      const itemInd = this.items.findIndex((item) => item?.id === productId);
-      if (itemInd !== -1) this.items.splice(itemInd,1);
+      const itemInd = this.cartItems.findIndex((item) => item?.id === productId);
+      if (itemInd !== -1) this.cartItems.splice(itemInd,1);
     }
   };
   minusItemFromCart(minusItemFromCartProd: string) {
@@ -101,23 +104,23 @@ export class CartStore implements ICartStore {
       if (typeof window !== 'undefined') {
         localStorage.setItem(KEY, JSON.stringify(this.cart));
       }
-      this.items.map((item) =>
+      this.cartItems.map((item) =>
         item.id === productId ? { ...item, count: item.count - 1 } : item
       );
     }
   };
 
   removeItem(removeItemProd: string) {
-    const findItem = this.items.findIndex(
+    const findItem = this.cartItems.findIndex(
       (obj) => obj.id === removeItemProd
     ); // с помощю индекс находим индекс элемента
-    this.items.splice(findItem, 1); //С помощю сплайс удалит элемент
+    this.cartItems.splice(findItem, 1); //С помощю сплайс удалит элемент
   };
   clearCart() {
     if (typeof window !== 'undefined') {
     localStorage.setItem(KEY, JSON.stringify([]));}
     this.cart = [];
-    this.items = [];
+    this.cartItems = [];
   };
 
   async getUserCart() {
@@ -125,13 +128,21 @@ export class CartStore implements ICartStore {
     const response = await CartService.getUserCart();
 
     if ('data' in response) {
-      this.cart = response.data.products.map((item) => ({
+      
+      this.cart = response.data.products?.map((item: CartItem) => ({
         count: item.count,
         id: item.id,
       }));
-      this.items = response.data.products.map((product) => ({
+      this.cartItems = response.data.products?.map((product: CartItem) => ({
         ...product,
       }));
+      this.saledPrice = response?.data?.saledPrice ?? 0;
+      this.totalPrice = response?.data?.totalPrice ?? 0;
+      this.totalDiscountPrice = response?.data?.totalDiscountPrice ?? 0;
+      this.salePercent = response?.data?.salePercent ?? '';
+      this.discount = response?.data?.discount ?? '';
+
+      
     }
     this.isLoading = false;
   };
@@ -145,7 +156,7 @@ export class CartStore implements ICartStore {
         id: item.id,
       }));
      // @ts-ignore
-     this.items = carts.map((product) => ({
+     this.cartItems = carts.map((product) => ({
        ...product,
      }));
      this.isLoading = false;
@@ -157,7 +168,7 @@ export class CartStore implements ICartStore {
 
     if ('data' in response) {
     this.cart = [];
-    this.items = [];
+    this.cartItems = [];
     if (typeof window !== 'undefined') {
       localStorage.setItem(KEY, JSON.stringify([]));
     }
@@ -169,10 +180,11 @@ export class CartStore implements ICartStore {
   async addProductToCart(productId: string) {
     this.isLoading = true;
     const response = await CartService.addProductToCart(productId);
-
     if ('data' in response) {
-      const ind = this.cart.findIndex((item) => productId === item.id);
 
+      this.cartCount = response?.data?.cartCount ?? 0;
+      
+      const ind = this.cart?.findIndex((item) => productId === item.id);
       if (ind === -1) {
         this.cart = [
           ...this.cart,
@@ -187,6 +199,7 @@ export class CartStore implements ICartStore {
         id: productId,
         count: this.cart[ind].count + 1,
       };
+      
     }
     this.isLoading = false;
   }
@@ -204,5 +217,16 @@ export class CartStore implements ICartStore {
       this.cart[ind].count = this.cart[ind].count - 1
     }
     this.isLoading = false;
+  }
+
+
+  async basketReset() {
+    this.isLoading = true;
+    const response = await CartService.basketReset();
+
+    if ('data' in response) {
+      this.isLoading = false;
+    }
+    return response;
   }
 };

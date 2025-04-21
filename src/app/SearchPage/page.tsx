@@ -15,20 +15,23 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 const SearchPage = observer (() => {
 
-  const pathname = usePathname();                       //Pagination
-  const router = useRouter();                       //Pagination
+  const pathname = usePathname();
+  const router = useRouter();
   const store = useStore();
   const productStore = store.product;
-  
+  const [currentPage, setCurrentPage] = useState(1);
+
   const product = productStore.searchPageProduct;
-  const productsCount = productStore.totalCount;
+  const productsSearchCount = productStore.searchPageTotalCount;
   const [searchedString, setSearchedString] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const search = productStore.filters.SearchQuery;
 
 
   const searchParams = useSearchParams();
-  const searchPage = searchParams.get('Page');                       //Pagination
+  const searchPage = searchParams.get('Page');
+  const searchPageNum = Number(searchPage);
+  const [page, setPage] = useState(searchPageNum);
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -40,24 +43,23 @@ const SearchPage = observer (() => {
     }
   }, [searchParams]);
   // %2B
-  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    console.log(searchParams.toString(),'searchParams.get')
+
     productStore.getSearchProducts({
       SearchQuery: searchParams.get('SearchQuery') ?? '',
       From: page * COUNT_PER_PAGE,
       Count: COUNT_PER_PAGE,
     });
-  }, [page, searchParams, searchPage, page]);                       //Pagination
+  }, [page, searchParams, searchPage]);
 
 
-  useEffect(() => {                       //Pagination
+  useEffect(() => {
   //@ts-ignore
     setPage(searchParams.get(`Page`) === null ? 0 : +searchParams.get(`Page`))
   }, []);
 
-  useEffect(() => {                       //Pagination
+  useEffect(() => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set(`Page`, page.toString())
     router.push(`${pathname}?${newParams.toString()}`)
@@ -65,31 +67,38 @@ const SearchPage = observer (() => {
 
   const skeleton = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
+
   return (
 
-    <div className={`${cls.container} ${cls.searchpage__container}`}>
-      <Breadcrumb />
-      <div className={cls.searchpage__mt}>
-        <div className={cls.catalogue__product}>
-          <h3 className={cls.allproduct_heading}>
-            По запросу {`<${searchedString}>`}
-          </h3>
-          <ul className={cls.allproduct_goods_list}>
-            {productStore.isLoading && skeleton}
-            {product?.map((product) => (
-              <ProdBlock key={product.id} product={product} />
-            ))}
-          </ul>
-        </div>
+    <>
+      <div className={`${cls.container} ${cls.chapter__mt_bread}`}>
+        <Breadcrumb/>
       </div>
-      {(productsCount ?? 0) >= COUNT_PER_PAGE && (                       //Pagination
-        <Pagination
-          count={productsCount}
-          changePage={(num: number) => setPage(num - 1)}
-          isLoading={productStore.isLoading}
-        />
-      )}
-    </div>
+      <div className={`${cls.container} ${cls.searchpage__container}`}>
+        <div className={cls.searchpage__mt}>
+          <div className={cls.catalogue__product}>
+            <h3 className={cls.allproduct_heading}>
+              По запросу {`<${searchedString}>`}
+            </h3>
+            <ul className={cls.allproduct_goods_list}>
+              {/*{productStore.isLoading && skeleton}*/}
+              {product?.map((product) => (
+                <ProdBlock key={product.id} product={product}/>
+              ))}
+            </ul>
+          </div>
+        </div>
+        {(productsSearchCount ?? 0) >= COUNT_PER_PAGE && (
+          <Pagination
+            count={productsSearchCount}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            changePage={(num: number) => setPage(num - 1)}
+            isLoading={productStore.isLoading}
+          />
+        )}
+      </div>
+    </>
 
   );
 });

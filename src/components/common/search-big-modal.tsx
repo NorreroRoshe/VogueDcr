@@ -21,22 +21,6 @@ type SearchProps = {
   variant?: 'border' | 'fill';
 };
 
-// const SearchBox = observer ( React.forwardRef<HTMLInputElement, SearchProps>(
-//   (
-//     {
-//       className,
-//       searchId = 'search',
-//       variant = 'border',
-//       value,
-//       onSubmit,
-//       onClear,
-//       onFocus,
-//       onKeyDown,
-//       inputFocus,
-//       ...rest
-//     },
-//     ref
-//   ) => {
   const SearchBox = observer(({
     className,
     searchId = 'search',
@@ -58,8 +42,8 @@ type SearchProps = {
       // // onSubmit={onSubmit}
       // >
       <>
-        <label htmlFor={searchId} className="flex flex-1 items-center py-0.5">
-          <span className="w-14 md:w-16 h-full absolute bottom-1 start-2 flex flex-shrink-0 justify-center items-center focus:outline-none">
+        <label htmlFor={searchId} className={`flex flex-1 items-center py-0.5 ${cls.wqefweq}`}>
+          <span className="w-14 md:w-16 h-full absolute bottom-0.5 start-2 flex flex-shrink-0 justify-center items-center focus:outline-none">
             <SearchIcon className={`text-skin-base text-opacity-40 ${cls.seach_size}`} />
           </span>
           <input

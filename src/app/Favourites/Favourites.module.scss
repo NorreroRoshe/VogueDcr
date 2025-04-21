@@ -3,7 +3,7 @@
   // @media (max-width: 1023px) {
   //   margin-top: 10px;
   // }
- 
+
   .favourites_container {
     overflow: hidden;
     --items-gap: 15px;
@@ -266,7 +266,7 @@
                     height: 50px;
                     color: #000;
                     display: block;
-                    margin-top: 10px; 
+                    margin-top: 10px;
                     text-align: start;
                     @media (max-width: 550px) {
                       font-size: 12px;
@@ -340,7 +340,7 @@
                     border-radius: 4px;
                     box-sizing: border-box;
                     color: #fff;
-                    cursor: pointer;
+                    cursor: pointer !important;
                     display: flex;
                     font-size: 16px;
                     font-weight: 500;
@@ -457,3 +457,4 @@
     height: 227px;
   }
 }
+

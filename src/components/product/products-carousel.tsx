@@ -25,7 +25,7 @@ interface ProductsCarouselProps {
   carouselBreakpoint?: {} | any;
 }
 
-const breakpoints = {
+const breakpoints: Record<string, { slidesPerView: number }> = {
   '1921': {
     slidesPerView: 7,
   },
@@ -64,9 +64,24 @@ const ProductsCarousel: React.FC<ProductsCarouselProps> = observer(({
   carouselBreakpoint,
 }) => {
   const { width } = useWindowSize();
-  // const { locale } = useRouter();
   const dir = getDirection('ltr');
 
+
+  const getSlidesPerView = (width?: number): number => {
+    if (!width) return 1;
+
+    return (
+      breakpoints[
+        Object.keys(breakpoints)
+          .map(Number)
+          .sort((a, b) => b - a)
+          .find((key) => width >= key)!
+        ]?.slidesPerView || 1
+    );
+  };
+
+  const slidesPerView = getSlidesPerView(width);
+  const shouldShowSeeAll = !!products?.length && products.length >= slidesPerView;
 
   return (
     <div
@@ -111,9 +126,11 @@ const ProductsCarousel: React.FC<ProductsCarouselProps> = observer(({
                   </SwiperSlide>
                 ))}
                 ``
-                <SwiperSlide className="p-2.5 flex items-center justify-center">
-                  <SeeAll href={categorySlug} />
-                </SwiperSlide>
+                {shouldShowSeeAll && (
+                  <SwiperSlide className="p-2.5 flex items-center justify-center">
+                    <SeeAll href={categorySlug} />
+                  </SwiperSlide>
+                )}
                 {width! > 1024 && width! < 1921 && <SwiperSlide />}
               </>
             )}

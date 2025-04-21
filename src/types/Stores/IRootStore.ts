@@ -6,7 +6,7 @@ import { ICollectionStore } from "./ICollectionStore";
 import { IFavoritesStore } from "./IFavoritesStore";
 import { IProductStore } from "./IProductStore";
 
-export interface IRootStore { 
+export interface IRootStore {
   brand: IBrandStore;
   collection: ICollectionStore;
   auth: IAuthStore;

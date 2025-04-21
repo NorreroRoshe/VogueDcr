@@ -1,12 +1,14 @@
+"use client"
 import usePrice from '@/framework/basic-rest/product/use-price';
 import { calculateTotal } from '@/contexts/cart/cart.utils';
 
 export const TotalPrice: React.FC<{ items?: any }> = ({ items }) => {
   const { price } = usePrice({
     amount: Math.round(
-      calculateTotal(items?.products) + items?.delivery_fee - items?.discount
+      // calculateTotal(items?.products) + items?.delivery_fee - items?.discount
+      items?.total_cost
     ),
-    currencyCode: 'USD',
+    currencyCode: 'RUB',
   });
   return <span className="total_price">{price}</span>;
 };
@@ -14,7 +16,7 @@ export const TotalPrice: React.FC<{ items?: any }> = ({ items }) => {
 export const DiscountPrice = (discount: any) => {
   const { price } = usePrice({
     amount: discount?.discount,
-    currencyCode: 'USD',
+    currencyCode: 'RUB',
   });
   return <>-{price}</>;
 };
@@ -22,15 +24,18 @@ export const DiscountPrice = (discount: any) => {
 export const DeliveryFee = (delivery: any) => {
   const { price } = usePrice({
     amount: delivery?.delivery,
-    currencyCode: 'USD',
+    currencyCode: 'RUB',
   });
   return <>{price}</>;
 };
 
 export const SubTotalPrice: React.FC<{ items?: any }> = ({ items }) => {
   const { price } = usePrice({
-    amount: calculateTotal(items),
-    currencyCode: 'USD',
+    // amount: calculateTotal(items),
+    amount: Math.round(
+      items?.total_cost
+    ),
+    currencyCode: 'RUB',
   });
   return <>{price}</>;
 };

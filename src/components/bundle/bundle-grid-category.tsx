@@ -7,13 +7,18 @@ import { SwiperSlide } from '@/components/ui/carousel/slider';
 import SectionHeader from '../common/section-header';
 import Link from 'next/link';
 import { ROUTES } from '@/utils/routes';
+import {ICategoryType} from "@/types/Product/product.dtos";
+import {observer} from "mobx-react";
+import {usePathname} from "next/navigation";
 const Carousel = dynamic(() => import('@/components/ui/carousel/carousel'), {
   ssr: false,
 });
 
 interface Props {
   className?: string;
-  data: any;
+  data?: ICategoryType[];
+  shouldDisplay?: boolean;
+  productTypeName: string;
 }
 
 const breakpoints = {
@@ -31,23 +36,29 @@ const breakpoints = {
   },
 };
 
-const BundleGridCategory: React.FC<Props> = ({ className = 'mb-12 pb-0.5', data }) => {
+const BundleGridCategory: React.FC<Props> = observer(({ className = 'mb-12 pb-0.5', data, productTypeName, shouldDisplay }) => {
   const { width } = useWindowSize();
+  const pathname = usePathname();
+
+  const pathSegments = pathname.split("/").filter(Boolean); // Разбиваем путь на части
+
   return (
     <div className={cn('heightFull', className)}>
       {width! < 1536 ? (
         <>
           <SectionHeader
-            sectionHeading={`Категория: ${data?.categoryName}`}
+            sectionHeading={`Категория: ${productTypeName}`}
             sectionSubHeading=""
             headingPosition="left"
+            className='ewvref'
           />
           <Carousel breakpoints={breakpoints}>
-            {data.subcategories?.map((item: any) => (
+            {data?.map((item) => (
               <SwiperSlide key={`bundle-key-${item.id}`}>
                 <BundleCardCategory
                   bundle={item}
-                  href={`${ROUTES.BUNDLE}/${item.slug}`}
+                  href={shouldDisplay ? `${pathSegments[1]}/${item?.EngName}` : `${pathSegments[0]}/${item?.EngName}`}
+                  shouldDisplay={shouldDisplay}
                 />
               </SwiperSlide>
             ))}
@@ -55,17 +66,18 @@ const BundleGridCategory: React.FC<Props> = ({ className = 'mb-12 pb-0.5', data 
         </>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {data.subcategories?.map((item: any) => (
+          {data?.map((item) => (
             <BundleCardCategory
               key={`bundle-key-${item.id}`}
               bundle={item}
-              href={`${ROUTES.BUNDLE}/${item.slug}`}
+              href={shouldDisplay ? `${pathSegments[1]}/${item?.EngName}` : `${pathSegments[0]}/${item?.EngName}`}
+              shouldDisplay={shouldDisplay}
             />
           ))}
         </div>
       )}
     </div>
   );
-};
+});
 
 export default BundleGridCategory;

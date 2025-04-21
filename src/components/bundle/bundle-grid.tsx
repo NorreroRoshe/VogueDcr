@@ -29,6 +29,9 @@ const breakpoints = {
 
 const BundleGrid: React.FC<Props> = ({ className = 'mb-12 pb-0.5', data }) => {
   const { width } = useWindowSize();
+
+  console.log(data,'datadata')
+
   return (
     <div className={cn('heightFull', className)}>
       {width! < 1536 ? (
@@ -40,7 +43,7 @@ const BundleGrid: React.FC<Props> = ({ className = 'mb-12 pb-0.5', data }) => {
           />
           <Carousel breakpoints={breakpoints}>
             {data?.map((item: any) => (
-              <SwiperSlide key={`bundle-key-${item.id}`}>
+              <SwiperSlide className="werfcwqw" key={`bundle-key-${item.id}`}>
                 <BundleCard
                   bundle={item}
                   href={`${ROUTES.BUNDLE}/${item.slug}`}

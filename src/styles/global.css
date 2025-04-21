@@ -120,6 +120,7 @@
   h5 {
     color: #232323;
   }
+
   h1 {
     font-size: 48px;
   }
@@ -788,4 +789,66 @@
   cursor: pointer;
   border-bottom: 1px solid #000;
   width: fit-content;
+}
+
+
+.dfgbv {
+
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none; /* Для Firefox */
+  -ms-overflow-style: none; /* Для IE и Edge */
+  /*display: flex;*/
+  /*flex-wrap: nowrap;*/
+  /*scrollbar-width: none;*/
+  /*-ms-overflow-style: none;*/
+}
+
+.breadcrumb-container {}
+
+.sedweqfcfdg {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0 auto 30px;
+  @media (max-width: 550px) {
+    margin: 0 auto 10px;
+  }
+}
+
+.eqwretgnr {
+  @media (max-width: 700px) {
+    padding: 0 !important;
+  }
+}
+
+
+.vqedwq {
+  @media (max-width: 470px) {
+    width: 15px;
+    height: 23px;
+  }
+}
+
+.dsfc {
+  @media (max-width: 470px) {
+    margin-right: 10px;
+  }
+}
+
+.wsevdw {
+  @media (max-width: 470px) {
+    margin-left: 10px;
+  }
+}
+
+.ewvref {
+  position: relative;
+  @media (max-width: 550px) {
+    left: -9px;
+  }
+}
+
+.ewrvfbe {
+  font-size: 18px;
 }

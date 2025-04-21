@@ -28,10 +28,10 @@ export const useLogoutMutation = () => {
   return useMutation(() => logout(), {
     onSuccess: (_data) => {
       authStore.signOut();
-      // Устанавливаем таймаут на 1 секунду перед переходом
+      router.push('/'); // Сначала перенаправляем пользователя на главную страницу
       setTimeout(() => {
-        router.push('/');
-      }, 1000); // 1000 миллисекунд = 1 секунда
+        window.location.reload(); // Затем перезагружаем страницу
+      }, 1000); // Небольшая задержка для обеспечения выполнения перенаправления
     },
     onError: (data) => {
       // Обработка ошибок

@@ -10,6 +10,7 @@ import { useStore } from "@/hooks/useStore";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CollectionsOfBrands } from "@/components/CollectionsOfBrands/CollectionsOfBrands";
 import {observer} from "mobx-react";
+import Breadcrumb from "@/components/ui/breadcrumb";
 
 const BrandPage: React.FC = observer(() => {
 
@@ -24,7 +25,6 @@ const BrandPage: React.FC = observer(() => {
 
   const brandId = pathname.split('/').pop();
 
-  const brand = brandStore.brands.find((br) => br.id === brandId);
 
   // useEffect(() => {
   //   productStore.getBrandProducts({
@@ -34,8 +34,11 @@ const BrandPage: React.FC = observer(() => {
   //   });
   // }, [brandId, brand, page]);
 
-
   return (
+  <>
+    <div className={cls.chapter__mt_bread}>
+      <Breadcrumb/>
+    </div>
     <div className={`${cls.container} ${cls.brand__container}`}>
       <div className={cls.brand__mt}>
         {/* <h2 className={cls.brand__title}>Коллекции бренда {brand?.name}</h2> */}
@@ -55,6 +58,7 @@ const BrandPage: React.FC = observer(() => {
         )} */}
       </div>
     </div>
+  </>
   );
 });
 

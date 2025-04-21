@@ -1,16 +1,21 @@
-"use client"
-import React, { useEffect } from "react";
-import { GoodsCatalogue } from "../../components/GoodsCatalogue/GoodsCatalogue";
-import { sitePathCategory } from "@/settings/site-path-cathegory";
+"use client";
+
+import React from "react";
 import cls from "./Chapter.module.scss";
-import Breadcrumb from '@/components/ui/breadcrumb';
+import {GoodsCatalogue} from "@/components/GoodsCatalogue/GoodsCatalogue";
+import DownloadApps from "@/components/common/download-apps";
+
 const Chapter: React.FC = () => {
   return (
-    <div className={`${cls.container} ${cls.chapter__container}`}>
-      <div className={cls.chapter__mt}>
-        <GoodsCatalogue sitePathCategory={sitePathCategory[8]} />
+    <>
+      <div className={`${cls.container} ${cls.chapter__container}`}>
+        <GoodsCatalogue/>
+
       </div>
-    </div>
+      <div style={{borderBottom: '1px solid black'}}>
+        <DownloadApps/>
+      </div>
+    </>
   );
 };
 

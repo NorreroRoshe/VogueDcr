@@ -11,10 +11,10 @@ const Factory = () => {
   const page = usePathname();
   return (
     <div className={cls.section_collaboration}>
-      <div className={cls.content}>
         <div className={cls.container}>
           <Breadcrumb />
           <div>
+      <div className={cls.content}>
             <div className={cls.content_title}>Производство</div>
             <div className={cls.content_im_wr}>
               <img

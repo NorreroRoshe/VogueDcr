@@ -1,6 +1,7 @@
 .section_butterfly {
   position: relative;
   margin-bottom: 50px;
+  gap: 30px;
   flex-direction: column;
   display: flex;
   justify-content: center;
@@ -136,42 +137,21 @@
     }
     .butterfly_collection__item {
       position: relative;
-      .butterfly_product__link {
         display: flex;
         flex-direction: column;
         margin: 0 0 auto;
         height: 100%;
+      .butterfly_product__link {
         .butterfly_product__box {
           padding: 18px;
           margin: auto;
           .butterfly_product__image {
             transition: transform 0.3s ease-in-out;
+            max-height: 202px;
+            object-fit: contain;
             &:hover {
               transform: scale(1.1);
             }
-          }
-        }
-        .butterfly_product__vendor {
-          font: 400 19px/20px openSans;
-          color: #424246;
-          margin: 0 0 5px;
-          padding: 0;
-          text-align: center;
-          @media(max-width: 708px) {
-            font-size: 15px;
-          }
-          .butterfly_product__vendor_in {
-            font-weight: 700;
-          }
-        }
-        .butterfly_product__title {
-          font: 400 18px/20px openSans;
-          color: #787a81;
-          margin: 0;
-          padding: 5px;
-          text-align: center;
-          @media(max-width: 708px) {
-            font-size: 15px;
           }
         }
       }
@@ -180,11 +160,11 @@
   .butterfly_icon_btn {
     display: flex;
     align-items: center;
-    margin-top: 30px;
+    //margin-top: 30px;
     border: 1px solid #58595b;
     padding-bottom: 7px;
     padding-top: 3px;
-    border-radius: 18px;
+    border-radius: 7px;
     padding: 4px 15px;
     position: relative;
     max-width: 210px;
@@ -205,4 +185,28 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.butterfly_product__vendor {
+  font: 400 16px/20px openSans;
+  color: #424246;
+  margin: 0 0 5px;
+  padding: 0;
+  text-align: center;
+  @media(max-width: 708px) {
+    font-size: 13px;
+  }
+  .butterfly_product__vendor_in {
+    font-weight: 700;
+  }
+}
+.butterfly_product__title {
+  font: 400 18px/20px openSans;
+  color: #787a81;
+  margin: 0;
+  padding: 5px;
+  text-align: center;
+  @media(max-width: 708px) {
+    font-size: 15px;
+  }
 }

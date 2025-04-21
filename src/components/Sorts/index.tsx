@@ -22,20 +22,20 @@ type Option = {
 };
 
 const options: Option[] = [
+  // {
+  //   name: 'по рейтингу (возрастание)',
+  //   url: 'first',
+  //   value: '0',
+  // },
+  // {
+  //   name: 'по рейтингу (убывание)',
+  //   url: 'second',
+  //   value: '1',
+  // },
   {
-    name: 'по рейтингу (возрастание)',
-    url: 'first',
-    value: '0',
-  },
-  {
-    name: 'по рейтингу (убывание)',
-    url: 'second',
+    name: 'по популярности',
+    url: 'fourth',
     value: '1',
-  },
-  {
-    name: 'по новинкам (возрастание)',
-    url: 'third',
-    value: '2',
   },
   {
     name: 'по новинкам (убывание)',
@@ -43,19 +43,19 @@ const options: Option[] = [
     value: '3',
   },
   {
-    name: 'по популярности',
-    url: 'fourth',
-    value: '4',
-  },
-  {
-    name: 'по цене (возрастание)',
-    url: 'sixth',
-    value: '5',
+    name: 'по новинкам (возрастание)',
+    url: 'third',
+    value: '2',
   },
   {
     name: 'по цене (убывание)',
     url: 'seventh',
     value: '6',
+  },
+  {
+    name: 'по цене (возрастание)',
+    url: 'sixth',
+    value: '5',
   },
 ];
 
@@ -72,7 +72,8 @@ const Sorts: FC<SortProps> = React.memo(({ title }) => {
   const pathname = usePathname();
   const params = useSearchParams();
   const newParams = new URLSearchParams(params)
-  const currentSelectedItem =params.get('sort_by')
+
+  const currentSelectedItem = params.get('sort_by')
     ? options.find((o) => o.value === params.get('sort_by'))!
     : options[0];
   const sort_by = params.get('sort_by');
@@ -99,15 +100,17 @@ const Sorts: FC<SortProps> = React.memo(({ title }) => {
   }
 
   useEffect(() => {
-    const sortValue = sort_by !== null ? sort_by : '0';
+    const sortValue = sort_by !== null ? sort_by : '1';
     const sortValueString = Array.isArray(sortValue) ? sortValue[0] : sortValue;
     const sortValueNumber = parseInt(sortValueString, 10); // или используйте Number(sortValueString)
 
     productStore.setSort(sortValueNumber);
-    console.log(sortValue, 'sortValue');
-    console.log(sortValueString, 'sortValueString');
 
-  }, [sort_by, sort]);
+
+
+  }, [sort_by
+    // , sort
+  ]);
 
   return (
     <Listbox value={selectedItem} onChange={handleItemClick}>

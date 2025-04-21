@@ -17,8 +17,9 @@ const Favourites: React.FC = observer(() => {
   const store = useStore();
   const favoritesStore = store.favorites;
   const productStore = store.product;
+  const authStore = store.auth;
 
-  const favorites = favoritesStore.items;
+  const favorites = favoritesStore.favoriteItems;
   const ids = favoritesStore.ids;
   const { deleteFromFavorite } = useFavorite();
 
@@ -33,10 +34,10 @@ const Favourites: React.FC = observer(() => {
             favoritesStore.getFavorite(pld.data);
           }),
       );
-    console.log(ids)
+
   }, [ids]);
 
-  if (ids.length === 0) {
+  if (!authStore.isAuth || ids.length === 0) {
     return <FavEmpty />;
   }
 
@@ -66,7 +67,9 @@ const Favourites: React.FC = observer(() => {
 
                         <Link href={`/Product/${favorite?.id}`}>
                           {!!favorite?.files[0] ? (
-                            <img src={favorite?.files[0]?.url} alt={favorite?.files[0]?.name} className={cls.photo_wrapp_img} />
+                            <Image width={450} height={400} src={
+                              // process.env.NEXT_PUBLIC_PHOTO_URL1 +
+                              favorite?.files[0]?.url} alt={favorite?.files[0]?.name} className={cls.photo_wrapp_img} />
                           ) : (
                             <div className="w-auto flex items-center justify-center">
                               {/* <img src={PP} alt='404!'/> */}
@@ -98,25 +101,47 @@ const Favourites: React.FC = observer(() => {
                         )}
                         <FavAddCart product={favorite} />
                         <div className={cls.item_unit_data}>
-                          <div className={cls.unit_data_item}>
-                            <span>Диаметр:</span>
-                            {favorite?.diameter} см
-                          </div>
-                          <div className={cls.unit_data_item}>
-                            <span>Высота:</span>
-                            {favorite?.height} см
-                          </div>
+                          {!!favorite.diameter && (
+                            <div className={cls.unit_data_item}>
+                              <span>Диаметр:</span>
+                              {favorite?.diameter} см
+                            </div>
+                          )}
+                          {!!favorite.width && (
+                            <div className={cls.unit_data_item}>
+                              <span>Ширина:</span>
+                              {favorite?.width} см
+                            </div>
+                          )}
+                          {!!favorite.length && (
+                            <div className={cls.unit_data_item}>
+                              <span>Длинна:</span>
+                              {favorite?.length} см
+                            </div>
+                          )}
+                          {!!favorite.height && (
+                            <div className={cls.unit_data_item}>
+                              <span>Высота:</span>
+                              {favorite?.height} см
+                            </div>
+                          )}
+                          {!!favorite.indent && (
+                            <div className={cls.unit_data_item}>
+                              <span>Глубина:</span>
+                              {favorite?.indent} см
+                            </div>
+                          )}
                         </div>
                       </div>
                     </li>
                   ))}
-                </ul>
-              </div>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 });
 

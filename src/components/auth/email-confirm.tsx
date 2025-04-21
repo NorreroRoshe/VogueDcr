@@ -72,8 +72,8 @@ const EmailConfirmForm = () => {
   };
   
 
-  function onResetSubmit({ Email }: IResendConfirmReq) {
-    authStore.emailResendConfirm({ Email: Email })
+  function onResetSubmit({ email }: IResendConfirmReq) {
+    authStore.emailResendConfirm({ email: email })
     .then(() => {
       setOpenResetCode(false);
       setIfCode(true);
@@ -153,7 +153,7 @@ const EmailConfirmForm = () => {
       <button
         type="button"
         // onClick={onResetSubmit}
-        className="text-skin-base underline font-medium hover:no-underline focus:outline-none"
+        className="text-skin-base underline font-extrabold hover:no-underline focus:outline-none"
       >
         {t('Нажмите сюда чтобы повторно выслать код')}
       </button>
@@ -176,7 +176,7 @@ const EmailConfirmForm = () => {
           label={t('Введите ардес Email на который пришёл код')}
           type="email"
           variant="solid"
-          {...registerSecondForm('Email', {
+          {...registerSecondForm('email', {
             required: `${t('Email обязателен')}`,
             pattern: {
               value:
@@ -184,7 +184,7 @@ const EmailConfirmForm = () => {
               message: t('Некорректный email'),
             },
           })}
-          error={secEemailError || errorsSecondForm.Email?.message}
+          error={secEemailError || errorsSecondForm.email?.message}
         />
         <Button
           type="submit"
@@ -200,7 +200,7 @@ const EmailConfirmForm = () => {
   <div className="text-sm sm:text-15px text-skin-muted text-center">
     <span
       // type="button"
-      className="text-skin-base font-normal font-medium focus:outline-none"
+      className="text-skin-base font-normal font-extrabold focus:outline-none"
       style={{opacity: '0.7'}}
     >
       <span className='text-22px font-normal hover:no-underline underline'
@@ -210,7 +210,7 @@ const EmailConfirmForm = () => {
       <br />
       Пожалуйста проверьте на вашей почте в папке &apos;Входящие&apos; либо в папке &apos;Cпам&apos;.
       <br />
-       В случае если кода нет ни в одной из папок на указанной почте, то просим связаться с нами по почте &apos;info@VogueDecor.ru&apos;, либо по номеру телефона +7-999-990-20-20.
+       В случае если кода нет ни в одной из папок на указанной почте, то просим связаться с нами по почте &apos;info@Vogue-Decor.ru&apos;, либо по номеру телефона +7-999-990-20-20.
     </span>
   </div>
 )}

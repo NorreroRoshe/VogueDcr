@@ -17,7 +17,6 @@ const AuthMenu: React.FC<Props> = observer(({
   children,
 }) => {
 
-  console.log(isAuthorized,'isAuthorized')
   return isAuthorized ? (
     <Link
       href={href}

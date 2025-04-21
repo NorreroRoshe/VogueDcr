@@ -29,6 +29,7 @@ const RelatedProductFeedBrand: React.FC<RelatedProductsProps> = observer (({
 
   const brand = brandStore.brands.find((col) => col.id === brandId);
 
+
   useEffect(() => {
     productStore.getBrandProducts({
       BrandsId: brandId,
@@ -38,7 +39,6 @@ const RelatedProductFeedBrand: React.FC<RelatedProductsProps> = observer (({
   }, [brand, brandId]);
 
 
-  console.log(brandId,'brandId')
 
   return (
     <ProductsCarousel

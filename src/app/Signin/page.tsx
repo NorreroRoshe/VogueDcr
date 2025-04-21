@@ -5,8 +5,28 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Divider from '@/components/ui/divider';
 import LoginForm from '@/components/auth/login-form';
 import Breadcrumb from '@/components/ui/breadcrumb';
+import {useStore} from "@/hooks/useStore";
+import NotFound from "@/app/404/page";
+import {observer} from "mobx-react";
+import {useRouter} from "next/navigation";
+import {useEffect} from "react";
 
-export default function SignInPage() {
+
+const SignInPage: React.FC = observer(({}) => {
+
+  const store = useStore();
+
+  const authStore = store.auth;
+  const router = useRouter();
+
+
+  useEffect(() => {
+    if (authStore.isAuth) {
+      router.push('/');
+    }
+  }, [authStore.isAuth, router]);
+
+
   return (
     <>
       {/* <Seo
@@ -24,7 +44,9 @@ export default function SignInPage() {
       <Divider />
     </>
   );
-}
+})
+
+export default SignInPage;
 
 // export const getStaticProps: GetStaticProps = async ({ locale }) => {
 //   return {

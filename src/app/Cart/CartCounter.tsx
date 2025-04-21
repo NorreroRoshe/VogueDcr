@@ -22,7 +22,7 @@ const CartCounter: React.FC<CIBProps> = observer(({ id, count }) => {
       cartStore.addProductToCart(productId);
       return;
     }
-    console.log(id)
+
     cartStore.addLocalItem(productId);
   };
 
@@ -51,7 +51,7 @@ const CartCounter: React.FC<CIBProps> = observer(({ id, count }) => {
   };
 
   useEffect(() => {
-    console.log(id, count,cartStore.isLoading)
+
 
   }, [cartStore.isLoading]);
 

@@ -86,7 +86,9 @@ export const DescBlock: React.FC<IDescBlockProps> = ({ detProduct }) => {
         </p>
         {!!detProduct.availability ? (
         <div className={cls.info_feature_nalichie}>
-          <p className={cls.feature_nalichie_desc}>В наличии: {detProduct.availability} шт.</p>
+          <p className={cls.feature_nalichie_desc}>В наличии
+            {/*: {detProduct.availability} шт.*/}
+          </p>
         </div>):(       
         <div className={cls.info_feature_nalichie_predzakaz}>
           <p className={cls.feature_nalichie_desc}>Предзаказ</p>
@@ -97,7 +99,9 @@ export const DescBlock: React.FC<IDescBlockProps> = ({ detProduct }) => {
         <p className={cls.info_feature_about_titledesc}>Параметры:</p>
         {!!detProduct.availability ? (
         <div className={`${cls.info_feature_nalichie_par} ${cls.info_feature_nalichie}`}>
-          <p className={`${cls.feature_nalichie_desc_par} ${cls.feature_nalichie_desc}`}>В наличии: {detProduct.availability} шт.</p>
+          <p className={`${cls.feature_nalichie_desc_par} ${cls.feature_nalichie_desc}`}>В наличии
+            {/*: {detProduct.availability} шт.*/}
+          </p>
         </div>):(       
          <div className={`${cls.info_feature_nalichie_par_predzakaz} ${cls.info_feature_nalichie_predzakaz}`}>
          <p className={`${cls.feature_nalichie_desc_par} ${cls.feature_nalichie_desc}`}>Предзаказ</p>
@@ -117,7 +121,7 @@ export const DescBlock: React.FC<IDescBlockProps> = ({ detProduct }) => {
           <li className={cls.feature_about_item}>
             <span className={cls.about_item_category}>Цвет:</span>
             <span className={cls.about_item_value}>
-              {detProduct.colors?.map((colors) => arrayColor[colors]).join(' / ')}
+              {detProduct.color?.map((colors) => arrayColor[colors]).join(' / ')}
             </span>
           </li>
           {!!detProduct.height && (
@@ -146,7 +150,7 @@ export const DescBlock: React.FC<IDescBlockProps> = ({ detProduct }) => {
           )}
           {!!detProduct.lampCount && (
           <li className={cls.feature_about_item}>
-            <span className={cls.about_item_category}>Лампочки (Количество x Цоколь):</span>
+            <span className={cls.about_item_category}>Лампочки (Кол-во x Цоколь):</span>
             <span className={cls.about_item_value}>
               {detProduct.lampCount} x {detProduct.plinth}
             </span>

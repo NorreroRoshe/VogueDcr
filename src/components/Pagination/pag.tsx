@@ -8,11 +8,13 @@ interface ITablePagination {
   count: number;
   changePage: (n: number) => void;
   isLoading: boolean;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
 export const Pagination = (props: ITablePagination) => {
-  const { count, changePage, isLoading } = props;
-  const [currentPage, setCurrentPage] = useState(1);
+  const { count, changePage, isLoading, currentPage, setCurrentPage } = props;
+  // const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(count / COUNT_PER_PAGE);
   const searchParams = useSearchParams();
 
@@ -30,11 +32,6 @@ export const Pagination = (props: ITablePagination) => {
     [currentPage, count],
   );
 
-  console.log(currentPage,'currentPage')
-  useEffect(() => {
-  //@ts-ignore
-    setCurrentPage(searchParams.get(`Page`) !== null ? +searchParams.get(`Page`)+1 : 1 )
-  }, []);
 
   return (
     <div className={cls.paginationWrapper}>
@@ -43,7 +40,7 @@ export const Pagination = (props: ITablePagination) => {
           className={cls.pagination_dprev}
           disabled={currentPage === 1 || isLoading}
           onClick={() => hangleChangePage(1)}>
-          Начало
+          {'<<'}
         </button>
         <button
           disabled={currentPage === 1 || isLoading}
@@ -94,7 +91,7 @@ export const Pagination = (props: ITablePagination) => {
           disabled={currentPage === totalPages || isLoading}
           onClick={() => hangleChangePage(totalPages)}
           className={cls.pagination_dnext}>
-          Конец
+          {'>>'}
         </button>
       </div>
     </div>

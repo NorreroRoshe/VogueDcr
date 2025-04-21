@@ -14,7 +14,7 @@ import PasswordInput from '../ui/form/password-input';
 import Button from '../ui/button';
 import Logo from '../ui/logo';
 import Link from 'next/link';
-import signupphoto from '@/assets/img/ButtImg/SignUp.jpg';
+import signupphoto from '@/assets/img/SignUp.jpg';
 import { ISingUpReq } from '@/types/Auth/auth.dtos';
 import { useStore } from '@/hooks/useStore';
 
@@ -52,33 +52,38 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       password,
     })
       .then((data) => {
-        openModal('EMAIL_CONFIRM');
-      })
-      .catch((error) => {
-        if (error?.data?.errors?.Password) {
-          const passwordErrorMessage = error.data.errors.Password[0];
-          setPasswordError(passwordErrorMessage);
-          setEmailError(null);
-        } else if (error?.data?.Message === "Пользователь с такой почтой уже существует") {
-          setEmailError('Пользователь с такой почтой уже существует, либо восстоновите пароль, либо подтвердите ваш почту');
-          setPasswordError(null);
-        }
-        else if (error?.data?.Message === "Passwords must have at least one lowercase ('a'-'z').") {
-          setPasswordError("Пароль должен содержать хотя бы одну строчную букву ('a'-'z').");
-          setEmailError(null);
-        }
-        else if (error?.data?.Message === "Passwords must have at least one non alphanumeric character.") {
-          setPasswordError("Пароль должен содержать хотя бы один символ не цыфро-буквенный");
-          setEmailError(null);
-        }
-        else if (error?.data?.Message === "Passwords must have at least one uppercase ('A'-'Z').") {
-          setEmailError(null);
-          setPasswordError("Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z').");
+
+        
+        if (data?.data?.message === "Запрос выполнен успешно") {
+          openModal('AFTER_LOGIN_VIEW');
         } else {
-          setEmailError("Ошибка при регистрации");
-          setPasswordError('Ошибка при регистрации');
+          if (data?.message === "Пользователь с такой почтой уже существует") {
+            setEmailError('Пользователь с такой почтой уже существует, либо восстоновите пароль, либо подтвердите ваш почту');
+            setPasswordError(null);
+          }
+          else if (data?.message === "Пароль должен содержать минимум 8 символов, включая заглавные и строчные буквы, цифры и специальные символы.") {
+            setPasswordError("Пароль должен содержать минимум 8 символов, включая заглавные и строчные буквы, цифры и специальные символы.");
+            setEmailError(null);
+          }
+          else if (data?.message === "Passwords must have at least one lowercase ('a'-'z').") {
+            setPasswordError("Пароль должен содержать хотя бы одну строчную букву ('a'-'z').");
+            setEmailError(null);
+          }
+          else if (data?.message === "Passwords must have at least one non alphanumeric character.") {
+            setPasswordError("Пароль должен содержать хотя бы один символ не цыфро-буквенный");
+            setEmailError(null);
+          }
+          else if (data?.message === "Passwords must have at least one uppercase ('A'-'Z').") {
+            setEmailError(null);
+            setPasswordError("Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z').");
+          } 
+          else {
+            setEmailError("Ошибка при регистрации");
+            setPasswordError('Ошибка при регистрации');
+          }
         }
-      });
+      }
+    )
   }
   return (
     <div
@@ -170,8 +175,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
               >
                 <Button
                   type="submit"
-                  loading={authStore.isLoading}
-                  disabled={authStore.isLoading}
+                  // loading={authStore.isLoading}
+                  // disabled={authStore.isLoading}
                   className="h-11 md:h-12 w-full mt-2 font-15px md:font-15px tracking-normal"
                   variant="formButton"
                 >

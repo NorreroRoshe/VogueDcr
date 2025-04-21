@@ -33,13 +33,13 @@ const social = [
   //   className: 'twitter',
   //   title: 'text-twitter',
   // },
-  {
-    id: 2,
-    link: 'https://www.youtube.com/channel/UCjld1tyVHRNy_pe3ROLiLhw',
-    icon: <IoLogoYoutube />,
-    className: 'youtube',
-    title: 'text-youtube',
-  },
+  // {
+  //   id: 2,
+  //   link: 'https://www.youtube.com/channel/UCjld1tyVHRNy_pe3ROLiLhw',
+  //   icon: <IoLogoYoutube />,
+  //   className: 'youtube',
+  //   title: 'text-youtube',
+  // },
   {
     id: 3,
     link: 'https://www.instagram.com/redqinc/',

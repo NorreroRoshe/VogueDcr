@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cls from './SaleBunner.module.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css'; // путь к slick.css
@@ -10,6 +10,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from 'react-query';
 import { useStore } from '@/hooks/useStore';
 import {observer} from "mobx-react";
+import CategoryCardLoader from "@/components/ui/loaders/category-card-loader";
 
 export type SaleType = {
   saleImg: string;
@@ -41,9 +42,47 @@ export const SaleBunner: React.FC = observer(() => {
    
   // const data = productStore.getProducts(8, 0, {ProductTypes : 1, Categories : 2});
 
-  useEffect(() => {
-    productStore.getProducts(8, 0, {ProductTypes : [1], IsSale: true});
-  }, []);
+
+  const CustomNextArrow = (props: any) => {
+    const { className, onClick } = props;
+    return <div className={`${className} ${cls.custom_next}`} onClick={onClick} />;
+  };
+
+  const CustomPrevArrow = (props: any) => {
+    const { className, onClick } = props;
+    return <div className={`${className} ${cls.custom_prev}`} onClick={onClick} />;
+  };
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 550,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+    slidesToScroll: 1,
+    // fade: true,
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
+    // autoplay: true,
+    autoplaySpeed: 2500,
+    pauseOnHover: false,
+    // centerMode: true,
+    // centerPadding: '400px',
+  };
+
 
   // useEffect(() => {
   //   if (data) {
@@ -57,55 +96,27 @@ export const SaleBunner: React.FC = observer(() => {
       <div className={`${cls.saleb__container}`}>
         <h2 className={cls.saleb_title}>Распродажа</h2>
         <Slider className={cls.main_slider} {...sliderSettings}>
-          {!productStore.isLoading &&
-            productStore.items?.map((product, i) => <SaleBunnerProduct key={i} product={product} />)}
+          {productStore.isLoading
+            ? Array.from({ length: 3 }).map((_, idx) => {
+              return (
+                <CategoryCardLoader key={idx} uniqueKey={`category-card-${idx}`} />
+              );
+            })
+            : productStore.items?.map((product, i) => <SaleBunnerProduct key={i} product={product} />)}
         </Slider>
-        <Link onClick={handleSetSale} href="/Chapter" className={cls.slider_btn}>
+
+        {productStore.isLoading
+          ? (
+            <></>
+          ):
+        <Link onClick={handleSetSale} href="/Chapter?IsSale=true" className={cls.slider_btn}>
           Смотреть всю распродажу
         </Link>
+        }
+
       </div>
     </section>
   );
 });
-
-const CustomNextArrow = (props: any) => {
-  const { className, onClick } = props;
-  return <div className={`${className} ${cls.custom_next}`} onClick={onClick} />;
-};
-
-const CustomPrevArrow = (props: any) => {
-  const { className, onClick } = props;
-  return <div className={`${className} ${cls.custom_prev}`} onClick={onClick} />;
-};
-
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  responsive: [
-    {
-      breakpoint: 1500,
-      settings: {
-        slidesToShow: 2,
-      },
-    },
-    {
-      breakpoint: 550,
-      settings: {
-        slidesToShow: 1,
-      },
-    },
-  ],
-  slidesToScroll: 1,
-  // fade: true,
-  nextArrow: <CustomNextArrow />,
-  prevArrow: <CustomPrevArrow />,
-  // autoplay: true,
-  autoplaySpeed: 2500,
-  pauseOnHover: false,
-  // centerMode: true,
-  // centerPadding: '400px',
-};
 
 export default SaleBunner;

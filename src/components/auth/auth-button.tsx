@@ -58,7 +58,7 @@ const AuthButton: React.FC<AuthButtonProps> = observer(({ className }) => {
       )}
       style={{ display: 'flex', zIndex: 1, marginRight: '-7px' }}>
       <div
-        className="hidden lg:flex items-center flex-shrink-0 custom-dn"
+        className="hidden lg:flex items-center flex-shrink-0"
         style={{
           display: "flex",
         }}>

@@ -31,8 +31,12 @@
 }
 
 .seach_size {
-  width: 25px;
-  height: 25px;
+  width: 20px; //25px;
+  height: 20px;
+  @media(max-width: 1200px) {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .searchmodal_wrapp {
@@ -48,7 +52,7 @@
   padding: 21px 40px 30px;
   left: -40px !important;
   @media(max-width: 550px) {
-    left: -20px;
+    left: -20px !important;
     top: -13px;
   }
   @media (max-width: 460px) {
@@ -64,6 +68,11 @@
   border-right: none;
   border-left: none;
   border-radius: 0;
+
+  @media(max-width: 550px) {
+    height: 32px;
+    margin-top: 5px;
+  }
 }
 
 .modal_round_input_big {
@@ -71,8 +80,15 @@
   border-radius: 15px;
   // height: 44px;
   margin-bottom: 5px;
+
   @media(max-width: 440px) {
     height: 35px;
+  }
+}
+
+.wqefweq {
+  @media(max-width: 1200px) {
+    margin-bottom: 0px;
   }
 }
 
@@ -160,10 +176,14 @@ margin: 0;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
-  height: 75px;
+  max-height: 75px;
   margin-top: 10px;
   align-items: start;
   margin-right: auto;
+  @media(max-width: 550px) {
+    //flex-direction: column-reverse;
+    max-height: 62px;
+  }
 }
 
 .priduct_tile_ho, .priduct_tile_pr {
@@ -180,6 +200,9 @@ margin: 0;
   overflow: hidden;
   text-decoration: none;
   text-overflow: ellipsis;
+  @media(max-width: 550px) {
+    font-size: 11px;
+  }
 }
 
 .priduct_tile_pr {
@@ -192,6 +215,9 @@ margin: 0;
 .priduct_tile_pr_tw {
   position: relative;
   white-space: nowrap;
+  @media(max-width: 550px) {
+    font-size: 11px;
+  }
 }
 
 .priduct_tile_pr_znak {
@@ -212,9 +238,14 @@ margin: 0;
   padding: 10px 45px;
   border: 1px solid #232323;
   max-width: 279px;
-  max-height: 41px;
+  max-height: max-content;
   width: 100%;
   height: 100%;
+  @media(max-width: 550px) {
+    padding: 7px 0;
+    font-size: 14px;
+    max-width: 223px;
+  }
 }
 
 .parent_wind_container {
@@ -262,11 +293,18 @@ margin: 0;
 
 .mtfifth {
   margin-top: 90px;
+  @media(max-width: 550px) {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
 }
 
 .mb_trith {
   margin-top: 10px;
   margin-bottom: 30px;
+  @media(max-width: 550px) {
+    margin-bottom: 20px;
+  }
 }
 
 .down_image {
@@ -360,6 +398,9 @@ margin: 0;
    align-items: flex-start;
    display: grid;
    grid-template-columns: repeat(3,1fr);
-   padding-top: 25px;
+   padding-top: 45px;
    padding-bottom: 30px;
+  @media(max-width: 550px) {
+    padding-bottom: 10px;
+  }
 }

@@ -1,3 +1,21 @@
+
+.scrollCustom {
+  background-color: rgb(66, 66, 70);
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  z-index: 50;
+  bottom: 115px;
+  @media(max-width: 550px) {
+    background-color: rgb(66, 66, 70);
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    z-index: 50;
+    bottom: 78px;
+  }
+}
+
 .scrollCustom {
   &::before {
     font-family: serif;

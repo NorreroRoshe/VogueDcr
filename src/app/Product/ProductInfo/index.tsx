@@ -18,12 +18,12 @@ export const ProductInfo: React.FC<ProductInfoProps> = observer(({ detProduct })
   
   return (
     <div className={`${cls.product_info_container} ${cls.container}`}>
-      <Breadcrumb />
       <ProductInd detProduct={detProduct} />
       <div className={cls.product_info_feed}>
         <RelatedProductFeed
           sectionHeading='Товары из этой коллекции'
-          id={detProduct?.collection?.id}
+          collid={detProduct?.collection?.id}
+          brid={detProduct?.brand?.id}
           carouselBreakpoint={RelatedBreakpoints}
           className="mb-0.5 md:mb-2 lg:mb-3.5 xl:mb-4 2xl:mb-6"
         />

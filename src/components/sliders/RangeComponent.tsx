@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import ReactSlider from "react-slider";
-import { IRange } from "../GoodsCatalogue/FilterBlock/FilterBlock";
 import { useSearchParams } from "next/navigation";
+import {IRange} from "@/settings/range-settings";
 
 export type IMinMax = { min: number; max: number };
 
@@ -10,6 +10,8 @@ interface IRangeComponentProps extends IRange {
   changeValues?: (props: IMinMax) => void;
   RangeValue: IRange;
   trigger: any;
+  minValue: number;
+  maxValue: number;
 }
 
 const RangeComponent: React.FC<IRangeComponentProps> = ({

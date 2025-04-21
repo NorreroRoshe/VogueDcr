@@ -1,7 +1,6 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import cls from "../GoodsCatalogue.module.scss";
-import Colorcheckbox from "../../Checkbox/ColorCheckbox";
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import TypeLight from "../../Checkbox/TypeLight";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -10,75 +9,116 @@ import Switch from '@/components/ui/switch';
 import { ISiteCategory } from '@/settings/site-path-cathegory';
 import { useStore } from "@/hooks/useStore";
 import {observer} from "mobx-react";
-import {setSearchParams} from "@/utils/queryFunctions";
-import {arrayToString, isEntryArray} from "@/api/Product/ProductService";
+import ColorCheckboxMB from "@/components/Checkbox/ColorCheckboxMB";
+import TypeLightMB from "@/components/Checkbox/TypeLightMB";
+import {ICategoryType} from "@/types/Product/product.dtos";
+import ColorCheckbox from "@/components/Checkbox/ColorCheckbox";
+import {
+  DiametrRange,
+  HeightRange,
+  IndentRange,
+  IRange,
+  LampCountRange,
+  LengthRange,
+  PriceRange,
+  WidthRange
+} from "@/settings/range-settings";
+import {useUI} from "@/contexts/ui.context";
 
-export interface IRange {
-  minValue: number;
-  maxValue: number;
+
+interface FilComponentProps {
+  headeDropdownClass?: string;
+  array: number[];
+  onChangeCategory: (id: number) => void;
+  lightCategory: ICategoryType[] | null | undefined;
 }
 
-const DiametrRange: IRange = {
-  minValue: 0,
-  maxValue: 2000,
-};
+interface IFiltersTypeLight {
+  title: string;
+  filterKey: number[] | undefined;
+  stateKey: boolean;
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
+  iconKey: React.JSX.Element;
+  lightCategory?: ICategoryType[];
+  should: boolean;
+  onChange: (ind: number) => void;
+  classs?: string;
+  FilComponent: React.ComponentType<FilComponentProps>;
+}
 
-const LampCountRange: IRange = {
-  minValue: 0,
-  maxValue: 20,
-};
+interface IFiltersRanget {
+  should: boolean;
+  label: string;
+  minKey: number | undefined;
+  maxKey: number | undefined;
+  range: IRange;
+  handler: (props: IMinMax) => void;
+}
 
-const HeightRange: IRange = {
-  minValue: 0,
-  maxValue: 2000,
-};
-
-const WidthRange: IRange = {
-  minValue: 0,
-  maxValue: 1500,
-};
-
-const LengthRange: IRange = {
-  minValue: 0,
-  maxValue: 2000,
-};
-
-const IndentRange: IRange = {
-  minValue: 0,
-  maxValue: 1500,
-};
-
-const PriceRange: IRange = {
-  minValue: 0,
-  maxValue: 2000000,
-};
-export type FilterProps = {
-  isActive: boolean;
-  handleClick: () => void;
+export type IFilterProps = {
   handleGetProducts: () => void;
-  sitePathCategory?: ISiteCategory;
+  sitePathCategory?: ICategoryType[];
+  ProductTypesArray: number[];
+  CategoriesArray: number[];
+  foundProductTypeId: number | undefined;
+  foundCategoryId: number | undefined;
+  trigger: boolean;
+  handleSetClear: () => void;
 };
 
-export const FilterBlock: React.FC<FilterProps> = observer(
-  ({ handleClick, isActive, handleGetProducts, sitePathCategory }) => {
+export const FilterBlock: React.FC<IFilterProps> = observer(
+  ({ handleSetClear, trigger, foundCategoryId, foundProductTypeId, handleGetProducts, sitePathCategory, ProductTypesArray, CategoriesArray }) => {
 
     const store = useStore();
     const productStore = store.product
 
+    const {
+      openShop,
+      closeShop
+    } = useUI();
+
     const pathname = usePathname();
     const router = useRouter();
+    const pathSegments = pathname.split("/").filter(Boolean); // Разбиваем путь на части
 
-    const [isOpenLight, setOpenLight] = useState<boolean>(
-      pathname === "/Chapter/Carpets" || pathname === "/Chapter/LightAccessories" ? true : false
-    );
+    const [isOpenLight, setOpenLight] = useState<boolean>(false);
     const [isOpenDop, setOpenDop] = useState<boolean>(true);
+    const [isOpenDop1, setOpenDop1] = useState<boolean>(true);
+    const [isOpenDop2, setOpenDop2] = useState<boolean>(true);
+    const [isOpenDop3, setOpenDop3] = useState<boolean>(true);
+    const [isOpenDop4, setOpenDop4] = useState<boolean>(true);
+    const [isOpenDop5, setOpenDop5] = useState<boolean>(true);
+    const [isOpenDop6, setOpenDop6] = useState<boolean>(true);
+    const [isOpenDop7, setOpenDop7] = useState<boolean>(true);
     const [isOpenColor, setOpenColor] = useState<boolean>(true);
-    // const [getProducts, {}] = useGetProductsMutation();
-    const [trigger, setTrigger] = useState(false);
+
+    // const [trigger, setTrigger] = useState(false);
     const searchParams = useSearchParams();
-    const saleRout = useRouter();
     const currentParams = useSearchParams()
    const params = new URLSearchParams(currentParams);
+
+
+    const toggleIcon = (isOpen: boolean) => {
+      return isOpen ? (
+        <IoIosArrowUp className="text-base text-skin-base text-opacity-40" />
+      ) : (
+        <IoIosArrowDown className="text-base text-skin-base text-opacity-40" />
+      );
+    };
+
+
+    const expandIconLight = toggleIcon(isOpenLight);
+    const expandIconDop = toggleIcon(isOpenDop);
+    const expandIconDop1 = toggleIcon(isOpenDop1);
+    const expandIconDop2 = toggleIcon(isOpenDop2);
+    const expandIconDop3 = toggleIcon(isOpenDop3);
+    const expandIconDop4 = toggleIcon(isOpenDop4);
+    const expandIconDop5 = toggleIcon(isOpenDop5);
+    const expandIconDop6 = toggleIcon(isOpenDop6);
+    const expandIconDop7 = toggleIcon(isOpenDop7);
+    const expandIconColor = toggleIcon(isOpenColor);
+
+
     const handleSetPrice = (props: IMinMax) => {
       productStore.setPrice(props.min, props.max);
     };
@@ -114,302 +154,43 @@ export const FilterBlock: React.FC<FilterProps> = observer(
 
       const handleSetCategories = (ind: number) => {
         productStore.setCategories(ind);
-      // const searchParams =  productStore.filters && Object.entries(productStore.filters)
-      // .map((item) =>
-      //   (item[0] === "ProductTypes" ||
-      //     item[0] === "Categories" ||
-      //     item[0] === "Styles" ||
-      //     item[0] === "ChandelierTypes" ||
-      //     item[0] === "Colors" ||
-      //     item[0] === "AdditionalParams" ||
-      //     item[0] === "Materials" ||
-      //     item[0] === "PictureMaterial") &&
-      //   isEntryArray(item)
-      //     ? arrayToString(item)
-      //     : `${item[0]}=${item[1]}`
-      // )
-      // .join("&")
-
-      // router.push(`${pathname}?${searchParams}`)
     };
 
     const handleSetTypeColors = (ind: number) => {
-      productStore.setColors(ind);
+      productStore.setfilter2(ind);
     };
 
     const handleSetChandelierTypes = (ind: number) => {
-      productStore.setChandelierTypes(ind);
+      productStore.setfilter3(ind);
     };
 
     const handleSetMaterials = (ind: number) => {
-      productStore.setMaterials(ind);
+      productStore.setfilter5(ind);
     };
 
     const handleSetPictureMaterial = (ind: number) => {
-      productStore.setPictureMaterial(ind);
+      productStore.setfilter7(ind);
     };
 
     const handleSetStyles = (ind: number) => {
-      productStore.setStyles(ind);
+      productStore.setfilter6(ind);
     };
 
-    // Выводим значение "Light" в консоль
-    const currentPath = pathname;
-    console.log(currentPath);
+    const handleSetCarpStyles = (ind: number) => {
+      productStore.setfilter8(ind);
+    };
 
-    const handleSetClear = () => {
-      productStore.clearFilters();
-      setTrigger((prev) => !prev);
-      // productStore.getProducts({});
-      productStore.getProducts(20);
+    const handleSetMaterialsHome = (ind: number) => {
+      productStore.setfilter10(ind);
+    };
 
 
-      let query = '';                               //Данная функция должна делать то чтобы делать проверку , если имеется такой путь то обязательно добавлять такой еще пазнейм
-      switch (pathname) {
+    const handleSetCarpetMat = (ind: number) => {
+      productStore.setfilter9(ind);
+    };
 
-
-        // Свет
-        case "/Chapter/Light":
-          query = `${pathname}?ProductTypes=1`;
-          break;
-        case "/Chapter/Light/Lyustri":
-          query = `${pathname}?ProductTypes=1&Categories=1`;
-          break;
-        case "/Chapter/Light/Bra":
-          query = `${pathname}?ProductTypes=1&Categories=2`;
-          break;
-        case "/Chapter/Light/NastolnieLampi":
-          query = `${pathname}?ProductTypes=1&Categories=3`;
-          break;
-        case "/Chapter/Light/Torsheri":
-          query = `${pathname}?ProductTypes=1&Categories=4`;
-          break;
-        case "/Chapter/Light/PodvesnoiSvet":
-          query = `${pathname}?ProductTypes=1&Categories=5`;
-          break;
-        case "/Chapter/Light/PotolochniySvet":
-          query = `${pathname}?ProductTypes=1&Categories=6`
-          break;
-        case "/Chapter/Light/UlichniySvet":
-          query = `${pathname}?ProductTypes=1&Categories=7`
-          break;
-        case "/Chapter/Light/PodsvetkaDlyaKartin":
-          query = `${pathname}?ProductTypes=1&Categories=8`
-          break;
-        case "/Chapter/Light/TrekiSpoti":
-          query = `${pathname}?ProductTypes=1&Categories=9`
-          break;
-        case "/Chapter/Light/LightAccessories":
-          query = `${pathname}?ProductTypes=1&Categories=10`
-
-          break;
-
-
-
-        // Мебель
-        case "/Chapter/Furniture":
-          query = `${pathname}?ProductTypes=2`
-          break;
-        case "/Chapter/Furniture/Divani":
-          query = `${pathname}?ProductTypes=2&Categories=11`
-
-          break;
-        case "/Chapter/Furniture/Kresla":
-          query = `${pathname}?ProductTypes=2&Categories=12`
-
-          break;
-        case "/Chapter/Furniture/Stoli":
-          query = `${pathname}?ProductTypes=2&Categories=13`
-
-          break;
-        case "/Chapter/Furniture/Stulya":
-          query = `${pathname}?ProductTypes=2&Categories=14`
-
-          break;
-        case "/Chapter/Furniture/Komodi":
-          query = `${pathname}?ProductTypes=2&Categories=15`
-
-          break;
-        case "/Chapter/Furniture/Konsoli":
-          query = `${pathname}?ProductTypes=2&Categories=16`
-
-          break;
-        case "/Chapter/Furniture/Krovati":
-          query = `${pathname}?ProductTypes=2&Categories=17`
-
-          break;
-        case "/Chapter/Furniture/Matrasi":
-          query = `${pathname}?ProductTypes=2&Categories=18`
-
-          break;
-        case "/Chapter/Furniture/PufiBanketki":
-          query = `${pathname}?ProductTypes=2&Categories=19`
-
-          break;
-
-        // Зеркала
-        case "/Chapter/Mirrors":
-          query = `${pathname}?ProductTypes=3`
-          break;
-        case "/Chapter/Mirrors/Artobj":
-          query = `${pathname}?ProductTypes=3&Categories=20`
-
-          break;
-        case "/Chapter/Mirrors/Sprintami":
-          query = `${pathname}?ProductTypes=3&Categories=21`
-
-          break;
-        case "/Chapter/Mirrors/Solnishko":
-          query = `${pathname}?ProductTypes=3&Categories=22`
-
-          break;
-        case "/Chapter/Mirrors/Sderevom":
-          query = `${pathname}?ProductTypes=3&Categories=23`
-
-          break;
-        case "/Chapter/Mirrors/DesignMetall":
-          query = `${pathname}?ProductTypes=3&Categories=24`
-
-          break;
-        case "/Chapter/Mirrors/Klassicheskie":
-          query = `${pathname}?ProductTypes=3&Categories=25`
-
-          break;
-        case "/Chapter/Mirrors/Nastolnie":
-          query = `${pathname}?ProductTypes=3&Categories=26`
-
-          break;
-        case "/Chapter/Mirrors/Napolnie":
-          query = `${pathname}?ProductTypes=3&Categories=27`
-
-          break;
-        case "/Chapter/Mirrors/Pryamougolnie":
-          query = `${pathname}?ProductTypes=3&Categories=28`
-
-          break;
-        case "/Chapter/Mirrors/Kruglie":
-          query = `${pathname}?ProductTypes=3&Categories=29`
-
-          break;
-
-        // Ковры
-        case "/Chapter/Carpets":
-          query = `${pathname}?ProductTypes=4`
-          break;
-        case "/Chapter/Carpets/Pryamougolnie":
-          query = `${pathname}?ProductTypes=4&Categories=30`
-          break;
-        case "/Chapter/Carpets/Kvadratnie":
-          query = `${pathname}?ProductTypes=4&Categories=31`
-          break;
-        case "/Chapter/Carpets/Kruglie":
-          query = `${pathname}?ProductTypes=4&Categories=32`
-          break;
-        case "/Chapter/Carpets/Ovalnie":
-          query = `${pathname}?ProductTypes=4&Categories=33`
-          break;
-        case "/Chapter/Carpets/Dorojki":
-          query = `${pathname}?ProductTypes=4&Categories=34`
-          break;
-        case "/Chapter/Carpets/Nestandartnie":
-          query = `${pathname}?ProductTypes=4&Categories=35`
-          break;
-
-
-        case "/Chapter/GoodsForHome":
-          query = `${pathname}?ProductTypes=5`;
-          break;
-        case "/Chapter/GoodsForHome/Tarelki":
-          query = `${pathname}?ProductTypes=5&Categories=36`
-          break;
-        case "/Chapter/GoodsForHome/Stremyanki":
-          query = `${pathname}?ProductTypes=5&Categories=37`
-          break;
-        case "/Chapter/GoodsForHome/Sushilki":
-          query = `${pathname}?ProductTypes=5&Categories=38`
-          break;
-        case "/Chapter/GoodsForHome/Gladilki":
-          query = `${pathname}?ProductTypes=5&Categories=39`
-          break;
-        case "/Chapter/GoodsForHome/VeshalkiNapolnie":
-          query = `${pathname}?ProductTypes=5&Categories=40`
-          break;
-        case "/Chapter/GoodsForHome/VeshalkiNastennie":
-          query = `${pathname}?ProductTypes=5&Categories=41`
-          break;
-        case "/Chapter/GoodsForHome/BathAccess":
-          query = `${pathname}?ProductTypes=5&Categories=42`
-          break;
-        case "/Chapter/GoodsForHome/LojkiObuvi":
-          query = `${pathname}?ProductTypes=5&Categories=43`
-          break;
-        case "/Chapter/GoodsForHome/VaziPodsvechniki":
-          query = `${pathname}?ProductTypes=5&Categories=44`
-          break;
-        case "/Chapter/GoodsForHome/Podushki":
-          query = `${pathname}?ProductTypes=5&Categories=45`
-          break;
-        case "/Chapter/GoodsForHome/Pledi":
-          query = `${pathname}?ProductTypes=5&Categories=46`
-          break;
-        case "/Chapter/GoodsForHome/Pokrivala":
-          query = `${pathname}?ProductTypes=5&Categories=47`
-          break;
-        
-        
-        case "/Chapter/Accessories":
-          query = `${pathname}?ProductTypes=6`;
-          break;
-        case "/Chapter/Accessories/Statuetki":
-          query = `${pathname}?ProductTypes=6&Categories=48`
-          break;
-        case "/Chapter/Accessories/Watches":
-          query = `${pathname}?ProductTypes=6&Categories=49`
-          break;
-        case "/Chapter/Accessories/NastolnieIgri":
-          query = `${pathname}?ProductTypes=6&Categories=50`
-          break;
-        case "/Chapter/Accessories/Zonti":
-          query = `${pathname}?ProductTypes=6&Categories=51`
-          break;
-        case "/Chapter/Accessories/PodstavkaDlyaZontov":
-          query = `${pathname}?ProductTypes=6&Categories=52`
-          break;
-        case "/Chapter/Accessories/LojkiDlyaObuvi":
-          query = `${pathname}?ProductTypes=6&Categories=53`
-          break;
-        case "/Chapter/Accessories/DerjateliKnig":
-          query = `${pathname}?ProductTypes=6&Categories=54`
-          break;
-        
-        
-        case "/Chapter/Paintings":
-          query = `${pathname}?ProductTypes=7`;
-          break;
-        case "/Chapter/Paintings/Artobj":
-          query = `${pathname}?ProductTypes=7&Categories=55`
-          break;
-        case "/Chapter/Paintings/Avtorskie":
-          query = `${pathname}?ProductTypes=7&Categories=56`
-          break;
-        case "/Chapter/Paintings/Posteri":
-          query = `${pathname}?ProductTypes=7&Categories=57`
-          break;
-        case "/Chapter/Paintings/WithLego":
-          query = `${pathname}?ProductTypes=7&Categories=58`
-          break;
-        case "/Chapter/Paintings/SportStyle":
-          query = `${pathname}?ProductTypes=7&Categories=59`
-          break;
-        case "/Chapter/Paintings/Reproduction":
-          query = `${pathname}?ProductTypes=7&Categories=60`
-          break;
-
-
-        default:
-          query = `${pathname}?ProductTypes=1`
-      }
-      router.push(query);
+    const handleSetMatAccessories = (ind: number) => {
+      productStore.setfilter11(ind);
     };
 
     const handleSetSale = () => {
@@ -417,23 +198,6 @@ export const FilterBlock: React.FC<FilterProps> = observer(
       productStore.setIsSale(!productStore.filters.IsSale);
     };
 
-    // useEffect(() => {
-    //   if (pathname === '/Outlet') {
-    //     productStore.getProducts(20);
-    //     const isSaletimeout = setTimeout(() => {
-    //       productStore.setIsSale(true);
-    //       productStore.getProducts(20, { IsSale: true, SortType: 0 });
-    //     }, 100);
-
-    //     return () => {
-    //       clearTimeout(isSaletimeout);
-    //     };
-    //   }
-    // }, [pathname]);
-
-    useEffect(() => {
-      productStore.clearFilters();
-    }, [searchParams.get('Category')]);
 
     const [isSaleChecked, setIsSaleChecked] = useState(productStore.filters.IsSale || false);
 
@@ -447,444 +211,336 @@ export const FilterBlock: React.FC<FilterProps> = observer(
       };
     }, [productStore.filters.IsSale]);
 
-    let expandIconLight;
-    expandIconLight = isOpenLight ? (
-      <IoIosArrowUp className="text-base text-skin-base text-opacity-40" />
-    ) : (
-      <IoIosArrowDown className="text-base text-skin-base text-opacity-40" />
-    );
 
-    let expandIconDop;
-    expandIconDop = isOpenDop ? (
-      <IoIosArrowUp className="text-base text-skin-base text-opacity-40" />
-    ) : (
-      <IoIosArrowDown className="text-base text-skin-base text-opacity-40" />
-    );
+    const filterprodTyp = productStore.prodTypFil;
+    const filterСolors = productStore.colorsFil;
+    const filtercategor = productStore.categoriesFil;
+    const filstyles = productStore.stylesFil;
+    const filmaterials_host = productStore.materials_hostFil;
+    const filstyles_carpet = productStore.styles_carpetFil;
+    const filmaterials = productStore.materialsFil;
+    const filtypesChand = productStore.typesChandFil;
+    const filmaterials_accessories = productStore.materials_accessoriesFil;
+    const filterCarpetMat = productStore.carpetMatFil;
+    const filmaterial_obr = productStore.material_obrFil;
+    const filmaterials_border = productStore.materials_borderFil;
+    const filmaterials_home = productStore.materials_homeFil;
 
-    let expandIconColor;
-    expandIconColor = isOpenColor ? (
-      <IoIosArrowUp className="text-base text-skin-base text-opacity-40" />
-    ) : (
-      <IoIosArrowDown className="text-base text-skin-base text-opacity-40" />
-    );
+    const shouldShowStyles = (filterData: { filter1?: Record<number, boolean> }[]): boolean => {
+      if (!Array.isArray(filterData) || filterData.length === 0 || foundCategoryId === undefined) return false;
 
+      const firstStyle = filterData[0];
 
-    const containsAdditionalPath = pathname.split("/").length > 3;
-    
-    const NotshouldDisplayFilterBlockProductTypes =
-      pathname.includes("/Chapter");
-
-    const NotshouldDisplayFilterBlock =
-      pathname.includes("/Chapter/Light") ||
-      pathname.includes("/Chapter/Furniture") ||
-      pathname.includes("/Chapter/Mirrors") ||
-      pathname.includes("/Chapter/GoodsForHome") ||
-      pathname.includes("/Chapter/Accessories") ||
-      pathname.includes("/Chapter/Carpets") ||
-      pathname.includes("/Chapter/Paintings");
-
-    const NotshouldDisplayFilterLight = pathname === "/Chapter/Light";
+      const filter1TrueCategory: number[] = firstStyle?.filter1
+        ? Object.keys(firstStyle.filter1) // Получаем ключи из filter1 (они строковые)
+          .map(Number) // Преобразуем ключи в числа
+          .filter((key) => firstStyle.filter1?.[key] === true) // Оставляем только те, где true
+        : [];
 
 
-    const NotshouldDisplayFilterMirrorsVisShir =
-      pathname.includes("/Chapter/Mirrors/Kruglie") ||
-      pathname.includes("/Chapter/Mirrors/Solnishko");
+      return filter1TrueCategory.includes(foundCategoryId);
+    };
 
 
-    const NotshouldDisplayFilterLightShir =
-      pathname.includes("/Chapter/Light") ||
-      pathname.includes("/Chapter/Light/Bra") ||
-      pathname.includes("/Chapter/Light/NastolnieLampi") ||
-      pathname.includes("/Chapter/Light/Torsheri") ||
-      pathname.includes("/Chapter/Light/PodvesnoiSvet") ||
-      pathname.includes("/Chapter/Light/UlichniySvet") ||
-      pathname.includes("/Chapter/Light/PotolochniySvet") ||
-      pathname.includes("/Chapter/Light/AccessForLight");
-
-    const NotshouldDisplayFilterMirrorsDiam =
-      pathname === "/Chapter/Mirrors" ||
-      pathname.includes("/Chapter/Mirrors/Artobj") ||
-      pathname.includes("/Chapter/Mirrors/Sprintami") ||
-      pathname.includes("/Chapter/Mirrors/Klassicheskie") ||
-      pathname.includes("/Chapter/Mirrors/Sderevom") ||
-      pathname.includes("/Chapter/Mirrors/DesignMetall") ||
-      pathname.includes("/Chapter/Mirrors/Nastolnie") ||
-      pathname.includes("/Chapter/Mirrors/Napolnie") ||
-      pathname.includes("/Chapter/Mirrors/Pryamougolnie");
-
-    const NotshouldDisplayFilterCarpetDiam =
-      pathname === "/Chapter/Carpets" ||
-      pathname.includes("/Chapter/Carpets/Pryamougolnie") ||
-      pathname.includes("/Chapter/Carpets/Kvadratnie") ||
-      pathname.includes("/Chapter/Carpets/Ovalnie") ||
-      pathname.includes("/Chapter/Carpets/Dorojki") ||
-      pathname.includes("/Chapter/Carpets/Nestandartnie");
-
-    const NotshouldDisplayFilterCarpetDlinShir =
-      pathname.includes("/Chapter/Carpets/Kruglie");
-
-    const NotshouldDisplayFilterLightOtstup =
-      pathname.includes("/Chapter/Light/Bra") ||
-      pathname.includes("/Chapter/Light/PodsvetkaDlyaKartin") ||
-      pathname.includes("/Chapter/Light/TrekiSpoti");
-
-    const NotshouldDisplayFilterMirrorsMaterial =
-      pathname.includes("/Chapter/Mirrors/Sderevom") ||
-      pathname.includes("/Chapter/Mirrors/DesignMetall");
-
-    const NotshouldDisplayFilterLightDlinna =
-      pathname.includes("/Chapter/Light/Lyustri") ||
-      pathname.includes("/Chapter/Light/Bra") ||
-      pathname.includes("/Chapter/Light/NastolnieLampi") ||
-      pathname.includes("/Chapter/Light/Torsheri") ||
-      pathname.includes("/Chapter/Light/PodvesnoiSvet") ||
-      pathname.includes("/Chapter/Light/PotolochniySvet") ||
-      pathname.includes("/Chapter/Light/UlichniySvet");
 
 
-    const NotshouldDisplayFilterLightDiam =
-      pathname.includes("/Chapter/Light/PodsvetkaDlyaKartin") ||
-      pathname.includes("/Chapter/Light/TrekiSpoti");
+    function handleCloseFilters() {
+      return closeShop();
+    }
 
-    const NotshouldDisplayFilterLightAccess =
-      pathname.includes("/Chapter/Light/UlichniySvet") ||
-      pathname.includes("/Chapter/Light/PodsvetkaDlyaKartin") ||
-      pathname.includes("/Chapter/Light/TrekiSpoti");
-    pathname.includes("/Chapter/Light/AcsesuariDlyaSveta");
+    const shouldShowStylesProdTyp = (filterData: { filter4?: Record<number, boolean> }[]): boolean => {
+      if (!Array.isArray(filterData) || filterData.length === 0 || foundProductTypeId === undefined) return false;
+
+      const firstStyle = filterData[0];
+
+      const filter1TrueProdTyp: number[] = firstStyle?.filter4
+        ? Object.keys(firstStyle.filter4) // Получаем ключи из filter4 (они строковые)
+          .map(Number) // Преобразуем ключи в числа
+          .filter((key) => firstStyle.filter4?.[key] === true) // Оставляем только те, где true
+        : [];
+
+      // Условие для отображения блока
+      return filter1TrueProdTyp.includes(foundProductTypeId);
+    };
+
+
+    const shouldDisplay = (filterData: any) => shouldShowStyles(filterData) || shouldShowStylesProdTyp(filterData);
+
+    const shouldRenderColors =
+      foundProductTypeId === 1 ||
+      (foundCategoryId !== undefined && foundCategoryId >= 1 && foundCategoryId <= 9);
+
+    const shouldApplyDiameter =
+      (foundCategoryId !== undefined && [1, 3, 4, 5, 6, 7, 10, 13, 21, 22, 23, 24, 25, 26, 27, 29, 32, 36, 49, 50].includes(foundCategoryId)) ||
+      (foundProductTypeId !== undefined && [1, 3].includes(foundProductTypeId));
+
+    const shouldApplyDlinna =
+      (foundCategoryId !== undefined && [8, 11, 13, 15, 16, 17, 18, 19, 20, 21, 23, 25, 26, 27, 28, 30, 31, 34, 35, 37, 38, 39, 40, 41, 43, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59].includes(foundCategoryId)) ||
+      (foundProductTypeId !== undefined && [2, 3, 4, 5, 7].includes(foundProductTypeId));
+
+    const shouldApplyVisota =
+      (foundCategoryId !== undefined && [1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 37, 38, 39, 40].includes(foundCategoryId)) ||
+      (foundProductTypeId !== undefined && [1, 2, 5, 6].includes(foundProductTypeId));
+
+    const shouldApplyOtstup =
+      (foundCategoryId !== undefined && [2, 7, 8, 9, 41].includes(foundCategoryId));
+
+    const shouldApplyLampCount =
+      (foundCategoryId !== undefined && [1, 2, 3, 4, 5, 6, 7, 8, 9].includes(foundCategoryId)) ||
+      (foundProductTypeId !== undefined && [1].includes(foundProductTypeId));
+
+    const shoudChapter = pathSegments.length === 1;
+    const shoudCategor = pathSegments.length === 2;
+
+
+    const filtersTypeLight: IFiltersTypeLight[] = [
+      {
+        title: 'Все категории',
+        filterKey: productStore.filters.ProductTypes,
+        stateKey: isOpenLight,
+        setState: setOpenLight,
+        iconKey: expandIconLight,
+        lightCategory: filterprodTyp,
+        should: shoudChapter,
+        onChange: handleSetTypeProduct,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Категория товаров',
+        filterKey: productStore.filters.Categories,
+        stateKey: isOpenLight,
+        setState: setOpenLight,
+        iconKey: expandIconLight,
+        lightCategory: sitePathCategory,
+        should: shoudCategor,
+        onChange: handleSetCategories,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Цвет',
+        filterKey: productStore.filters.filter2,
+        stateKey: isOpenColor,
+        setState: setOpenColor,
+        iconKey: expandIconColor,
+        lightCategory: filterСolors,
+        should: !shouldRenderColors,
+          // shouldDisplay(filterСolors) &&
+        onChange: handleSetTypeColors,
+        FilComponent: ColorCheckboxMB
+      },
+      {
+        title: 'Цвет',
+        filterKey: productStore.filters.filter2,
+        stateKey: isOpenColor,
+        setState: setOpenColor,
+        iconKey: expandIconColor,
+        should: shouldRenderColors,
+        onChange: handleSetTypeColors,
+        FilComponent: ColorCheckbox
+      },
+      {
+        title: 'Материал',
+        filterKey: productStore.filters.filter5,
+        stateKey: isOpenDop2,
+        setState: setOpenDop2,
+        iconKey: expandIconDop2,
+        lightCategory: filmaterials,
+        should: shouldDisplay(filmaterials) || shoudChapter,
+        onChange: handleSetMaterials,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Материал аксессуаров',
+        filterKey: productStore.filters.filter11,
+        stateKey: isOpenDop7,
+        setState: setOpenDop7,
+        iconKey: expandIconDop7,
+        lightCategory: filmaterials_accessories,
+        should: shouldDisplay(filmaterials_accessories),
+        onChange: handleSetMatAccessories,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Дополнительно',
+        filterKey: productStore.filters.filter3,
+        stateKey: isOpenDop4,
+        setState: setOpenDop4,
+        iconKey: expandIconDop4,
+        lightCategory: filtypesChand,
+        should: shouldDisplay(filtypesChand),
+        onChange: handleSetChandelierTypes,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Материал холста',
+        filterKey: productStore.filters.filter13,
+        stateKey: isOpenDop3,
+        setState: setOpenDop3,
+        iconKey: expandIconDop3,
+        lightCategory: filmaterials_host,
+        should: shouldDisplay(filmaterials_host),
+        onChange: handleSetPictureMaterial,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Материал ковров',
+        filterKey: productStore.filters.filter9,
+        stateKey: isOpenDop5,
+        setState: setOpenDop5,
+        iconKey: expandIconDop5,
+        lightCategory: filterCarpetMat,
+        should: shouldDisplay(filterCarpetMat),
+        onChange: handleSetCarpetMat,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Материалы товаров для дома',
+        filterKey: productStore.filters.filter10,
+        stateKey: isOpenDop6,
+        setState: setOpenDop6,
+        iconKey: expandIconDop6,
+        lightCategory: filmaterials_home,
+        should: shouldDisplay(filmaterials_home),
+        onChange: handleSetMaterialsHome,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Стиль',
+        filterKey: productStore.filters.filter6,
+        stateKey: isOpenDop1,
+        setState: setOpenDop1,
+        iconKey: expandIconDop1,
+        lightCategory: filstyles,
+        should: shouldDisplay(filstyles) || shoudChapter,
+        onChange: handleSetStyles,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      },
+      {
+        title: 'Стиль ковров',
+        filterKey: productStore.filters.filter8,
+        stateKey: isOpenDop,
+        setState: setOpenDop,
+        iconKey: expandIconDop,
+        lightCategory: filstyles_carpet,
+        should: shouldDisplay(filstyles_carpet),
+        onChange: handleSetCarpStyles,
+        FilComponent: TypeLightMB,
+        classs: 'header__dropdown_wrap_lightCategory'
+      }
+    ];
+
+    const filtersRange: IFiltersRanget[] = [
+      { should: true, label: "Цена", minKey: productStore.filters.MinPrice, maxKey: productStore.filters.MaxPrice, range: PriceRange, handler: handleSetPrice },
+      { should: shouldApplyDiameter, label: "Диаметр (см)", minKey: productStore.filters.MinDiameter, maxKey: productStore.filters.MaxDiameter, range: DiametrRange, handler: handleSetDiameter },
+      { should: shouldApplyDlinna, label: "Длинна (см)", minKey: productStore.filters.MinLength, maxKey: productStore.filters.MaxLength, range: LengthRange, handler: handleSetLength },
+      { should: shouldApplyDlinna, label: "Ширина (см)", minKey: productStore.filters.MinWidth, maxKey: productStore.filters.MaxWidth, range: WidthRange, handler: handleSetWidth },
+      { should: shouldApplyVisota, label: "Высота (см)", minKey: productStore.filters.MinHeight, maxKey: productStore.filters.MaxHeight, range: HeightRange, handler: handleSetHeight },
+      { should: shouldApplyOtstup, label: "Отступ от стены (см)", minKey: productStore.filters.MinIndent, maxKey: productStore.filters.MaxIndent, range: IndentRange, handler: handleSetIndent },
+      { should: shouldApplyLampCount, label: "Количество лампочек (шт)", minKey: productStore.filters.MinLampCount, maxKey: productStore.filters.MaxLampCount, range: LampCountRange, handler: handleSetLampsCount },
+    ];
 
     return (
       <div className={cls.catalogue__filter}>
-        <h3 className={cls.filter__title}>
-          {sitePathCategory?.filters?.filterName}
-        </h3>
-        <div className={cls.catalogue__border}>
-          <div
-            className={`${cls.filter__fil} ${isActive ? cls.filter__fil_mobile : ""}`}
+
+        <div className={cls.filter_hh}>
+
+          <h3 className={cls.filter__title}>
+            Фильтры
+          </h3>
+
+          <button
+            onClick={handleCloseFilters}
+            className={`${cls.close_filter} ${cls.close_filter_block}`}
           >
-            <button
-              onClick={handleClick}
-              className={`${cls.close_filter} ${isActive ? cls.close_filter_block : ""}`}
-            >
               <span
                 className={`${cls.close_filter__l} ${cls.close_filter__perv}`}
               ></span>
-              <span
-                className={`${cls.close_filter__l} ${cls.close_filter__vtor}`}
-              ></span>
-            </button>
+            <span
+              className={`${cls.close_filter__l} ${cls.close_filter__vtor}`}
+            ></span>
+          </button>
+        </div>
+
+        <div className={cls.catalogue__border}>
+          <div
+            className={`${cls.filter__fil}`}
+          >
 
 
-
-
-            {!containsAdditionalPath && !NotshouldDisplayFilterBlock && (
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenLight ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenLight(!isOpenLight)} style={{ marginBottom: isOpenLight ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.categoryFiltersArray?.categoryFilterName}
-                    </h4>
-                    {expandIconLight && <span onClick={() => setOpenLight(!isOpenLight)} className={cls.expandIconitto}>{expandIconLight}</span>}
+            {filtersTypeLight.map(({
+                                     FilComponent,
+                                     classs,
+                                     should,
+                                     onChange,
+                                     title,
+                                     filterKey,
+                                     stateKey,
+                                     setState,
+                                     iconKey,
+                                     lightCategory
+                                   }) => (
+              should && (
+                <div className={cls.product__fil} key={title}>
+                  <div style={{paddingBottom: stateKey ? '' : '0'}} className={cls.product__fil_style}>
+                    <div className={cls.product__fil_styler_ue}>
+                      <h4 onClick={() => setState(!stateKey)} style={{marginBottom: stateKey ? '' : '10px'}}
+                          className={cls.product__fil_style_head}>
+                        {title}
+                      </h4>
+                      {iconKey &&
+                          <span onClick={() => setState(!stateKey)} className={cls.expandIconitto}>{iconKey}</span>}
+                    </div>
+                    {!stateKey &&
+                        <FilComponent
+                            headeDropdownClass={classs ?? ""}
+                            array={filterKey || []}
+                            onChangeCategory={onChange}
+                            lightCategory={lightCategory}
+                        />
+                    }
                   </div>
-                  {isOpenLight &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_typelught"}
-                      array={productStore.filters.ProductTypes || []}
-                      onChangeCategory={handleSetTypeProduct}
-                      lightCategory={sitePathCategory?.filters?.categoryFiltersArray?.categoryFilter}
-                    />
-                  }
                 </div>
-              </div>
-            )}
+              )
+            ))}
 
 
-
-
-            {!containsAdditionalPath && NotshouldDisplayFilterBlock && (
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenLight ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenLight(!isOpenLight)} style={{ marginBottom: isOpenLight ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.categoryFiltersArray?.categoryFilterName}
-                    </h4>
-                    {expandIconLight && <span onClick={() => setOpenLight(!isOpenLight)} className={cls.expandIconitto}>{expandIconLight}</span>}
+            {filtersRange.map(({should, label, minKey, maxKey, range, handler}) =>
+              (should && should) && (
+                <div className={cls.filter__fil_price} key={label}>
+                  <h4 className={cls.filter__fil_price_head}>{label}</h4>
+                  <div className={cls.polsunok}>
+                    <RangeComponent
+                      changeValues={handler}
+                      trigger={trigger}
+                      minValue={minKey || range.minValue}
+                      maxValue={maxKey || range.maxValue}
+                      RangeValue={range}
+                    />
                   </div>
-                  {isOpenLight &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_typelught"}
-                      array={productStore.filters.Categories || []}
-                      onChangeCategory={handleSetCategories}
-                      lightCategory={sitePathCategory?.filters?.categoryFiltersArray?.categoryFilter}
-                    />
-                  }
                 </div>
-              </div>
-            )}
+              ))}
 
-            {sitePathCategory?.filters?.carpetStyleFiltersArray &&
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenDop ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenDop(!isOpenDop)} style={{ marginBottom: isOpenDop ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.carpetStyleFiltersArray?.carpetStyleFilterName}
-                    </h4>
-                    {expandIconDop && <span onClick={() => setOpenDop(!isOpenDop)} className={cls.expandIconitto}>{expandIconDop}</span>}
-                  </div>
-                  {isOpenDop &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_lightCategory"}
-                      array={productStore.filters.Styles || []}
-                      onChangeCategory={handleSetStyles}
-                      lightCategory={sitePathCategory?.filters?.carpetStyleFiltersArray?.carpetStyleFilter}
-                    />
-                  }
-                </div>
-              </div>
-            }
 
-            {sitePathCategory?.filters?.colorFiltersArray &&
-              <div className={cls.filter__fil_color}>
-                <div className={cls.product__fil_styler_ue}>
-                  <h4 onClick={() => setOpenColor(!isOpenColor)} className={cls.filter__fil_color_head}>
-                    {sitePathCategory?.filters?.colorFiltersArray?.colorFilterName}
-                  </h4>
-                  {expandIconColor && <span onClick={() => setOpenColor(!isOpenColor)} className={cls.expandIconittos}>{expandIconColor}</span>}
-                </div>
-                {isOpenColor &&
-                  <Colorcheckbox
-                    onChangeCategory={handleSetTypeColors}
-                    array={productStore.filters.Colors || []}
-                    sitePathCategory={sitePathCategory?.filters?.colorFiltersArray?.colorFilters}
-                  />
-                }
-              </div>
-            }
-
-            {sitePathCategory?.filters?.styleFiltersArray &&
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenDop ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenDop(!isOpenDop)} style={{ marginBottom: isOpenDop ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.styleFiltersArray?.styleFilterName}
-                    </h4>
-                    {expandIconDop && <span onClick={() => setOpenDop(!isOpenDop)} className={cls.expandIconitto}>{expandIconDop}</span>}
-                  </div>
-                  {isOpenDop &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_lightCategory"}
-                      array={productStore.filters.Styles || []}
-                      onChangeCategory={handleSetStyles}
-                      lightCategory={sitePathCategory?.filters?.styleFiltersArray?.styleFilter}
-                    />
-                  }
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.priceFiltersArray &&
-              <div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.priceFiltersArray?.priceFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetPrice}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinPrice || PriceRange.minValue}
-                    maxValue={productStore.filters.MaxPrice || PriceRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.priceFiltersArray?.priceFilters}
-                  />
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.diametrFiltersArray && !NotshouldDisplayFilterLight &&
-              !NotshouldDisplayFilterLightDiam &&
-              !NotshouldDisplayFilterMirrorsDiam &&
-              !NotshouldDisplayFilterCarpetDiam &&
-              <div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.diametrFiltersArray?.polsunokFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetDiameter}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinDiameter || DiametrRange.minValue}
-                    maxValue={productStore.filters.MaxDiameter || DiametrRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.diametrFiltersArray?.polsunokFilters}
-                  />
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.dlinnaFiltersArray &&
-              !NotshouldDisplayFilterLight &&
-              !NotshouldDisplayFilterMirrorsVisShir &&
-              !NotshouldDisplayFilterLightDlinna &&
-              !NotshouldDisplayFilterCarpetDlinShir &&
-              <div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.dlinnaFiltersArray?.polsunokFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetLength}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinLength || LengthRange.minValue}
-                    maxValue={productStore.filters.MaxLength || LengthRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.dlinnaFiltersArray?.polsunokFilters}
-                  />
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.shirinaFiltersArray &&
-              !NotshouldDisplayFilterMirrorsVisShir &&
-              !NotshouldDisplayFilterLightShir &&
-              !NotshouldDisplayFilterCarpetDlinShir &&
-              <div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.shirinaFiltersArray?.polsunokFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetWidth}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinWidth || WidthRange.minValue}
-                    maxValue={productStore.filters.MaxWidth || WidthRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.shirinaFiltersArray?.polsunokFilters}
-                  />
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.visotaFiltersArray && !NotshouldDisplayFilterLight &&
-              <div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.visotaFiltersArray?.polsunokFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetHeight}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinHeight || HeightRange.minValue}
-                    maxValue={productStore.filters.MaxHeight || HeightRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.visotaFiltersArray?.polsunokFilters}
-                  />
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.otstupFiltersArray &&
-              !NotshouldDisplayFilterLight &&
-              NotshouldDisplayFilterLightOtstup &&
-              (<div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.otstupFiltersArray?.polsunokFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetIndent}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinIndent || IndentRange.minValue}
-                    maxValue={productStore.filters.MaxIndent || IndentRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.otstupFiltersArray?.polsunokFilters}
-                  />
-                </div>
-              </div>
-              )}
-
-            {sitePathCategory?.filters?.lampCountFiltersArray &&
-              <div className={cls.filter__fil_price}>
-                <h4 className={cls.filter__fil_price_head}>
-                  {sitePathCategory?.filters?.lampCountFiltersArray?.polsunokFilterName}
-                </h4>
-                <div className={cls.polsunok}>
-                  <RangeComponent
-                    changeValues={handleSetLampsCount}
-                    trigger={trigger}
-                    minValue={productStore.filters.MinLampCount || LampCountRange.minValue}
-                    maxValue={productStore.filters.MaxLampCount || LampCountRange.maxValue}
-                    RangeValue={sitePathCategory?.filters?.lampCountFiltersArray?.polsunokFilters}
-                  />
-                </div>
-              </div>
-            }
-
-            {sitePathCategory?.filters?.materialFiltersArray &&
-              !NotshouldDisplayFilterMirrorsMaterial &&
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenDop ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenDop(!isOpenDop)} style={{ marginBottom: isOpenDop ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.materialFiltersArray?.materialFilterName}
-                    </h4>
-                    {expandIconDop && <span onClick={() => setOpenDop(!isOpenDop)} className={cls.expandIconitto}>{expandIconDop}</span>}
-                  </div>
-                  {isOpenDop &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_lightCategory"}
-                      array={productStore.filters.Materials || []}
-                      onChangeCategory={handleSetMaterials}
-                      lightCategory={sitePathCategory?.filters?.materialFiltersArray?.materialFilter}
-                    />
-                  }
-                </div>
-              </div>
-            }
-            {sitePathCategory?.filters?.materialPaintFiltersArray &&
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenDop ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenDop(!isOpenDop)} style={{ marginBottom: isOpenDop ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.materialPaintFiltersArray?.materialPaintFilterName}
-                    </h4>
-                    {expandIconDop && <span onClick={() => setOpenDop(!isOpenDop)} className={cls.expandIconitto}>{expandIconDop}</span>}
-                  </div>
-                  {isOpenDop &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_lightCategory"}
-                      array={productStore.filters.PictureMaterial || []}
-                      onChangeCategory={handleSetPictureMaterial}
-                      lightCategory={sitePathCategory?.filters?.materialPaintFiltersArray?.materialPaintFilter}
-                    />
-                  }
-                </div>
-              </div>
-            }
-            {sitePathCategory?.filters?.dopFiltersArray &&
-              !NotshouldDisplayFilterLightAccess &&
-              <div className={cls.product__fil}>
-                <div style={{ paddingBottom: isOpenDop ? '' : '0' }} className={cls.product__fil_style}>
-                  <div className={cls.product__fil_styler_ue}>
-                    <h4 onClick={() => setOpenDop(!isOpenDop)} style={{ marginBottom: isOpenDop ? '' : '10px' }} className={cls.product__fil_style_head}>
-                      {sitePathCategory?.filters?.dopFiltersArray?.dopFilterName}
-                    </h4>
-                    {expandIconDop && <span onClick={() => setOpenDop(!isOpenDop)} className={cls.expandIconitto}>{expandIconDop}</span>}
-                  </div>
-                  {isOpenDop &&
-                    <TypeLight
-                      headeDropdownClass={"header__dropdown_wrap_lightCategory"}
-                      array={productStore.filters.ChandelierTypes || []}
-                      onChangeCategory={handleSetChandelierTypes}
-                      lightCategory={sitePathCategory?.filters?.dopFiltersArray?.dopFilter}
-                    />
-                  }
-                </div>
-              </div>
-            }
             <div className={cls.product__fil}>
               <div className={`${cls.product__fil_style} ${cls.product__fil_style_sale}`}>
                 <h4 className={cls.product__fil_style_head}>Скидка</h4>
                 {/* <input
-                    type="checkbox"
-                    checked={isSaleChecked}
-                    onChange={handleSetSale}
-                  /> */}
+                  type="checkbox"
+                  checked={isSaleChecked}
+                  onChange={handleSetSale}
+                /> */}
                 <div className="flex items-center flex-shrink-0">
                   <label className="switch relative inline-block w-10 cursor-pointer">
-                    <Switch checked={isSaleChecked} onChange={handleSetSale} />
+                    <Switch checked={isSaleChecked} onChange={handleSetSale}/>
                   </label>
                 </div>
               </div>
@@ -893,14 +549,14 @@ export const FilterBlock: React.FC<FilterProps> = observer(
             <div className={cls.product__fil}>
               <div className={cls.product__fil_primenit}>
                 <button
-                  onClick={()=>handleGetProducts()}
+                  onClick={() => handleGetProducts()}
                   className={cls.product__fil_primenit_search}
                 >
-                  <span
-                    className={`${cls.product__fil_primenit_btn} ${cls.primenit_btn}`}
-                  >
-                    Применить фильтр
-                  </span>
+                <span
+                  className={`${cls.product__fil_primenit_btn} ${cls.primenit_btn}`}
+                >
+                  Применить фильтр
+                </span>
                 </button>
                 <button
                   onClick={handleSetClear}
@@ -913,6 +569,4 @@ export const FilterBlock: React.FC<FilterProps> = observer(
           </div>
         </div>
       </div>
-    );
-  }
-);
+    )})

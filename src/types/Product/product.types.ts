@@ -5,14 +5,15 @@ export type Product = {
   id: string;
   name: string;
   description?: string;
-  type: number;
+  type?: number[];
   article?: string;
   price: number;
-  colors?: number[];
+  color?: number[];
   diameter?: number;
   height?: number;
   length?: number;
   width?: number;
+  indent?: number;
   discount: number;
   chandelierTypes?: number[];
   plinth?: string;
@@ -23,8 +24,9 @@ export type Product = {
   BrandId?: string;
   collection?: ICollection;
   brand?: IBrand;
-  urls: string[];
+  productTypes?: number[];
   files: IFileUrl[];
+  urls: string[];
 };
 
 export interface IFileUrl {

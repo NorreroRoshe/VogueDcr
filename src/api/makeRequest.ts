@@ -1,15 +1,34 @@
 "use client"
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponseHeaders, InternalAxiosRequestConfig, RawAxiosResponseHeaders} from 'axios';
 import Cookies from 'js-cookie';
+
 interface TMakeRequestParams extends AxiosRequestConfig {
   authToken?: boolean;
 }
-export type APIError = {
-  errors: {
+
+export type APIError<T = any, D = any> = {
+  errors?: {
     [key: string]: string[] | object[];
   };
+  data?: T;
+  message?: string;
   status: number;
 };
+
+
+
+export interface AxiosResponse<T = any, D = any> {
+  data: T;
+  message?: string;
+  errors: {
+    [key: string]: string[]; // Здесь ключи - это названия полей, а значения - массивы строк с сообщениями об ошибках
+  };
+  status: number;
+  statusText: string;
+  headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
+  config: InternalAxiosRequestConfig<D>;
+  request?: any;
+}
 
 type APIResponse<Type> = Promise<AxiosResponse<Type> | APIError>;
 const makeRequest = <Type>({
@@ -38,11 +57,12 @@ const makeRequest = <Type>({
     data,
   })
   .catch((errors) => {
+    const message = errors.response?.data?.message as string;
     const responseErrors = errors.response?.data?.errors;
     const status = errors?.response?.status as number;
     const meta = errors?.response?.data?.meta;
 
-    return { errors: responseErrors, status };
+    return { message: message, status };
   });
 };
 

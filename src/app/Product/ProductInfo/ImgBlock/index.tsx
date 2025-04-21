@@ -101,7 +101,9 @@ export const ImgBlock: React.FC<imgBlockProps> = ({ detProduct }) => {
         <div className={cls.product_info_nalich_wrapp}>
             {!!detProduct.availability ? (
         <div className={cls.product_info_feature_nalichie}>
-          <p className={cls.product_feature_nalichie_desc}>В наличии: {detProduct.availability} шт.</p>
+          <p className={cls.product_feature_nalichie_desc}>В наличии
+            {/*: {detProduct.availability} шт.*/}
+          </p>
         </div>):(       
         <div className={cls.info_feature_nalichie_predzakaz}>
           <p className={cls.feature_nalichie_desc}>Предзаказ</p>

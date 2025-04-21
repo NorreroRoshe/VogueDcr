@@ -6,7 +6,7 @@ import useWindowSize from '@/utils/use-window-size';
 import PlusIcon from '@/components/iconsCode/plus-icon';
 import { AddToCart } from '@/components/product/add-to-cart';
 import { useTranslation } from 'next-i18next';
-import { productPlaceholder } from '@/assets/placeholders';
+import {categoryPlaceholder, productPlaceholder} from '@/assets/placeholders';
 import Counter from '@/components/ui/counter';
 import { toast } from 'react-toastify';
 import { useCart } from '@/hooks/useCart';
@@ -24,6 +24,8 @@ const RenderPopupOrAddToCart = observer(({ data }: { data: Product }) => {
 
   const store = useStore();
   const cartStore = store.cart;
+  const authStore = store.auth;
+  const { openModal, closeModal } = useModalAction();
 
   const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
 
@@ -55,30 +57,49 @@ const RenderPopupOrAddToCart = observer(({ data }: { data: Product }) => {
     });
   };
 
+
+  function handleLogin() {
+    openModal("LOGIN_VIEW");
+  }
+
   const iconSize = width! > 1024 ? '19' : '17';
 
   return (
     <div style={{ bottom: '154px', zIndex: 1000, right: '28px' }}>
-      {cartCount > 0 ? (
-        <Counter variant='popupcollection' product={data} />
-      ) : (
-        <button
-          className="inline-flex bg-skin-primary rounded-full w-8 lg:w-10 h-8 lg:h-10 text-skin-inverted text-4xl items-center justify-center focus:outline-none focus-visible:outline-none"
-          aria-label="Count Button"
-          onClick={handleAddToCart}
-        >
-          <PlusIcon width={iconSize} height={iconSize} opacity="1" />
-        </button>
-      )
+      {authStore.isAuth ?
+        (
+          cartCount > 0 ? (
+            <Counter variant='popupcollection' product={data} />
+          ) : (
+            <button
+              className="inline-flex bg-skin-primary rounded-full w-8 lg:w-10 h-8 lg:h-10 text-skin-inverted text-4xl items-center justify-center focus:outline-none focus-visible:outline-none"
+              aria-label="Count Button"
+              onClick={handleAddToCart}
+            >
+              <PlusIcon width={iconSize} height={iconSize} opacity="1" />
+            </button>
+          )
+        ):(
+          <button
+            className="inline-flex bg-skin-primary rounded-full w-8 lg:w-10 h-8 lg:h-10 text-skin-inverted text-4xl items-center justify-center focus:outline-none focus-visible:outline-none"
+            aria-label="Count Button"
+            onClick={handleLogin}
+          >
+            <PlusIcon width={iconSize} height={iconSize} opacity="1" />
+          </button>
+        )
       }
     </div>
   )
 })
 
 const ProductCard: React.FC<ProductProps> = observer(({ product, className }) => {
-  const { id, price, discount, article, urls, name } = product ?? {};
+  const { id, price, discount, article, urls, name, files } = product ?? {};
 
-  const imageUrl = urls ? urls[0] : '';
+  // const imageUrl = urls ? urls[0] : '';
+  const imageUrl = files[0] ? files[0].url : '';
+
+  const imageUrlsdfdsd = imageUrl ? process.env.NEXT_PUBLIC_PHOTO_URL1 + imageUrl : categoryPlaceholder;
 
   const { openModal } = useModalAction();
 
@@ -97,12 +118,14 @@ const ProductCard: React.FC<ProductProps> = observer(({ product, className }) =>
       <div
         onClick={handlePopupView}
         className="relative flex-shrink-0">
-        <div className="flex overflow-hidden max-w-[230px] mx-auto transition duration-200 ease-in-out transform group-hover:scale-105 relative mb-5" style={{marginTop: '12px'}}>
-          <img
+        <div className="flex overflow-hidden max-w-[230px] mx-auto transition duration-200 ease-in-out transform group-hover:scale-105 relative mb-5" style={{marginTop: '12px', height: '200px'}}>
+          <Image
             src={imageUrl ?? productPlaceholder}
             alt={name || 'Product Image'}
-            max-width={230}
-            max-height={190}
+            // max-width={230}
+            // max-height={190}
+            width={230}
+            height={190}
             className="object-cover bg-skin-thumbnail"
           />
         </div>

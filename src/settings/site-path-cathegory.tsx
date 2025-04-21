@@ -241,71 +241,71 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Люстры',
-        href: '/Chapter/Light/Lyustri',
-        types: '?ProductTypes=1&Categories=1',
+        href: '1',
+        types: '?Categories=1',
         mainPhoto: lyustra
       },
       {
         id: 1,
         subName: 'Бра',
-        href: '/Chapter/Light/Bra',
-        types: '?ProductTypes=1&Categories=2',
+        href: '2',
+        types: '?Categories=2',
         mainPhoto: bra
       },
       {
         id: 2,
         subName: 'Настольные лампы',
-        href: '/Chapter/Light/NastolnieLampi',
-        types: '?ProductTypes=1&Categories=3',
+        href: '3',
+        types: '?Categories=3',
         mainPhoto: nastolknayaLampa
       },
       {
         id: 3,
         subName: 'Торшеры',
-        href: '/Chapter/Light/Torsheri',
-        types: '?ProductTypes=1&Categories=4',
+        href: '/4',
+        types: '?Categories=4',
         mainPhoto: Torsher
       },
       {
         id: 4,
         subName: 'Подвесные светильники',
-        href: '/Chapter/Light/PodvesnoiSvet',
-        types: '?ProductTypes=1&Categories=5',
+        href: '5',
+        types: '?Categories=5',
         mainPhoto: PodvesnoiSvet
       },
       {
         id: 5,
         subName: 'Потолочне светильники',
-        href: '/Chapter/Light/PotolochniySvet',
-        types: '?ProductTypes=1&Categories=6',
+        href: '6',
+        types: '?Categories=6',
         mainPhoto: PotolochniySvet
       },
       {
         id: 6,
         subName: 'Уличный свет',
-        href: '/Chapter/Light/UlichniySvet',
-        types: '?ProductTypes=1&Categories=7',
+        href: '7',
+        types: '?Categories=7',
         mainPhoto: UlichniySvet
       },
       {
         id: 7,
         subName: 'Подсветка для картин',
-        href: '/Chapter/Light/PodsvetkaDlyaKartin',
-        types: '?ProductTypes=1&Categories=8',
+        href: '8',
+        types: '?Categories=8',
         mainPhoto: PodsvetkaDlyaKartin
       },
       {
         id: 8,
         subName: 'Треки и споты',
-        href: '/Chapter/Light/TrekiSpoti',
-        types: '?ProductTypes=1&Categories=9',
+        href: '9',
+        types: '?Categories=9',
         mainPhoto: TrekiISpoti
       },
       {
         id: 9,
         subName: 'Аксессуары к светильникам',
-        href: '/Chapter/LightAccessories',
-        types: '?ProductTypes=1&Categories=10',
+        href: '10',
+        types: '?Categories=10',
         mainPhoto: AcssesForLight
       }
     ],
@@ -569,72 +569,72 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Диваны',
-        href: '/Chapter/Furniture/Divani',
-        types: '?ProductTypes=2&Categories=11',
+        href: '11',
+        types: '?Categories=11',
         mainPhoto: Divani
       },
       {
         id: 1,
         subName: 'Кресла',
-        href: '/Chapter/Furniture/Kresla',
-        types: '?ProductTypes=2&Categories=12',
+        href: '12',
+        types: '?Categories=12',
         mainPhoto: Kresla
       },
       {
         id: 2,
         subName: 'Столы',
-        href: '/Chapter/Furniture/Stoli',
-        types: '?ProductTypes=2&Categories=13',
+        href: '13',
+        types: '?Categories=13',
         mainPhoto: Stoli
       },
       {
         id: 3,
         subName: 'Стулья',
-        href: '/Chapter/Furniture/Stulya',
-        types: '?ProductTypes=2&Categories=14',
+        href: '14',
+        types: '?Categories=14',
         mainPhoto: Stulya
       },
       {
         id: 4,
         subName: 'Комоды',
-        href: '/Chapter/Furniture/Komodi',
-        types: '?ProductTypes=2&Categories=15',
+        href: '15',
+        types: '?Categories=15',
         mainPhoto: Komodi
       },
 
       {
         id: 5,
         subName: 'Консоли',
-        href: '/Chapter/Furniture/Konsoli',
-        types: '?ProductTypes=2&Categories=16',
+        href: '16',
+        types: '?Categories=16',
         mainPhoto: Komodi
       },
       {
         id: 6,
         subName: 'Кровати',
-        href: '/Chapter/Furniture/Krovati',
-        types: '?ProductTypes=2&Categories=17',
+        href: '17',
+        types: '?Categories=17',
         mainPhoto: Krovati
       },
       {
         id: 7,
         subName: 'Матрасы',
-        href: '/Chapter/Furniture/Matrasi',
-        types: '?ProductTypes=2&Categories=18',
+        href: '18',
+        types: '?Categories=18',
         mainPhoto: Matrasi
       },
       {
         id: 8,
         subName: 'Пуфы и банкетки',
-        href: '/Chapter/Furniture/PufiBanketki',
-        types: '?ProductTypes=2&Categories=19',
+        href: '19',
+        types: '?Categories=19',
         mainPhoto: Pufi
       }
       // ,
       // {
       //   id: 8,
       //   subName: 'Аксесуары для мебели',
-      //   href: '/Chapter/Furniture/Accessories',
+      //   href:s:',
       // types: '',
       //   mainPhoto: AccessDlyaMebeli
       // }
@@ -848,85 +848,85 @@ export const sitePathCategory: ISiteCategory[] = [
       // {
       //   id: 0,
       //   subName: 'С подсветкой',
-      //   href: '/Chapter/Mirrors/Spodsvetkoi',
+      //   href:i:',
       //   types: '',
       //   mainPhoto: 
       // },
       {
         id: 1,
         subName: 'Зеркало - панно / арт объект',
-        href: '/Chapter/Mirrors/Artobj',
-        types: '?ProductTypes=3&Categories=20',
+        href: '20',
+        types: '?Categories=20',
         mainPhoto: MirrorPano
       },
       {
         id: 2,
         subName: 'С принтами',
-        href: '/Chapter/Mirrors/Sprintami',
-        types: '?ProductTypes=3&Categories=21',
+        href: '21',
+        types: '?Categories=21',
         mainPhoto: MirPrint
       },
       {
         id: 3,
         subName: 'Зеркало - солнышко',
-        href: '/Chapter/Mirrors/Solnishko',
-        types: '?ProductTypes=3&Categories=22',
+        href: '22',
+        types: '?Categories=22',
         mainPhoto: MirSolnishko
       },
       {
         id: 4,
         subName: 'С деревом',
-        href: '/Chapter/Mirrors/Sderevom',
-        types: '?ProductTypes=3&Categories=23',
+        href: '23',
+        types: '?Categories=23',
         mainPhoto: MirDerevo
       },
       {
         id: 5,
         subName: 'Дизайнерские с металлом',
-        href: '/Chapter/Mirrors/DesignMetall',
-        types: '?ProductTypes=3&Categories=24',
+        href: '24',
+        types: '?Categories=24',
         mainPhoto: MirMetall
       },
       {
         id: 6,
         subName: 'Классические',
-        href: '/Chapter/Mirrors/Klassicheskie',
-        types: '?ProductTypes=3&Categories=25',
+        href: '25',
+        types: '?Categories=25',
         mainPhoto: MirKlassika
       },
       {
         id: 7,
         subName: 'Настольные зеркала',
-        href: '/Chapter/Mirrors/Nastolnie',
-        types: '?ProductTypes=3&Categories=26',
+        href: '26',
+        types: '?Categories=26',
         mainPhoto: MirNastol
       },
       {
         id: 8,
         subName: 'Напольные зеркала',
-        href: '/Chapter/Mirrors/Napolnie',
-        types: '?ProductTypes=3&Categories=27',
+        href: '27',
+        types: '?Categories=27',
         mainPhoto: MirNapol
       },
       {
         id: 9,
         subName: 'Прмоугольные',
-        href: '/Chapter/Mirrors/Pryamougolnie',
-        types: '?ProductTypes=3&Categories=28',
+        href: '28',
+        types: '?Categories=28',
         mainPhoto: MirPryamoug
       },
       {
         id: 10,
         subName: 'Круглые',
-        href: '/Chapter/Mirrors/Kruglie',
-        types: '?ProductTypes=3&Categories=29',
+        href: '29',
+        types: '?Categories=29',
         mainPhoto: MirKrug
       }
       // ,
       // {
       //   id: 11,
       //   subName: 'Каплевидные',
-      //   href: '/Chapter/Mirrors/Kaplevidnie',
+      //   href:e:',
       //   types: '',
       //   mainPhoto: MirKaplya
       // }
@@ -1161,43 +1161,43 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Прямоугольные',
-        href: '/Chapter/Carpets/Pryamougolnie',
-        types: '?ProductTypes=4&Categories=30',
+        href: '30',
+        types: '?Categories=30',
         mainPhoto: Pryamougolnie
       },
       {
         id: 1,
         subName: 'Квадратные',
-        href: '/Chapter/Carpets/Kvadratnie',
-        types: '?ProductTypes=4&Categories=31',
+        href: '31',
+        types: '?Categories=31',
         mainPhoto: Kvadratnie
       },
       {
         id: 2,
         subName: 'Круглые',
-        href: '/Chapter/Carpets/Kruglie',
-        types: '?ProductTypes=4&Categories=32',
+        href: '32',
+        types: '?Categories=32',
         mainPhoto: Kruglie
       },
       {
         id: 3,
         subName: 'Овальные',
-        href: '/Chapter/Carpets/Ovalnie',
-        types: '?ProductTypes=4&Categories=33',
+        href: '33',
+        types: '?Categories=33',
         mainPhoto: Ovalnie
       },
       {
         id: 4,
         subName: 'Дорожки',
-        href: '/Chapter/Carpets/Dorojki',
-        types: '?ProductTypes=4&Categories=34',
+        href: '34',
+        types: '?Categories=34',
         mainPhoto: Dorojki
       },
       {
         id: 5,
         subName: 'Нестандартные',
-        href: '/Chapter/Carpets/Nestandartnie',
-        types: '?ProductTypes=4&Categories=35',
+        href: '35',
+        types: '?Categories=35',
         mainPhoto: Nestandartnie
       }
     ],
@@ -1415,98 +1415,98 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Дизайнерские тарелки',
-        href: '/Chapter/GoodsForHome/Tarelki',
-        types: '?ProductTypes=5&Categories=36',
+        href: '36',
+        types: '?Categories=36',
         mainPhoto: Tarelki
       },
       {
         id: 1,
         subName: 'Стремянки и скамьи',
-        href: '/Chapter/GoodsForHome/Stremyanki',
-        types: '?ProductTypes=5&Categories=37',
+        href: '37',
+        types: '?Categories=37',
         mainPhoto: StremyankiSkami
       },
       {
         id: 2,
         subName: 'Сушилки',
-        href: '/Chapter/GoodsForHome/Sushilki',
-        types: '?ProductTypes=5&Categories=38',
+        href: '38',
+        types: '?Categories=38',
         mainPhoto: Sushilki
       },
       {
         id: 3,
         subName: 'Гладильные доски',
-        href: '/Chapter/GoodsForHome/Gladilki',
-        types: '?ProductTypes=5&Categories=39',
+        href: '39',
+        types: '?Categories=39',
         mainPhoto: Gladilki
       },
       {
         id: 4,
         subName: 'Вешалки напольные',
-        href: '/Chapter/GoodsForHome/VeshalkiNapolnie',
-        types: '?ProductTypes=5&Categories=40',
+        href: '40',
+        types: '?Categories=40',
         mainPhoto: VeshalkiNapol
       },
       {
         id: 5,
         subName: 'Вешалки настенные',
-        href: '/Chapter/GoodsForHome/VeshalkiNastennie',
-        types: '?ProductTypes=5&Categories=41',
+        href: '41',
+        types: '?Categories=41',
         mainPhoto: VeshalkiNastenn
       },
       {
         id: 6,
         subName: 'Аксессуары для ванной',
-        href: '/Chapter/GoodsForHome/BathAccess',
-        types: '?ProductTypes=5&Categories=42',
+        href: '42',
+        types: '?Categories=42',
         mainPhoto: BathAccess
       },
       {
         id: 7,
         subName: 'Ложки для обуви',
-        href: '/Chapter/GoodsForHome/LojkiObuvi',
-        types: '?ProductTypes=5&Categories=43',
+        href: '43',
+        types: '?Categories=43',
         mainPhoto: LojkiDlyaObuvi
       },
       {
         id: 8,
         subName: 'Вазы и подсвечники',
-        href: '/Chapter/GoodsForHome/VaziPodsvechniki',
-        types: '?ProductTypes=5&Categories=44',
+        href: '44',
+        types: '?Categories=44',
         mainPhoto: VaziPodsvechniki
       },
       {
         id: 9,
         subName: 'Декоративные подушки',
-        href: '/Chapter/GoodsForHome/Podushki',
-        types: '?ProductTypes=5&Categories=45',
+        href: '45',
+        types: '?Categories=45',
         mainPhoto: DekorPodushki
       },
       {
         id: 10,
         subName: 'Пледы',
-        href: '/Chapter/GoodsForHome/Pledi',
-        types: '?ProductTypes=5&Categories=46',
+        href: '46',
+        types: '?Categories=46',
         mainPhoto: Pledi
       },
       {
         id: 11,
         subName: 'Покрывала',
-        href: '/Chapter/GoodsForHome/Pokrivala',
-        types: '?ProductTypes=5&Categories=47',
+        href: '47',
+        types: '?Categories=47',
         mainPhoto: Pokrivala
       },
       // {
       //   id: 12,
       //   subName: 'Сервисные столики / подносы',
-      //   href: '/Chapter/GoodsForHome/Podnosi',
+      //   href:i:',
       //   types: '',
       //   mainPhoto: Podnosi
       // },
       // {
       //   id: 13,
       //   subName: 'Обувницы',
-      //   href: '/Chapter/GoodsForHome/Obuvnici',
+      //   href:i:',
       //   types: '',
       //   mainPhoto: Obuvnici
       // }
@@ -1753,57 +1753,57 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Современные игрушки / статуэтки',
-        href: '/Chapter/Accessories/Statuetki',
-        types: '?ProductTypes=6&Categories=48',
+        href: '48',
+        types: '?Categories=48',
         mainPhoto: Statuetki
       },
       {
         id: 1,
         subName: 'Часы',
-        href: '/Chapter/Accessories/Watches',
-        types: '?ProductTypes=6&Categories=49',
+        href: '49',
+        types: '?Categories=49',
         mainPhoto: Watches
       },
       {
         id: 2,
         subName: 'Настольные и настенные игры',
-        href: '/Chapter/Accessories/NastolnieIgri',
-        types: '?ProductTypes=6&Categories=50',
+        href: '50',
+        types: '?Categories=50',
         mainPhoto: NastolnieIgri
       },
       {
         id: 3,
         subName: 'Зонты',
-        href: '/Chapter/Accessories/Zonti',
-        types: '?ProductTypes=6&Categories=51',
+        href: '51',
+        types: '?Categories=51',
         mainPhoto: Zonti
       },
       {
         id: 4,
         subName: 'Подставки для зонтов',
-        href: '/Chapter/Accessories/PodstavkaDlyaZontov',
-        types: '?ProductTypes=6&Categories=52',
+        href: '52',
+        types: '?Categories=52',
         mainPhoto: PodstavkaDlyaZontov
       },
       {
         id: 5,
         subName: 'Ложки для обуви',
-        href: '/Chapter/Accessories/LojkiDlyaObuvi',
-        types: '?ProductTypes=6&Categories=53',
+        href: '53',
+        types: '?Categories=53',
         mainPhoto: LojkiDlyaObuvi
       },
       {
         id: 6,
         subName: 'Держатели книг',
-        href: '/Chapter/Accessories/DerjateliKnig',
-        types: '?ProductTypes=6&Categories=54',
+        href: '54',
+        types: '?Categories=54',
         mainPhoto: DerjateliKnig
       },
       // {
       //   id: 8,
       //   subName: ' Дизайнерские аксессуары',
-      //   href: '/Chapter/Accessories/DesignAccess',
-      //   types: '?ProductTypes=6&Categories=11',
+      //   href:s1',
+      //   types: '?Categories=11',
       //   mainPhoto: DesignAccess
       // }
     ],
@@ -2037,43 +2037,43 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Арт-объекты',
-        href: '/Chapter/Paintings/Artobj',
-        types: '?ProductTypes=7&Categories=55',
+        href: '55',
+        types: '?Categories=55',
         mainPhoto: Artobjects
       },
       {
         id: 1,
         subName: 'Картины авторские',
-        href: '/Chapter/Paintings/Avtorskie',
-        types: '?ProductTypes=7&Categories=56',
+        href: '56',
+        types: '?Categories=56',
         mainPhoto: AvtorskieKartini
       },
       {
         id: 2,
         subName: 'Постеры',
-        href: '/Chapter/Paintings/Posteri',
-        types: '?ProductTypes=7&Categories=57',
+        href: '57',
+        types: '?Categories=57',
         mainPhoto: Posteri
       },
       {
         id: 3,
         subName: 'Панно с лего',
-        href: '/Chapter/Paintings/WithLego',
-        types: '?ProductTypes=7&Categories=58',
+        href: '58',
+        types: '?Categories=58',
         mainPhoto: WithLego
       },
       {
         id: 4,
         subName: 'Пано в спортивном стиле',
-        href: '/Chapter/Paintings/SportStyle',
-        types: '?ProductTypes=7&Categories=59',
+        href: '59',
+        types: '?Categories=59',
         mainPhoto: SportStSportStyleyle
       },
       {
         id: 5,
         subName: 'Репродукция',
-        href: '/Chapter/Paintings/Reproduction',
-        types: '?ProductTypes=7&Categories=60',
+        href: '60',
+        types: '?Categories=60',
         mainPhoto: Reproduction
       }
     ],
@@ -2305,29 +2305,29 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Абажуры',
-        href: '/Chapter/LightAccessories/Abajuri',
-        types: '?ProductTypes=8&Categories=61',
+        href: '61',
+        types: '?Categories=61',
         mainPhoto: AcssesForLight
       },
       {
         id: 1,
         subName: 'Колпаки и крепления',
-        href: '/Chapter/LightAccessories/KolpakiKrepleniya',
-        types: '?ProductTypes=8&Categories=62',
+        href: '62',
+        types: '?Categories=62',
         mainPhoto: kolpaki
       },
       {
         id: 2,
         subName: 'Лампочки',
-        href: '/Chapter/LightAccessories/Lampochki',
-        types: '?ProductTypes=8&Categories=63',
+        href: '63',
+        types: '?Categories=63',
         mainPhoto: lampochki
       },
       {
         id: 3,
         subName: 'Светодиодная лента / подсветка',
-        href: '/Chapter/LightAccessories/SvetodiodnieLenti',
-        types: '?ProductTypes=8&Categories=64',
+        href: '64',
+        types: '?Categories=64',
         mainPhoto: lentaSvetodiodnaya
       }
     ],
@@ -2366,49 +2366,49 @@ export const sitePathCategory: ISiteCategory[] = [
       {
         id: 0,
         subName: 'Свет',
-        href: '/Chapter/Light',
+        href: '1',
         types: '?ProductTypes=1',
         mainPhoto: lyustra
       },
       {
         id: 1,
         subName: 'Мебель',
-        href: '/Chapter/Furniture',
+        href: '2',
         types: '?ProductTypes=2',
         mainPhoto: Divani
       },
       {
         id: 2,
         subName: 'Зеркала',
-        href: '/Chapter/Mirrors',
+        href: '3',
         types: '?ProductTypes=3',
         mainPhoto: MirrorPano
       },
       {
         id: 3,
         subName: 'Ковры',
-        href: '/Chapter/Carpets',
+        href: '4',
         types: '?ProductTypes=4',
         mainPhoto: Pryamougolnie
       },
       {
         id: 4,
         subName: 'Товары для дома',
-        href: '/Chapter/GoodsForHome',
+        href: '5',
         types: '?ProductTypes=5',
         mainPhoto: StremyankiSkami
       },
       {
         id: 5,
         subName: 'Аксессуары',
-        href: '/Chapter/Accessories',
+        href: '6',
         types: '?ProductTypes=6',
         mainPhoto: Statuetki
       },
       {
         id: 6,
         subName: 'Картины',
-        href: '/Chapter/Paintings',
+        href: '7',
         types: '?ProductTypes=7',
         mainPhoto: AvtorskieKartini
       }

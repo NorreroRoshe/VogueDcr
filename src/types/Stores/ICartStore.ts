@@ -2,13 +2,17 @@
 import { CartItem, ICartLocalState } from "../Cart/cart.types";
 
 export interface ICartStore {
+  cartItems: CartItem[];
   totalCount: number;
   totalPrice: number;
+  discount: number;
   totalDiscountPrice: number;
-  items: CartItem[];
   cart: ICartLocalState;
   isLoading: boolean;
-  
+  saledPrice: number;
+  salePercent: string;
+  cartCount: number;
+
   addLocalItem: (localItemProd: string) => void;
   addItem: (addItemProd: CartItem) => void;
   deleteProductFromCart: (deleteProductFromCartProd: string) => void;
@@ -20,6 +24,7 @@ export interface ICartStore {
   clearUserCart: () => void;
   addProductToCart: (productId: string) => void;
   minusProductCart: (productId: string, isRemovingAll?: boolean) => void;
+  basketReset: () => void;
 
   
 }

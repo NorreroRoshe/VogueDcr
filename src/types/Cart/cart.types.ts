@@ -12,6 +12,7 @@ export type CartItem = {
   colors?: number[];
   diameter?: number;
   height?: number;
+  indent?: number;
   length?: number;
   width?: number;
   discount: number;

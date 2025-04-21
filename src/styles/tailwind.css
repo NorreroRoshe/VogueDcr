@@ -105,7 +105,8 @@
 
   .subMenu {
     visibility: hidden;
-    transition: all 0.4s;
+    /*transition: all 0.4s;*/
+    transition: all 0.2s;
     top: calc(100% + 21px);
   }
 
@@ -138,7 +139,8 @@
 
   .headerMenu .menuItem:hover > .subMenu {
     visibility: visible;
-    top: calc(100% + 2px);
+    /*top: calc(100% + 2px);*/
+    top: calc(100% + 0px);
   }
 
   .header-one .headerMenu .menuItem:hover > .subMenu {

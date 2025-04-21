@@ -24,9 +24,14 @@ export const ProdBlock: React.FC<ProdBlockProps> = observer(({ product }) => {
   const productStore = store.product
   const favoritesStore = store.favorites
   const cartStore = store.cart
+  const authStore = store.auth
 
-  const imageUrl = product.urls ? product.urls[0] : '';
+  const photoUrlBase = process.env.NEXT_PUBLIC_PHOTO_URL1;
+  // const imageUrl = product.urls ? `${product.urls[0]}` : '';    //${photoUrlBase}
+  const imageUrl = product?.files?.[0]?.url;
+  const imageUrlsdfdsd = photoUrlBase + imageUrl;
 
+// console.log(imageUrlsdfdsd,'imageUrlimageUrlimageUrl')
   // const isFavorite = useAppSelector((state) => selectFavoritesItemById(state, product.id));
   const isFavorite = !!favoritesStore.ids?.find((obj) => obj === product.id)
 
@@ -54,6 +59,10 @@ export const ProdBlock: React.FC<ProdBlockProps> = observer(({ product }) => {
     const { className, onClick } = props;
     return <div className={`${className} ${cls.custom_prev}`} onClick={onClick} />;
   };
+
+  function handleLogin() {
+    openModal("LOGIN_VIEW");
+  }
 
   const sliderSettings = {
     dots: true,
@@ -87,48 +96,53 @@ export const ProdBlock: React.FC<ProdBlockProps> = observer(({ product }) => {
             </div>
           </Slider> */}
           {!!imageUrl ? (
-          <img
-          src={imageUrl}
-          alt=""
-          className={cls.allproduct_goods_img} />
+            // <img
+            // src={imageUrl}
+            // alt=""
+            // className={cls.allproduct_goods_img} />
+            <Image
+              src={imageUrl}
+              alt="product"
+              // quality={70}
+              width={425}
+              height={301}
+              layout="intrinsic" // Позволяет использовать оригинальный размер изображения
+              className={cls.allproduct_goods_img}/>
           ) : (
             <div className="w-auto flex items-center justify-center">
               {/* <img src={PP} alt='404!'/> */}
-                <Image src={PP} alt={'404!'} className={cls.allproduct_goods_img} />
+              <Image src={PP} alt={'404!'} className={cls.allproduct_goods_img}/>
             </div>
           )}
           {!!product.discount && (
-          <span className={cls.allproduct_product_label_ring}>
+            <span className={cls.allproduct_product_label_ring}>
             <span className={cls.allproduct_product_label_ring_desc}>
               <span>&nbsp;- {product.discount}%</span>
             </span>
-            {/* <span className={cls.allproduct_product_label_ring_icons}> */}
-            {/* </span> */}
+              {/* <span className={cls.allproduct_product_label_ring_icons}> */}
+              {/* </span> */}
           </span>
           )}
-          <div className={cls.cartlike__btn3_bolhi_wrapp}>
-          <button
-            onClick={handlePopupView}
-            className={`${cls.cartlike__btn3} ${cls.cartlike__btn3_bolhi} ${isFavorite ? cls.cartlike__btn3_active : ''}`}></button>
-          </div>
           <span className={cls.allproduct_goods_nal}>
           {product.availability > 0 ? (
-              <span className={cls.goods_nal_desc} style={{color: 'green'}}>В наличии: {product.availability} шт.</span>
-            ) : (
-              <span className={cls.goods_nal_desc} style={{color: '#b62908'}}>Предзаказ</span>
-            )}
+            <span className={cls.goods_nal_desc} style={{color: 'green'}}>В наличии
+              {/*: {product.availability} шт.*/}
+                </span>
+          ) : (
+            <span className={cls.goods_nal_desc} style={{color: '#b62908'}}>Предзаказ</span>
+          )}
 
           </span>
         </span>
-        <button
-          onClick={handleChangeFav}
-          className={`${cls.cartlike__btn2} ${isFavorite ? cls.cartlike__btn2_active : ''}`}
-        />
+        {/*<button*/}
+        {/*  onClick={authStore.isAuth ? handleChangeFav : handleLogin}*/}
+        {/*  className={`${cls.cartlike__btn2} ${isFavorite ? cls.cartlike__btn2_active : ''}`}*/}
+        {/*/>*/}
         <div className={cls.allproduct_goods_artikul_wrapp}>
 
           <div className={cls.allproduct_goods_artikul_nalnenal}>
             <p className={cls.allproduct_goods_artikul}>{product.name}
-              &nbsp;<span>{product.article}</span></p>
+              &nbsp;{product.article}</p>
             <span className={`${cls.allproduct_goods_nal} ${cls.allproduct_goods_nal_ot}`}>
               {product.availability > 0 ? (
                 <span className={cls.goods_nal_desc} style={{color: 'green'}}>{product.availability} шт.</span>
@@ -153,19 +167,27 @@ export const ProdBlock: React.FC<ProdBlockProps> = observer(({ product }) => {
         </div>
         <div className={cls.goods_activity_cartlike_wrapo}>
           <div className={cls.goods_activity_cartlike}>
-            <AddToCart cartCount={cartCount} product={product} />
+            <AddToCart cartCount={cartCount} product={product}/>
             <button
-              onClick={handleChangeFav}
+              onClick={authStore.isAuth ? handleChangeFav : handleLogin}
               className={`${cls.cartlike__btn2} ${isFavorite ? cls.cartlike__btn2_active : ''}`}
             />
-            
-          <button
-            onClick={handlePopupView}
-            className={`${cls.cartlike__btn3} ${isFavorite ? cls.cartlike__btn3_active : ''}`}
+
+            <button
+              onClick={handlePopupView}
+              className={`${cls.cartlike__btn3} ${isFavorite ? cls.cartlike__btn3_active : ''}`}
             ></button>
           </div>
         </div>
       </div>
+
+      <div
+        onClick={handlePopupView}
+        className={cls.cartlike__btn3_bolhi_wrapp}>
+        <button
+          className={`${cls.cartlike__btn3} ${cls.cartlike__btn3_bolhi} ${isFavorite ? cls.cartlike__btn3_active : ''}`}></button>
+      </div>
+
     </li>
   );
 });

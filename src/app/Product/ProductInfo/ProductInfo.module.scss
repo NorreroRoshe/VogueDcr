@@ -1,15 +1,11 @@
 .container {
-  max-width: 1660px;
   padding: 0 30px;
   margin: 0 auto;
   @media (max-width: 1023px) {
-    margin: 85px auto 0;
+    //margin: 85px auto 0;
   }
   @media (max-width: 900px) {
     padding: 0;
-  }
-  @media (max-width: 900px) {
-    padding: 0 5px;
   }
 }
 
@@ -22,5 +18,25 @@
 .product_info_container_s {
   @media (max-width: 1023px) {
     margin: 0 auto;
+  }
+}
+
+.dfghfgj {
+  display: flex;
+  gap: 20px;
+  @media (max-width: 999px) {
+    flex-direction: column;
+    gap: 0px;
+  }
+}
+
+.sqdwfegbfd {
+  color: #9a9ca5;
+  font-weight: 400;
+  line-height: 30px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  @media (max-width: 999px) {
+    margin-bottom: 0px;
   }
 }

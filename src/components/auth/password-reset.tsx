@@ -15,10 +15,11 @@ import PasswordInput from '../ui/form/password-input';
 import Button from '../ui/button';
 import Logo from '../ui/logo';
 import Link from 'next/link';
-import signupphoto from '@/assets/img/ButtImg/SignUp.jpg';
+import signupphoto from '@/assets/img//SignUp.jpg';
 import { useStore } from '@/hooks/useStore';
 import { IPasswordResetReq } from '@/types/Auth/auth.dtos';
 import { useRouter } from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 
 interface PasswordResetProps {
   isPopup?: boolean;
@@ -26,12 +27,19 @@ interface PasswordResetProps {
 }
 
 const PasswordReset: React.FC<PasswordResetProps> = ({
-  isPopup = true,
-  className,
-}) => {
+                                                       isPopup = true,
+                                                       className,
+                                                     }) => {
 
   const store = useStore();
   const authStore = store.auth
+
+  const params = useSearchParams()
+  const router = useRouter();
+
+  const searchEmail = params.get('email') as string
+  const searchCode = params.get('code') as string
+
   const { t } = useTranslation();
   const { closeModal, openModal } = useModalAction();
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -43,54 +51,53 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
     formState: { errors },
   } = useForm<IPasswordResetReq>();
 
-  const router = useRouter();
-  
-  function onSubmit({ code, email, password }: IPasswordResetReq) {
+
+  function onSubmit({ password }: IPasswordResetReq) {
     authStore.passwordReset({
-      code,
-      email,
+      code: searchCode,
+      email: searchEmail,
       password,
     })
-      .then((data) => {
-          openModal('SUCCESS_CHANGE_PASSWORD');
-          router.replace('/Signin');
-      })
-      .catch((error) => {
-        if (error?.data?.errors?.Password) {
-          const passwordErrorMessage = error.data.errors.Password[0];
-          setPasswordError(passwordErrorMessage);
-          setEmailError(null);
-        }
-        else if (error?.data?.Message === "Passwords must have at least one non alphanumeric character.") {
-          setPasswordError("Пароль должен содержать хотя бы один символ не цыфро-буквенный");
-          setEmailError(null);
-        }
-        else if (error?.data?.Message === "Passwords must have at least one uppercase ('A'-'Z').") {
-          setEmailError(null);
-          setPasswordError("Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z').");
-        }
-        else if (error?.data?.Message === "Passwords must have at least one lowercase ('a'-'z').") {
-          setPasswordError("Пароль должен содержать хотя бы одну строчную букву ('a'-'z').");
-          setEmailError(null);
-        }
-        else if (error.data.Message === "Неправильный код подтверждения") {
-          setEmailError(null);
-          setCodeError('Неправильный код подтверждения');
-        }
 
-        else if (error.data.errors?.Code && error.data.errors.Code[0] === 'Длина кода должна быть равна 6 символам') {
-          setCodeError('Длина кода должна быть равна 6 символам');
-          setEmailError(null);
+
+      .then((data) => {
+
+        if (data?.data?.message === "Запрос выполнен успешно") {
+          router.push('/SuccessChangePassword');
+        } else {
+          if (data?.message === "Внутренняя ошибка сервера") {
+            setPasswordError('Внутренняя ошибка сервера');
+            setEmailError(null);
+          }
+          else if (data?.message === "Пароль должен быть не менее 8 символов") {
+            setPasswordError("Пароль должен быть не менее 8 символов");
+            setEmailError(null);
+          }
+          else if (data?.message === "Неправильный код подтверждения") {
+            setPasswordError("Ошибка! Пожалуйста повторите операцию позже!");
+            setEmailError(null);
+          }
+          else if (data?.message === "Пользователь не найден") {
+            setPasswordError("Пользователь не найден!");
+            setEmailError(null);
+          }
+          else if (data?.message === "Пароль должен содержать минимум 8 символов, включая заглавные и строчные буквы, цифры и специальные символы.") {
+            setPasswordError("Пароль должен содержать минимум 8 символов, включая заглавные и строчные буквы, цифры и специальные символы.");
+            setEmailError(null);
+          }
+          else if (data?.message === "Undefined variable $validator") {
+            setPasswordError("Ошибка при смене пароля, пожалуйса повторите позже");
+            setEmailError(null);
+          }
+          else if (data?.message === "Passwords must have at least one uppercase ('A'-'Z').") {
+            setEmailError(null);
+            setPasswordError("Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z').");
+          }
+          else {
+            setPasswordError('Ошибка при смене пароля');
+          }
         }
-        else if (error.data.Message === "Пользователь не найден") {
-          setEmailError('Пользователь не найден');
-          setPasswordError(null);
-        }
-        else {
-          setEmailError("Ошибка при регистрации");
-          setPasswordError('Ошибка при регистрации');
-        }
-      });
+      })
   }
   return (
     <div
@@ -118,9 +125,9 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
             <h4 className="text-skin-base font-semibold text-xl sm:text-2xl  sm:pt-3 ">
               {t('Сброс пароля')}
             </h4>
-            <div className="text-sm sm:text-base text-body text-center mt-3 mb-1">
+            {/* <div className="text-sm sm:text-base text-body text-center mt-3 mb-1">
               {t('Следуйте инструкциям, и вы сможете восстановить ваш пароль')}
-            </div>
+            </div> */}
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -128,7 +135,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
             noValidate
           >
             <div className="flex flex-col space-y-4">
-              <Input
+              {/* <Input
                 label={t('Введите почту еще раз')}
                 type="email"
                 variant="solid"
@@ -148,7 +155,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
                 {...register('code', {
                   required: `${t('Некорректный код')}`,
                 })}
-              />
+              /> */}
               <PasswordInput
                 label={t('Введите новый пароль')}
                 error={passwordError || errors.password?.message}
@@ -160,8 +167,8 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
               >
                 <Button
                   type="submit"
-                  loading={authStore.isLoading}
-                  disabled={authStore.isLoading}
+                  // loading={authStore.isLoading}
+                  // disabled={authStore.isLoading}
                   className="h-11 md:h-12 w-full mt-2 font-15px md:font-15px tracking-normal"
                   variant="formButton"
                 >

@@ -6,8 +6,11 @@ import Breadcrumb from '@/components/ui/breadcrumb';
 const Contacts: React.FC = () => {
   return (
     <section className={cls.section_constact}>
+      <div className={`${cls.container_br}`}>
+          <Breadcrumb/>
+      </div>
+
       <div className={`${cls.contacts_container} ${cls.container}`}>
-        <Breadcrumb />
         <h2 className={cls.constact_header}>Контакты</h2>
         <div className={cls.contact_online}>
           <div className={cls.online_timeline}>
@@ -24,7 +27,7 @@ const Contacts: React.FC = () => {
             <div className={cls.connection_mail}>
               <div className={cls.connection_mail_client}>
                 <a href="" className={cls.mail_client_telink}>
-                  info@Vogue Decor.ru
+                  info@Vogue-Decor.ru
                 </a>
               </div>
             </div>
@@ -39,52 +42,60 @@ const Contacts: React.FC = () => {
             <div className={cls.requisite__item}>
               <p className={`${cls.requisite__itemComp} ${cls.requisite__itemText} ${cls.mrreset} ${cls.tac}`}>
                 Организация:
-                <strong className={`${cls.requisite__itemTextAccent} ${cls.requisite__item_text}`}>ИП Галоян Норайр Жирайрович</strong>
+                <strong className={`${cls.requisite__itemTextAccent} ${cls.requisite__item_text}`}>ИП Галоян Норайр
+                  Жирайрович</strong>
               </p>
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressLegal} ${cls.mrreset}`}>
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressLegal} ${cls.mrreset}`}>
                 Юридический адрес:
                 <span className={`${cls.requisite__itemTextAccent}`}>143362, г. Московская область, г. Апрелевка, ул. Ясаня , д. 3</span>
               </p>
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
                 Почтовый адрес:
                 <span className={`${cls.requisite__itemTextAccent}`}>143362, г. Московская область, г. Апрелевка, ул. Ясаня , д. 3</span>
               </p>
 
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
                 ИНН:
                 <span className={`${cls.requisite__itemTextAccent}`}>461501845610</span>
               </p>
               {/* <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
-                КПП:
-                <span className={`${cls.requisite__itemTextAccent}`}>507401001</span>
-              </p> */}
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
+              КПП:
+              <span className={`${cls.requisite__itemTextAccent}`}>507401001</span>
+            </p> */}
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
                 ОГРН:
                 <span className={`${cls.requisite__itemTextAccent}`}>315503000007608</span>
               </p>
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
                 Расчетный счет:
                 <span className={`${cls.requisite__itemTextAccent}`}>40802810540000012646</span>
               </p>
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
                 Банк:
                 <span className={`${cls.requisite__itemTextAccent}`}>ПАО Сбербанк Среднерусский банк СБ  РФ г. Москва Доп. офис №9040/01636</span>
               </p>
-              <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
+              <p
+                className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
                 БИК:
                 <span className={`${cls.requisite__itemTextAccent}`}>044525225</span>
               </p>
               {/* <p className={`${cls.requisite__itemText} ${cls.requisite__itemAddress} ${cls.requisite__itemAddressActual} ${cls.mrreset}`}>
-                К/сч:
-                <span className={`${cls.requisite__itemTextAccent}`}>30101810200000000593</span>
-              </p> */}
+              К/сч:
+              <span className={`${cls.requisite__itemTextAccent}`}>30101810200000000593</span>
+            </p> */}
               {/* Add other details for the first company */}
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+);
 };
 
 export default Contacts;

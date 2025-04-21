@@ -63,7 +63,7 @@ const CartElseProduct: React.FC<ICartElseProduct> = observer(({
     router.push(`${ROUTES.COLLECTIONS}/${collectionId}`);
   }
 
-  console.log(collection, 'collection')
+
 
   return (
     <>
@@ -89,7 +89,7 @@ const CartElseProduct: React.FC<ICartElseProduct> = observer(({
             <ul className={cls.maybebox_product_list}>
               {productStore.collectionItems?.map((obj, i) => (
                 <li key={i} className={cls.maybebox_product_item}>
-                  <img src={obj.urls ? obj.urls[0] : ''} alt="" className={cls.product_item_photo} />
+                  <img src={obj.files[0].url} alt="" className={cls.product_item_photo} />
                 </li>
               ))}
             </ul>
@@ -116,7 +116,7 @@ const CartElseProduct: React.FC<ICartElseProduct> = observer(({
                 <div key={i} className={cls.detalepoduct_product}>
                   <div className={cls.detalepoduct_product_box}>
                     <div className={cls.detalepoduct_product_link}>
-                      <img src={obj.urls ? obj.urls[0] : ''} alt="" className={cls.product_link_photo} />
+                      <img src={obj.files[0].url} alt="" className={cls.product_link_photo} />
                     </div>
                     <div className={cls.detalepoduct_product_desc}>{obj.name} <span>{obj.article}</span></div>
                   </div>

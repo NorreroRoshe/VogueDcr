@@ -94,15 +94,15 @@ const AfterLoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className })
               <Logo />
             </div>
             <div className="text-sm sm:text-15px text-body text-center mt-3 mb-1">
-              {t('Вы успешно зарегистрировались, для того чтобы войти в аккаунт, пожалуйста')}
+              {t('Вы успешно зарегистрировались, вам на почту направлено сообщение! Для того чтобы войти в аккаунт, пожалуйста пройдите верификацию с помощью ссылки, которую мы напавили на вашу почту!')}
               <br />
             </div>
 
-            <h4 className="text-skin-base font-semibold text-xl sm:text-2xl sm:pt-3 ">
+            {/* <h4 className="text-skin-base font-semibold text-xl sm:text-2xl sm:pt-3 ">
               {t('Авторизуйтесь')}
-            </h4>
+            </h4> */}
           </div>
-          <form
+          {/* <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col justify-center"
             noValidate>
@@ -149,7 +149,7 @@ const AfterLoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className })
                 </Button>
               </div>
             </div>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>

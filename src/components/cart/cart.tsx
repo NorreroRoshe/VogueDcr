@@ -18,14 +18,15 @@ import {toJS} from "mobx";
 
 const Cart = observer(() => {
   const { t } = useTranslation('common');
-  const { closeDrawer } = useUI();
+  const { displayDrawer, closeDrawer, drawerView } = useUI();
+
 
   const store = useStore();
   const cartStore = store.cart
   const authStore = store.auth
   const productStore = store.product
 
-  const cart = cartStore.items.map((cartItem) => {
+  const cart = cartStore.cartItems?.map((cartItem) => {
     const count =
     cartStore.cart.find((countItem) => countItem.id === cartItem?.id)?.count || 0;
     return { ...cartItem, count: count };
@@ -38,10 +39,18 @@ const Cart = observer(() => {
     }
   };
 
+  const isCartSidebarOpen = displayDrawer && drawerView === 'CART_SIDEBAR';
+
+  useEffect(() => {
+    if (isCartSidebarOpen) {
+      cartStore.getUserCart();
+    }
+  }, [isCartSidebarOpen]);
+
   useEffect(() => {
     if(!authStore.isAuth) {
-      cartStore.items = [];
-      console.log(cartStore.cart);
+      cartStore.cartItems = [];
+
       cartStore.cart.length > 0 &&
       cartStore.cart.map(
         (row) =>
@@ -57,12 +66,12 @@ const Cart = observer(() => {
 
 
 
-  const totalDiscountPrice = cartStore.items.reduce((sum, curr) => {
+  const totalDiscountPrice = cartStore.cartItems.reduce((sum, curr) => {
     const truePrice = curr.price - (curr.price * curr.discount) / 100;
     return truePrice * (cartStore.cart.find((item) => item.id === curr.id)?.count ?? 1) + sum;
   }, 0);
 
-  console.log(cart)
+
 
   if (cartStore.cart.length === 0) {
     return <EmptyCart />;

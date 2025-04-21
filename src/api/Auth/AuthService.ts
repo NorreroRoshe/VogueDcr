@@ -1,6 +1,7 @@
 "use client"
 import makeRequest from '@/api/makeRequest';
-import { IConfirmReq, IGetUserDetailsReq, IGetUserDetailsRes, IPasswodForgotReq, IPasswodForgotRes, IPasswordResetReq, IPasswordResetRes, IPutUserDetailsReq, IResendConfirmReq, IResendConfirmRes, ISingInReq, ISingInRes, ISingUpReq, ISingUpRes } from '@/types/Auth/auth.dtos';
+import makeRequestMap from '@/api/makeRequestMap';
+import { IRemoveOrderByIdReq, IGetUserOrdersReq, IChangeOrderStatusByIdReq, IGetUserOrdersRes,IDataGetOrderByIdReq, IDataGetOrderByIdRes, IConfirmRes, IScheduleData, IDataOrderReq, IDataOrderRes, IConfirmReq, IGetUserDetailsReq, IGetUserDetailsRes, IPasswodForgotReq, IPasswodForgotRes, IPasswordResetReq, IPasswordResetRes, IPutUserDetailsReq, IAddAddressReq, IGetAddressRes, IGetPhoneRes, IAddPhoneReq, IEditPhoneReq, IResendConfirmReq, IResendConfirmRes, ISingInReq, ISingInRes, ISingUpReq, ISingUpRes, IDeleteAddressReq, IEditAddressReq, IGetYandexListRes } from '@/types/Auth/auth.dtos';
 // import {ProductsResponse} from "@/types/types";
 import {AxiosResponse} from "axios";
 import Cookies from 'js-cookie';
@@ -15,6 +16,7 @@ class AuthService {
       data: data,
     });
   };
+
   signUp({data} :
     {data: ISingUpReq}) {
     return makeRequest<ISingUpRes>({
@@ -23,20 +25,23 @@ class AuthService {
       data: data,
     });
   };
+
   refreshToken() {
     return makeRequest<ISingInRes>({
       url: `/auth/token-refresh?refreshToken=${Cookies.get("refresh_token")}`,
       method: "POST",
     })
   };
+
   emailConfirm({data} :
     {data: IConfirmReq}) {
-    return makeRequest<void>({
+    return makeRequest<IConfirmRes>({
       url: "/auth/email-confirm",
       method: "POST",
       data: data,
     });
   };
+
   emailResendConfirm({data} :
     {data: IResendConfirmReq}) {
     return makeRequest<IResendConfirmRes>({
@@ -45,6 +50,7 @@ class AuthService {
       params: data,
     });
   };
+
   passwordForgot({data} :
     {data: IPasswodForgotReq}) {
     return makeRequest<IPasswodForgotRes>({
@@ -53,6 +59,7 @@ class AuthService {
       params: data,
     });
   };
+
   passwordReset({data} :
     {data: IPasswordResetReq}) {
     return makeRequest<IPasswordResetRes>({
@@ -61,6 +68,7 @@ class AuthService {
       data: data,
     });
   };
+
   getUserDetails({data} :
     {data: IGetUserDetailsReq}) {
     return makeRequest<IGetUserDetailsRes>({
@@ -69,12 +77,169 @@ class AuthService {
       params: data,
     });
   };
+
   putUserDetails({data} :
     {data: IPutUserDetailsReq}) {
     return makeRequest<void>({
       url: `/user/details`,
       method: "PUT",
       data: data,
+    });
+  };
+
+  
+  
+
+  getUserAddress({data} :
+    {data: void}) {
+    return makeRequest<IGetAddressRes>({
+      url: "/user/addresses/get",
+      method: "POST",
+      data: data,
+    });
+  };
+
+  addUserAddress({data} :
+    {data: IAddAddressReq}) {
+    return makeRequest<void>({
+      url: "/user/addresses/add",
+      method: "POST",
+      data: data,
+    });
+  };
+  
+  deleteUserAddress(id: number) {
+    return makeRequest<void>({
+      url: "/user/addresses/delete",
+      method: "POST",
+      data: {
+        id: id
+      }
+    });
+  };
+  
+  editUserAddress({data} :
+    {data: IEditAddressReq}) {
+    return makeRequest<void>({
+      url: "/user/addresses/edit",
+      method: "POST",
+      data: data,
+    });
+  };
+
+
+
+  
+  
+  getUserPhone({data} :
+    {data: void}) {
+    return makeRequest<IGetPhoneRes>({
+      url: "/user/phones/get",
+      method: "POST",
+      data: data,
+    });
+  };
+
+  addUserPhone({data} :
+    {data: IAddPhoneReq}) {
+    return makeRequest<void>({
+      url: "/user/phones/add",
+      method: "POST",
+      data: data,
+    });
+  };
+
+  deleteUserPhone(id: number) {
+    return makeRequest<void>({
+      url: "/user/phones/delete",
+      method: "POST",
+      data: {
+        id: id
+      }
+    });
+  };
+
+  editUserPhone({data} :
+    {data: IEditPhoneReq}) {
+    return makeRequest<void>({
+      url: "/user/phones/edit",
+      method: "POST",
+      data: data,
+    });
+  };
+
+
+
+
+
+  getOrderTimes({data} :
+    {data: void}) {
+    return makeRequest<IScheduleData>({
+      url: "/order/times",
+      method: "GET",
+      data: data,
+    });
+  };
+
+
+  dataOrder({data} :
+    {data: IDataOrderReq}) {
+    return makeRequest<IDataOrderRes>({
+      url: "/order",
+      method: "POST",
+      data: data,
+    });
+  };
+
+  dataGetOrderById({data} :
+    {data: IDataGetOrderByIdReq}) {
+    return makeRequest<IDataGetOrderByIdRes>({
+      url: "/order/getbyid",
+      method: "GET",
+      params: data,
+    });
+  };
+
+
+  getUserOrders({data} :
+    {data: IGetUserOrdersReq}) {
+    return makeRequest<IGetUserOrdersRes>({
+      url: "/order/all",
+      method: "GET",
+      params: data,
+    });
+  };
+
+  changeOrderStatusById({data} :
+    {data: IChangeOrderStatusByIdReq}) {
+    return makeRequest<void>({
+      url: "/order/status",
+      method: "GET",
+      params: data,
+    });
+  };
+
+
+
+
+
+
+  removeOrderById({data} :
+    {data: IRemoveOrderByIdReq}) {
+    return makeRequest<void>({
+      url: "/order/removebyid",
+      method: "GET",
+      params: data,
+    });
+  };
+
+
+  getValidAddress({data} :
+    {data: string}) {
+    return makeRequestMap<IGetYandexListRes>({
+      // url: `&text=${data}&ll=55.75583,37.61778`,
+      url: `&geocode=${data}&format=json`,
+      method: "GET"
     });
   };
 }

@@ -10,6 +10,8 @@ import { useModalAction } from '../common/modal/modal.context';
 import { useState } from 'react';
 import { useStore } from '@/hooks/useStore';
 import { IPasswodForgotReq } from '@/types/Auth/auth.dtos';
+import { useRouter } from "next/navigation";
+
 type FormValues = {
   email: string;
 };
@@ -20,8 +22,9 @@ const defaultValues = {
 
 const ForgetPasswordForm:React.FC = () => {
 
-const store = useStore();
-const authStore = store.auth
+  const router = useRouter();
+  const store = useStore();
+  const authStore = store.auth
 
   const { t } = useTranslation();
   const { closeModal, openModal } = useModalAction();
@@ -41,17 +44,19 @@ const authStore = store.auth
     authStore.passwordForgot({
       Email
     })
-    .then(() => {
-      openModal('PASSWORD_RESET')
-    })
-    .catch((error) => {
-        if (error.data?.Message === "Пользователь не найден") {
+    .then((data) => {
+      if (data?.data?.message === "Запрос выполнен успешно") {
+        closeModal();
+        router.push('/PasswordReset')
+      } else {
+        if (data?.message === "Пользователь не найден") {
           setEmailError('Пользователь не найден');
         }
         else {
-          setEmailError('Ошибка при входе');
+          setEmailError("Ошибка при входе");
+        }
       }
-    });
+    })
   };
 
 
@@ -106,7 +111,7 @@ const authStore = store.auth
         {t('Вернуться к ')}{' '}
         <button
           type="button"
-          className="text-skin-base underline font-medium hover:no-underline focus:outline-none"
+          className="text-skin-base underline font-extrabold hover:no-underline focus:outline-none"
           onClick={handleSignIn}
         >
           {t('авторизации')}

@@ -29,4 +29,15 @@ export interface IFilter {
   CollectionsId?: string;
   BrandsId?: string;
   IsSale?: boolean;
+  filter2?: number[];      //Colors
+  filter3?: number[];      //ChandelierTypes
+  filter5?: number[];      //Materials
+  filter6?: number[];      //Styles
+  filter7?: number[];      //PictureMaterial
+  filter8?: number[];      //Stil kovrov
+  filter9?: number[];      //Материал ковров
+  filter10?: number[];      //Материал для товаров и услуг
+  filter11?: number[];      //Материал аксессуаров
+  filter12?: number[];      //Материал рамки
+  filter13?: number[];      //Материал холста
 }

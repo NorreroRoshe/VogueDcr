@@ -58,9 +58,10 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
   const store = useStore();
   const favoritesStore = store.favorites;
   const cartStore = store.cart;
+  const authStore = store.auth
+  const { openModal, closeModal } = useModalAction();
 
   const { width } = useWindowSize();
-  const { closeModal } = useModalAction();
   const router = useRouter();
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
   const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
@@ -148,7 +149,9 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
     });
   }
 
-  // useEffect(() => [data.id]);
+  function handleLogin() {
+    openModal("LOGIN_VIEW");
+  }
 
   return (
     <div className="md:w-[600px] lg:w-[940px] xl:w-[1180px] 2xl:w-[1360px] mx-auto p-1 lg:p-0 xl:p-3 bg-skin-fill rounded-md">
@@ -189,7 +192,8 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
                         borderRadius: '5px',
                         color: 'rgb(228, 185, 13)'
                       }}>
-                      В наличии: {popupProduct.availability} шт.
+                      В наличии
+                      {/*: {popupProduct.availability} шт.*/}
                     </div>) : (
                     <div
                       className="whitespace-nowrap"
@@ -258,7 +262,7 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
                       <br />
                     </span>
                   )}
-                  {!!popupProduct.width && (
+                  {!!popupProduct.width &&(
                     <span
                       className="text-sm font-medium"
                       style={{ color: '#787a80', fontSize: '17px' }}>
@@ -267,33 +271,59 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
                       <br />
                     </span>
                   )}
-                  <span
-                    className="text-sm font-medium"
-                    style={{ color: '#787a80', fontSize: '17px' }}>
-                    Лампочки:
-                    <span style={{ marginLeft: '10px', fontSize: '17px' }}>
-                      {popupProduct.lampCount} x {popupProduct.plinth}
+                  {!!popupProduct.indent &&(
+                    <span
+                      className="text-sm font-medium"
+                      style={{ color: '#787a80', fontSize: '17px' }}>
+                      Отступ от стены:
+                      <span style={{ marginLeft: '10px', fontSize: '17px' }}>{popupProduct.indent} см</span>
+                      <br />
                     </span>
-                  </span>
+                  )}
+                  {popupProduct?.productTypes?.includes(1) && (
+                    <span
+                      className="text-sm font-medium"
+                      style={{color: '#787a80', fontSize: '17px'}}>
+                      Лампочки:
+                      <span style={{marginLeft: '10px', fontSize: '17px'}}>
+                        {popupProduct.lampCount} x {popupProduct.plinth}
+                      </span>
+                    </span>
+                  )}
+
                 </div>
 
                 <div className="pt-1.5 lg:pt-3 xl:pt-4 space-y-2.5 md:space-y-3.5">
-                  {cartCount() > 0 ? (
-                    <Counter variant="single" product={popupProduct} />
-                  ) : (
-                    <Button
-                      onClick={handleAddToCart}
-                      className="w-full px-1.5"
-                      loading={addToCartLoader}>
-                      <CartIcon color="#ffffff" className="me-3" />
-                      Добавить в корзину
-                    </Button>
-                  )}
+                  {authStore.isAuth ?
+                    (
+                      cartCount() > 0 ? (
+                        <Counter variant="single" product={popupProduct}/>
+                      ) : (
+                        <Button
+                          onClick={handleAddToCart}
+                          className="w-full px-1.5"
+                          loading={addToCartLoader}
+                        >
+                          <CartIcon color="#ffffff" className="me-3" />
+                          Добавить в корзину
+                        </Button>
+                      )
+                    ):(
+                      <Button
+                        onClick={handleLogin}
+                        className="w-full px-1.5"
+                        loading={addToCartLoader}
+                      >
+                        <CartIcon color="#ffffff" className="me-3" />
+                        Добавить в корзину
+                      </Button>
+                    )
+                  }
 
                   <div className="grid grid-cols-2 gap-2.5">
                     <Button
                       variant="border"
-                      onClick={addToWishlist}
+                      onClick={authStore.isAuth ? addToWishlist : handleLogin}
                       loading={addToWishlistLoader}
                       className={`group hover:text-skin-primary ${(isFavorite()) && 'text-skin-primary'}`}
                       style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
@@ -336,21 +366,23 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
                     <>&nbsp;{`<`}</>
                   </Button> */}
                 </div>
-                <ul className="pt-5 xl:pt-6">
-                  <li className="text-sm md:text-15px text-skin-base text-opacity-80 inline-flex items-center justify-center me-2 relative top-1">
-                    <LabelIcon className="me-2" /> Теги:
-                  </li>
-                  <li className="inline-block p-[3px]">
-                    <div
-                      className="font-medium text-13px md:text-sm rounded hover:bg-skin-button-secondary block border border-sink-base px-2 py-1 transition"
-                      style={{ cursor: 'text' }}
-                      role="button">
-                      {popupProduct.chandelierTypes
-                        ?.map((chandelierType) => chandelierTypeArray[chandelierType])
-                        .join(' / ')}
-                    </div>
-                  </li>
-                </ul>
+                {popupProduct?.type?.length ? (
+                  <ul className="pt-5 xl:pt-6">
+                    <li className="text-sm md:text-15px text-skin-base text-opacity-80 inline-flex items-center justify-center me-2 relative top-1">
+                      <LabelIcon className="me-2" /> Теги:
+                    </li>
+                    <li className="inline-block p-[3px]">
+                      <div
+                        className="font-medium text-13px md:text-sm rounded hover:bg-skin-button-secondary block border border-sink-base px-2 py-1 transition"
+                        style={{ cursor: 'text' }}
+                        role="button">
+                        {popupProduct.type
+                          ?.map((chandelierType) => chandelierTypeArray[chandelierType])
+                          .join(' / ')}
+                      </div>
+                    </li>
+                  </ul>
+                ) : (<span></span>)}
                 <div className="pt-6 xl:pt-8">
                   <Heading className="mb-3 lg:mb-3.5">Описание:</Heading>
                   <Text variant="small">
@@ -374,7 +406,7 @@ const ProductPopup: React.FC<ProductPopupProps> = observer(({ popupProduct }) =>
           </div>
         </div>
         <RelatedProductFeed
-          id={popupProduct?.collection?.id}
+          collid={popupProduct?.collection?.id}
           sectionHeading='Товары из этой коллекции'
           carouselBreakpoint={RelatedBreakpoints}
           className="mb-0.5 md:mb-2 lg:mb-3.5 xl:mb-4 2xl:mb-6"

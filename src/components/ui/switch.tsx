@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from 'react-switch'; // Импорт из библиотеки react-switch
+import cls from './Ui.module.scss'; // Импорт из библиотеки react-switch
 // import { useRouter } from 'next/navigation';
 // import { getDirection } from '@/utils/get-direction';
 
@@ -19,7 +20,7 @@ const SwitchComponent: React.FC<SwitchProps> = ({ srText = 'toggle', checked, on
   };
 
   return (
-    <label>
+    <label className={cls.salenu}>
       <Switch checked={checked || false} onChange={handleSwitchChange} aria-label={srText} />
     </label>
   );

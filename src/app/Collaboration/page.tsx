@@ -62,7 +62,7 @@ const Collaboration: React.FC = () => {
                       style={{
                         borderBottom: '1px solid #805856',
                       }}>
-                      <td width="15%">
+                      <td width="5%">
                         <img
                           className={cls.content_first_img}
                           width="100%"

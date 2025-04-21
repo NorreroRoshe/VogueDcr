@@ -22,9 +22,9 @@ const CartButton: React.FC<CartButtonProps> = observer(({ className }) => {
     setDrawerView('CART_SIDEBAR');
     // isShowing;
     return openDrawer();
-  } 
+  }
   const cartCount = cartStore.cart.reduce((sum, curr) => sum + curr.count, 0);
-  console.log(cartStore.cart)
+
 
   return (
     <button
@@ -43,6 +43,7 @@ const CartButton: React.FC<CartButtonProps> = observer(({ className }) => {
         </svg>
         <span className="cart-counter-badge flex items-center justify-center text-skin-black absolute -top-2.5 -right-6 start-2.5 rounded-full" style={{ fontSize: '14px' }}>
           {cartCount}
+          {/*{cartStore.cartCount}*/}
         </span>
       </div>
       {/* {!hideLabel && (                                                                                //Текст - Корзина

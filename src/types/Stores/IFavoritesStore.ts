@@ -2,7 +2,7 @@
 import { FavoritesItem } from "../Favorites/favorites.types";
 
 export interface IFavoritesStore {
-  items: FavoritesItem[];
+  favoriteItems: FavoritesItem[];
   ids: string[];
   isLoading: boolean;
   

@@ -28,7 +28,7 @@ export class BrandStore implements IBrandStore {
 
 
 
-  async getBrands(data: IGetBrandReq) { 
+  async getBrands(data: IGetBrandReq) {
     this.isLoading = true;
     const response = await BrandService.getBrands({data})
     if ('data' in response) {
@@ -36,7 +36,7 @@ export class BrandStore implements IBrandStore {
       this.brands = response.data.brands
     }
   }
-  async getBrandCol(data: IGetBrandColReq) { 
+  async getBrandCol(data: IGetBrandColReq) {
     this.isLoading = true;
     const response = await BrandService.getBrandCol({data})
     if ('data' in response) {
@@ -45,7 +45,7 @@ export class BrandStore implements IBrandStore {
       this.brandName = response.data.brandName ?? ''
     }
   }
-  async getWindowBrand(data: IGetBrandReq) { 
+  async getWindowBrand(data: IGetBrandReq) {
     this.isLoading = true;
     const response = await BrandService.getWindowBrand({data})
     if ('data' in response) {

@@ -3,6 +3,8 @@ import cls from '@/components/GoodsCatalogue/GoodsCatalogue.module.scss';
 import { useCart } from '@/hooks/useCart';
 import { Product } from '@/types/Product/product.types';
 import {observer} from "mobx-react";
+import {useStore} from "@/hooks/useStore";
+import {useModalAction} from "@/components/common/modal/modal.context";
 
 interface Props {
   cartCount: any;
@@ -12,6 +14,10 @@ interface Props {
 export const AddToCart = observer(({ cartCount, product }: Props) => {
   const { addToCart, deleteFromCart, isLoading } = useCart();
 
+  const store = useStore();
+  const authStore = store.auth
+  const { openModal } = useModalAction();
+
   const handleAddToCart = () => {
     addToCart(product.id)
   }
@@ -20,21 +26,35 @@ export const AddToCart = observer(({ cartCount, product }: Props) => {
     deleteFromCart(product.id)
   }
 
+  function handleLogin() {
+    openModal("LOGIN_VIEW");
+  }
+
   return (
     <>
-      {cartCount > 0 ? (
+      {authStore.isAuth ?
+        (
+        cartCount > 0 ? (
         // <Counter className={cls.add_to_coun} product={product} />
         <button
         onClick={()=>handleDeleteFromCart()}
         className={`${cls.cartlike__btn1} ${ cartCount ? cls.cartlike__btn1_active : ''}`}>
         </button>
-      ) : (
+        ) : (
         <button
           onClick={()=>handleAddToCart()}
           className={`${cls.cartlike__btn1} ${
             cartCount ? cls.cartlike__btn1_active : ''
           }`}></button>
-      )}
+        )
+      ):(
+          <button
+            onClick={handleLogin}
+            className={`${cls.cartlike__btn1} ${
+              cartCount ? cls.cartlike__btn1_active : ''
+            }`}></button>
+        )
+      }
     </>
   );
 });

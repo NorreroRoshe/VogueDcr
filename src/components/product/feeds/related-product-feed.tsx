@@ -8,7 +8,8 @@ interface RelatedProductsProps {
   carouselBreakpoint?: {} | any;
   className?: string;
   uniqueKey?: string;
-  id?: string;
+  collid?: string;
+  brid?: string;
   sectionHeading: string;
 }
 
@@ -16,15 +17,17 @@ const RelatedProductFeed: React.FC<RelatedProductsProps> = observer (({
   carouselBreakpoint,
   className,
   uniqueKey = 'related-product-popup',
-  id,
+  collid,
+  brid,
   sectionHeading
 }) => {
 
   const store = useStore();
   const productStore = store.product;
   const collectionStore = store.collection;
-  
-  const collectionId = id;
+
+  const collectionId = collid;
+  const brandId = brid;
 
   
 
@@ -43,7 +46,7 @@ const RelatedProductFeed: React.FC<RelatedProductsProps> = observer (({
   return (
     <ProductsCarousel
       sectionHeading={sectionHeading}
-      categorySlug={`/Collections/${collectionId}`}
+      categorySlug={`/Brands/${brandId}/${collectionId}`}
       className={className}
       products={productStore?.collectionItems}
       loading={productStore.isLoading}

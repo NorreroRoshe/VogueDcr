@@ -11,8 +11,10 @@ const CategoryCardLoader = (props: any) => (
     className="w-full h-auto overflow-hidden"
     {...props}
   >
-    <circle cx="90" cy="89" r="89" />
-    <rect x="30" y="203" rx="5" ry="5" width="118" height="8" />
+    {/*<circle cx="90" cy="89" r="89"/>*/}
+
+    <rect x="15" y="6" width="150" height="150" rx="10" ry="10"/>
+    <rect x="30" y="173" rx="5" ry="5" width="118" height="8"/>
   </ContentLoader>
 );
 

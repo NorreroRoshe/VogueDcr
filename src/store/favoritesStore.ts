@@ -14,7 +14,7 @@ const delFromArr = <T>(index: number, array: T[]) => [
 ];
 
 export class FavoritesStore implements IFavoritesStore {
-  items: FavoritesItem[] = [];
+  favoriteItems: FavoritesItem[] = [];
   ids: string[] = [];
   isLoading: boolean = false;
 
@@ -36,11 +36,11 @@ export class FavoritesStore implements IFavoritesStore {
   };
 
   getFavorite(getFavoriteProd: FavoritesItem) {
-    this.items = this.items.concat(getFavoriteProd);
+    this.favoriteItems = this.favoriteItems.concat(getFavoriteProd);
   };
   removeFavorite(removeFavoriteProd: string) {
-    const ind = this.items.findIndex((it) => it?.id === removeFavoriteProd);
-    this.items = delFromArr(ind, this.items);
+    const ind = this.favoriteItems.findIndex((it) => it?.id === removeFavoriteProd);
+    this.favoriteItems = delFromArr(ind, this.favoriteItems);
     const idsInd = this.ids.findIndex((it) => it === removeFavoriteProd);
     const ids = delFromArr(idsInd, this.ids);
     this.ids = ids;
@@ -49,7 +49,7 @@ export class FavoritesStore implements IFavoritesStore {
     }
   };
   clearItems() {
-    this.items = [];
+    this.favoriteItems = [];
     this.ids = [];
     if (typeof window !== 'undefined') {
       Cookies.set(KEY, `[]`);
@@ -65,8 +65,8 @@ export class FavoritesStore implements IFavoritesStore {
     if (typeof window !== 'undefined') {
       Cookies.remove("favorites");
     }
-      this.ids = response.data.products.map((item: Product) => item.id);
-      this.items = response.data.products;
+      this.ids = response.data.products?.map((item: Product) => item.id);
+      this.favoriteItems = response.data.products;
     }
   };
 
@@ -94,9 +94,9 @@ export class FavoritesStore implements IFavoritesStore {
       const ind = this.ids.findIndex((item) => productId === item);
       const ids = delFromArr(ind, this.ids);
       this.ids = ids;
-      const indItems = this.items.findIndex((item) => productId === item.id);
-      const items = delFromArr(indItems, this.items);
-      this.items = items;
+      const indItems = this.favoriteItems.findIndex((item) => productId === item.id);
+      const items = delFromArr(indItems, this.favoriteItems);
+      this.favoriteItems = items;
     }
   };
 };

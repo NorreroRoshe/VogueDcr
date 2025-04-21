@@ -648,7 +648,8 @@ button:focus {
 
 .subMenu {
   visibility: hidden;
-  transition: all .4s;
+  /*transition: all .4s;*/
+  transition: all .2s;
   top: calc(100% + 21px);
   width: 220px
 }
@@ -5617,8 +5618,14 @@ a {
 }
 
 .swiper-wrapper .swiper-slide {
-  height: auto
+  display: flex;
+  height: auto;
 }
+
+.swiper-wrapper .werfcwqw {
+  display: block;
+}
+
 
 .swiper .swiper-button-next,.swiper .swiper-button-prev {
   display: none
@@ -5660,10 +5667,10 @@ a {
 
 #productGalleryThumbs .swiper-wrapper {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   margin: -5px
 }
-
 #productGalleryThumbs .swiper-wrapper .swiper-slide {
   margin: 5px 5px 6px
 }
@@ -5697,14 +5704,14 @@ a {
   flex-direction: row
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 0px) {
   #productGalleryThumbs .swiper-wrapper {
       flex-flow:column;
       margin: 0
   }
 
   #productGalleryThumbs .swiper-wrapper .swiper-slide {
-      width: 100%!important;
+      width: 11% !important;
       margin: 0 0 12px
   }
 }
@@ -5715,6 +5722,24 @@ a {
   transform: translate3d(-500px,0,0)
 }
 
+.scrollCustom {
+  background-color: rgb(66, 66, 70) !important;
+  border-radius: 50% !important;
+  height: 65px !important;
+  width: 65px !important;
+  z-index: 50 !important;
+  bottom: 115px !important;
+  @media(max-width: 550px) {
+    background-color: rgb(66, 66, 70) !important;
+    border-radius: 50% !important;
+    height: 45px !important;
+    width: 45px !important;
+    z-index: 50 !important;
+    bottom: 78px !important;
+  }
+}
+
+
 .scrollCustom:before {
   /* font-family: serif; */
   content: ">";
@@ -5724,7 +5749,10 @@ a {
   right: 27%;
   top: -11%;
   color: #fff;
-  font-size: 50px
+  font-size: 50px;
+  @media(max-width: 550px) {
+    font-size: 35px;
+  }
 }
 
 .range-minmax {

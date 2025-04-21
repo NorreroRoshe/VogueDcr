@@ -36,6 +36,20 @@ const nextConfig = {
   typescript: {
     tsconfigPath,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.cryptocoin.wiki",
+        pathname: "/storage/**",
+      },
+      {
+        protocol: "https",
+        hostname: "api.vogue-decor.ru",
+        pathname: "/storage/**",
+      },
+    ]
+  }
 };
 
 export default nextConfig;

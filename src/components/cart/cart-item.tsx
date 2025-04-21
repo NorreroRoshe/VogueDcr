@@ -27,24 +27,18 @@ const CartItem: React.FC<CartItemProps> = observer(({
   article,
   count,
 }) => {
-  console.log( id,
-    name,
-    price,
-    discount,
-    files,
-    article,
-    count,)
+
 
   const store = useStore();
   const cartStore = store.cart
   const { deleteFromCart } = useCart();
 
-  const totalPrice = cartStore.items.reduce(
+  const totalPrice = cartStore.cartItems.reduce(
     (sum, curr) => sum + curr.count * curr.price,
     0
   );
 
-  const totaDiscountPrice = cartStore.items.reduce((sum, curr) => {
+  const totaDiscountPrice = cartStore.cartItems.reduce((sum, curr) => {
     const truePrice = curr.price - (curr.price * curr.discount) / 100;
     return truePrice * curr.count + sum;
   }, 0);
@@ -66,7 +60,9 @@ const CartItem: React.FC<CartItemProps> = observer(({
       <div className="relative flex rounded overflow-hidden flex-shrink-0 cursor-pointer w-[90px] md:w-[100px] h-[90px] md:h-[100px]">
         {files && files.length > 0 && (
           <img
-            src={files[0].url}
+            src={
+            // process.env.NEXT_PUBLIC_PHOTO_URL1 +
+              files[0].url}
             width={100}
             height={100}
             alt={files[0].name}

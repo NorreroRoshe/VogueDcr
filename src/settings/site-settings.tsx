@@ -1,9 +1,4 @@
 "use client"
-import { CNFlag } from '@/components/iconsCode/language/CNFlag';
-import { DEFlag } from '@/components/iconsCode/language/DEFlag';
-import { ILFlag } from '@/components/iconsCode/language/ILFlag';
-import { SAFlag } from '@/components/iconsCode/language/SAFlag';
-import { USFlag } from '@/components/iconsCode/language/USFlag';
 import sd from '@/assets/img/bravormain.png';
 
 export const siteSettings = {
@@ -11,7 +6,7 @@ export const siteSettings = {
   description: 'Офицальный представитель фабрики VogueDecor Russia в России',
   author: {
     name: 'Vogue Decor',
-    websiteUrl: 'http://VogueDecor.ru/Home',
+    websiteUrl: 'http://Vogue-Decor.ru/Home',
     address: '',
   },
   logo: {
@@ -32,69 +27,74 @@ export const siteSettings = {
       },
       {
         id: 1,
-        path: '/Chapter/Light?ProductTypes=1',
+        path: '/Chapter/Lights',
         label: 'Свет',
         subMenu: [
           {
             id: 0,
-            path: '/Chapter/Light?ProductTypes=1',
+            path: '/Chapter/Lights',
             label: 'Все категории',
           },
           {
             id: 1,
-            path: '/Chapter/Light/Lyustri?ProductTypes=1&Categories=1',
+            path: '/Chapter/Lights/lyustry',
             label: 'Люстры',
           },
           {
             id: 2,
-            path: '/Chapter/Light/Bra?ProductTypes=1&Categories=2',
+            path: '/Chapter/Lights/bra',
             label: 'Бра',
           },
           {
             id: 3,
-            path: '/Chapter/Light/NastolnieLampi?ProductTypes=1&Categories=3',
+            path: '/Chapter/Lights/nastolnyelampy',
             label: 'Настольные лампы',
           },
           {
             id: 4,
-            path: '/Chapter/Light/Torsheri?ProductTypes=1&Categories=4',
+            path: '/Chapter/Lights/torshery',
             label: 'Торшеры',
           },
           {
             id: 5,
-            path: '/Chapter/Light/PodvesnoiSvet?ProductTypes=1&Categories=5',
+            path: '/Chapter/Lights/podvesnyesvetilniki',
             label: 'Подвесные светильники',
           },
           {
             id: 6,
-            path: '/Chapter/Light/PotolochniySvet?ProductTypes=1&Categories=6',
+            path: '/Chapter/Lights/potolochnesvetilniki',
             label: 'Потолочные светильники',
           },
           {
             id: 7,
-            path: '/Chapter/Light/UlichniySvet?ProductTypes=1&Categories=7',
+            path: '/Chapter/Lights/ulichnyysvet',
             label: 'Уличный свет',
           },
           {
             id: 8,
-            path: '/Chapter/Light/PodsvetkaDlyaKartin?ProductTypes=1&Categories=8',
+            path: '/Chapter/Lights/podsvetkadlyakartin',
             label: 'Подсветка для картин',
           },
           {
             id: 10,
-            path: '/Chapter/Light/TrekiSpoti?ProductTypes=1&Categories=9',
+            path: '/Chapter/Lights/trekiispoty',
             label: 'Треки и споты',
           },
+          // {
+          //   id: 11,
+          //   path: '/Chapter/Lights/aksessuaryksvetilnikam',
+          //   label: 'Аксессуары к светильникам',
+          // },
           {
             id: 9,
-            path: '/Chapter/Light?ProductTypes=1&IsSale=true',
+            path: '/Chapter/Lights?IsSale=true',
             label: 'Sale',
           },
         ],
         subMenu1: [
           {
             id: 0,
-            path: '/Chapter/LightAccessories?ProductTypes=1&ProductTypes=8',
+            path: '/Chapter?ProductTypes=1&ProductTypes=8',
             label: 'Аксессуры к светильникам',
           },
           {
@@ -158,296 +158,290 @@ export const siteSettings = {
           }
         ],
       },
-      {
-        id: 2,
-        path: '/Chapter/Furniture?ProductTypes=2',
-        label: 'Мебель',
-        subMenu: [
-          {
-            id: 1,
-            path: '/Chapter/Furniture?ProductTypes=2',
-            label: 'Все категории',
-          },
-          {
-            id: 2,
-            path: '/Chapter/Furniture/Divani?ProductTypes=2&Categories=11',
-            label: 'Диваны',
-          },
-          {
-            id: 3,
-            path: '/Chapter/Furniture/Kresla?ProductTypes=2&Categories=12',
-            label: 'Кресла',
-          },
-          {
-            id: 4,
-            path: '/Chapter/Furniture/Stoli?ProductTypes=2&Categories=13',
-            label: 'Столы',
-          },
-          {
-            id: 5,
-            path: '/Chapter/Furniture/Stulya?ProductTypes=2&Categories=14',
-            label: 'Стулья',
-          },
-          {
-            id: 6,
-            path: '/Chapter/Furniture/Komodi?ProductTypes=2&Categories=15',
-            label: 'Комоды',
-          },
-          {
-            id: 7,
-            path: '/Chapter/Furniture/Konsoli?ProductTypes=2&Categories=16',
-            label: 'Консоли',
-          },
-          {
-            id: 8,
-            path: '/Chapter/Furniture/Krovati?ProductTypes=2&Categories=17',
-            label: 'Кровати',
-          },
-          {
-            id: 10,
-            path: '/Chapter/Furniture/Matrasi?ProductTypes=2&Categories=18',
-            label: 'Матрасы',
-          },
-          {
-            id: 11,
-            path: '/Chapter/Furniture/PufiBanketki?ProductTypes=2&Categories=19',
-            label: 'Пуфы и банкетки',
-          },
-          {
-            id: 9,
-            path: '/Chapter/Furniture?ProductTypes=2&IsSale=true',
-            label: 'Sale',
-          }
-        ],
-        // subMenu1: [
-        //   {
-        //     id: 0,
-        //     path: '/Chapter/Furniture/Accessories',
-        //     label: 'Аксессуры для мебели',
-        //   },
-        //   {
-        //     id: 1,
-        //     path: '/sub-menu-1',
-        //     label: 'Средство по уходу за обивкой',
-        //   },
-        //   {
-        //     id: 2,
-        //     path: '/sub-menu-2',
-        //     label: 'Декоративные подушки',
-        //   },
-        //   {
-        //     id: 3,
-        //     path: '/vintage',
-        //     label: 'Пледы',
-        //   },
-        //   {
-        //     id: 4,
-        //     path: '/standard',
-        //     label: 'Покрывала',
-        //   }
-        // ],
-        subMenu2: [
-          {
-            id: 0,
-            path: '/sub-menu-1',
-            label: 'Доставка и сборка',
-          },
-          {
-            id: 1,
-            path: '/sub-menu-1',
-            label: 'Условия доставки',
-          },
-          {
-            id: 2,
-            path: '/sub-menu-2',
-            label: 'Условия монтажа',
-          },
-          {
-            id: 9,
-            path: '/vintage',
-            label: 'Беспланая доставка и сборка',
-          }
-        ],
-        subMenu3: [
-          {
-            id: 0,
-            path: '/PUPUPU',
-            label: 'Популярная позиция',
-          },
-          {
-            id: 1,
-            path: '/POPOPOPO',
-            label: 'Диван Polo Rofo',
-            article: '12536',
-            price: '98000₽',
-            finalPrice: '88000₽',
-            url: sd,
-            // url: '../assets/img/Buttlogo.png',
-          }
-        ],
-      },
-      {
-        id: 3,
-        path: '/Chapter/Mirrors?ProductTypes=3',
-        label: 'Зеркала',
-        subMenu: [
-          {
-            id: 0,
-            path: '/Chapter/Mirrors?ProductTypes=3',
-            label: 'Все категории',
-          },
-          // {
-          //   id: 1,
-          //   path: '/Chapter/Mirrors/Spodsvetkoi',
-          //   label: 'С подсветкой',
-          // },
-          {
-            id: 2,
-            path: '/Chapter/Mirrors/Artobj?ProductTypes=3&Categories=20',
-            label: 'Зеркало - пано / Арт-объекты',
-          },
-          {
-            id: 3,
-            path: '/Chapter/Mirrors/Sprintami?ProductTypes=3&Categories=21',
-            label: 'С принтами',
-          },
-          {
-            id: 4,
-            path: '/Chapter/Mirrors/Solnishko?ProductTypes=3&Categories=22',
-            label: 'Зеркало - солнышко',
-          },
-          {
-            id: 5,
-            path: '/Chapter/Mirrors/Solnishko?ProductTypes=3&Categories=23',
-            label: 'С деревом',
-          },
-          {
-            id: 6,
-            path: '/Chapter/Mirrors/DesignMetall?ProductTypes=3&Categories=24',
-            label: 'Дизайнерские с металлом',
-          },
-          {
-            id: 7,
-            path: '/Chapter/Mirrors/Klassicheskie?ProductTypes=3&Categories=25',
-            label: 'Классические',
-          },
-          {
-            id: 8,
-            path: '/Chapter/Mirrors/Nastolnie?ProductTypes=3&Categories=26',
-            label: 'Настольные зеркала',
-          },
-          {
-            id: 10,
-            path: '/Chapter/Mirrors/Napolnie?ProductTypes=3&Categories=27',
-            label: 'Напольные зеркала',
-          },
-          {
-            id: 11,
-            path: '/Chapter/Mirrors/Pryamougolnie?ProductTypes=3&Categories=28',
-            label: 'Прмоугольные',
-          },
-          {
-            id: 12,
-            path: '/Chapter/Mirrors/Kruglie?ProductTypes=3&Categories=29',
-            label: 'Круглые',
-          },
-          {
-            id: 9,
-            path: '/Chapter/Mirrors?ProductTypes=3&IsSale=true',
-            label: 'Sale',
-          },
-        ],
-        subMenu2: [
-          {
-            id: 0,
-            path: '/sub-menu-1',
-            label: 'Доставка и установка',
-          },
-          {
-            id: 1,
-            path: '/sub-menu-1',
-            label: 'Условия доставки',
-          },
-          {
-            id: 2,
-            path: '/sub-menu-2',
-            label: 'Условия монтажа',
-          },
-          {
-            id: 9,
-            path: '/vintage',
-            label: 'Беспланая доставка и монтаж',
-          }
-        ],
-        subMenu3: [
-          {
-            id: 0,
-            path: '/PUPUPU',
-            label: 'Популярные позиция',
-          },
-          {
-            id: 1,
-            path: '/POPOPOPO',
-            label: 'Зеркало Sun Polo',
-            article: '8575',
-            price: '98000₽',
-            finalPrice: '88000₽',
-            url: sd,
-          },
-          {
-            id: 2,
-            path: '/POPOPOPO',
-            label: 'Зеркало Sun Polo',
-            article: '8575',
-            price: '98000₽',
-            finalPrice: '88000₽',
-            url: sd,
-          }
-        ],
-      },
+      // {
+      //   id: 2,
+      //   path: '/Chapter/Furniture',
+      //   label: 'Мебель',
+      //   subMenu: [
+      //     {
+      //       id: 1,
+      //       path: '/Chapter/Furniture',
+      //       label: 'Все категории',
+      //     },
+      //     {
+      //       id: 2,
+      //       path: '/Chapter/Furniture/divany',
+      //       label: 'Диваны',
+      //     },
+      //     {
+      //       id: 3,
+      //       path: '/Chapter/Furniture/kresla',
+      //       label: 'Кресла',
+      //     },
+      //     {
+      //       id: 4,
+      //       path: '/Chapter/Furniture/stoly',
+      //       label: 'Столы',
+      //     },
+      //     {
+      //       id: 5,
+      //       path: '/Chapter/Furniture/stulya',
+      //       label: 'Стулья',
+      //     },
+      //     {
+      //       id: 6,
+      //       path: '/Chapter/Furniture/komody',
+      //       label: 'Комоды',
+      //     },
+      //     {
+      //       id: 7,
+      //       path: '/Chapter/Furniture/konsoli',
+      //       label: 'Консоли',
+      //     },
+      //     {
+      //       id: 8,
+      //       path: '/Chapter/Furniture/krovati',
+      //       label: 'Кровати',
+      //     },
+      //     {
+      //       id: 10,
+      //       path: '/Chapter/Furniture/matrasy',
+      //       label: 'Матрасы',
+      //     },
+      //     {
+      //       id: 11,
+      //       path: '/Chapter/Furniture/pufyibanketki',
+      //       label: 'Пуфы и банкетки',
+      //     },
+      //     {
+      //       id: 9,
+      //       path: '/Chapter/Furniture?IsSale=true',
+      //       label: 'Sale',
+      //     }
+      //   ],
+      //   // subMenu1: [
+      //   //   {
+      //   //     id: 0,
+      //   //     path: '/   label: 'Аксессуры для мебели',
+      //   //   },
+      //   //   {
+      //   //     id: 1,
+      //   //     path: '/sub-menu-1',
+      //   //     label: 'Средство по уходу за обивкой',
+      //   //   },
+      //   //   {
+      //   //     id: 2,
+      //   //     path: '/sub-menu-2',
+      //   //     label: 'Декоративные подушки',
+      //   //   },
+      //   //   {
+      //   //     id: 3,
+      //   //     path: '/vintage',
+      //   //     label: 'Пледы',
+      //   //   },
+      //   //   {
+      //   //     id: 4,
+      //   //     path: '/standard',
+      //   //     label: 'Покрывала',
+      //   //   }
+      //   // ],
+      //   subMenu2: [
+      //     {
+      //       id: 0,
+      //       path: '/sub-menu-1',
+      //       label: 'Доставка и сборка',
+      //     },
+      //     {
+      //       id: 1,
+      //       path: '/sub-menu-1',
+      //       label: 'Условия доставки',
+      //     },
+      //     {
+      //       id: 2,
+      //       path: '/sub-menu-2',
+      //       label: 'Условия монтажа',
+      //     },
+      //     {
+      //       id: 9,
+      //       path: '/vintage',
+      //       label: 'Беспланая доставка и сборка',
+      //     }
+      //   ],
+      //   subMenu3: [
+      //     {
+      //       id: 0,
+      //       path: '/PUPUPU',
+      //       label: 'Популярная позиция',
+      //     },
+      //     {
+      //       id: 1,
+      //       path: '/POPOPOPO',
+      //       label: 'Диван Polo Rofo',
+      //       article: '12536',
+      //       price: '98000₽',
+      //       finalPrice: '88000₽',
+      //       url: sd,
+      //       // url: '../assets/img/Buttlogo.png',
+      //     }
+      //   ],
+      // },
+      // {
+      //   id: 3,
+      //   path: '/Chapter/Mirrors',
+      //   label: 'Зеркала',
+      //   subMenu: [
+      //     {
+      //       id: 0,
+      //       path: '/Chapter/Mirrors',
+      //       label: 'Все категории',
+      //     },
+      //     {
+      //       id: 2,
+      //       path: '/Chapter/Mirrors/zerkalo-panno-artobekt',
+      //       label: 'Зеркало - пано - Арт-объекты',
+      //     },
+      //     {
+      //       id: 3,
+      //       path: '/Chapter/Mirrors/sprintami',
+      //       label: 'С принтами',
+      //     },
+      //     {
+      //       id: 4,
+      //       path: '/Chapter/Mirrors/zerkalo-solnyshko',
+      //       label: 'Зеркало - солнышко',
+      //     },
+      //     {
+      //       id: 5,
+      //       path: '/Chapter/Mirrors/sderevom',
+      //       label: 'С деревом',
+      //     },
+      //     {
+      //       id: 6,
+      //       path: '/Chapter/Mirrors/dizaynerskiesmetallom',
+      //       label: 'Дизайнерские с металлом',
+      //     },
+      //     {
+      //       id: 7,
+      //       path: '/Chapter/Mirrors/klassicheskie',
+      //       label: 'Классические',
+      //     },
+      //     {
+      //       id: 8,
+      //       path: '/Chapter/Mirrors/nastolnyezerkala',
+      //       label: 'Настольные зеркала',
+      //     },
+      //     {
+      //       id: 10,
+      //       path: '/Chapter/Mirrors/napolnyezerkala',
+      //       label: 'Напольные зеркала',
+      //     },
+      //     {
+      //       id: 11,
+      //       path: '/Chapter/Mirrors/prmougolnye',
+      //       label: 'Прмоугольные',
+      //     },
+      //     {
+      //       id: 12,
+      //       path: '/Chapter/Mirrors/kruglye',
+      //       label: 'Круглые',
+      //     },
+      //     {
+      //       id: 9,
+      //       path: '/Chapter/Mirrors?IsSale=true',
+      //       label: 'Sale',
+      //     },
+      //   ],
+      //   subMenu2: [
+      //     {
+      //       id: 0,
+      //       path: '/sub-menu-1',
+      //       label: 'Доставка и установка',
+      //     },
+      //     {
+      //       id: 1,
+      //       path: '/sub-menu-1',
+      //       label: 'Условия доставки',
+      //     },
+      //     {
+      //       id: 2,
+      //       path: '/sub-menu-2',
+      //       label: 'Условия монтажа',
+      //     },
+      //     {
+      //       id: 9,
+      //       path: '/vintage',
+      //       label: 'Беспланая доставка и монтаж',
+      //     }
+      //   ],
+      //   subMenu3: [
+      //     {
+      //       id: 0,
+      //       path: '/PUPUPU',
+      //       label: 'Популярные позиция',
+      //     },
+      //     {
+      //       id: 1,
+      //       path: '/POPOPOPO',
+      //       label: 'Зеркало Sun Polo',
+      //       article: '8575',
+      //       price: '98000₽',
+      //       finalPrice: '88000₽',
+      //       url: sd,
+      //     },
+      //     {
+      //       id: 2,
+      //       path: '/POPOPOPO',
+      //       label: 'Зеркало Sun Polo',
+      //       article: '8575',
+      //       price: '98000₽',
+      //       finalPrice: '88000₽',
+      //       url: sd,
+      //     }
+      //   ],
+      // },
       {
         id: 4,
-        path: '/Chapter/Carpets?ProductTypes=4',
+        path: '/Chapter/Carpets',
         label: 'Ковры',
         subMenu: [
           {
             id: 0,
-            path: '/Chapter/Carpets?ProductTypes=4',
+            path: '/Chapter/Carpets',
             label: 'Все категории',
           },
           {
             id: 1,
-            path: '/Chapter/Carpets/Pryamougolnie?ProductTypes=4&Categories=30',
+            path: '/Chapter/Carpets/pryamougolnye',
             label: 'Прямоугольные',
           },
           {
             id: 2,
-            path: '/Chapter/Carpets/Kvadratnie?ProductTypes=4&Categories=31',
+            path: '/Chapter/Carpets/kvadratnye',
             label: 'Квадратные',
           },
           {
             id: 3,
-            path: '/Chapter/Carpets/Kruglie?ProductTypes=4&Categories=32',
+            path: '/Chapter/Carpets/kruglye',
             label: 'Круглые',
           },
           {
             id: 4,
-            path: '/Chapter/Carpets/Ovalnie?ProductTypes=4&Categories=33',
+            path: '/Chapter/Carpets/ovalnye',
             label: 'Овальные',
           },
           {
             id: 5,
-            path: '/Chapter/Carpets/Dorojki?ProductTypes=4&Categories=34',
+            path: '/Chapter/Carpets/dorozhki',
             label: 'Дорожки',
           },
           {
             id: 6,
-            path: '/Chapter/Carpets/Nestandartnie?ProductTypes=4&Categories=35',
+            path: '/Chapter/Carpets/nestandartnye',
             label: 'Нестандартные',
           },
           {
             id: 9,
-            path: '/Chapter/Carpets?ProductTypes=4&IsSale=true',
+            path: '/Chapter/Carpets?IsSale=true',
             label: 'Sale',
           }
         ],
@@ -501,72 +495,72 @@ export const siteSettings = {
       },
       {
         id: 5,
-        path: '/Chapter/GoodsForHome?ProductTypes=5',
+        path: '/Chapter/TovariDlyaDoma',
         label: 'Товары для дома',
         subMenu: [
           {
             id: 0,
-            path: '/Chapter/GoodsForHome?ProductTypes=5',
+            path: '/Chapter/TovariDlyaDoma',
             label: 'Все категории',
           },
           {
             id: 1,
-            path: '/Chapter/GoodsForHome/Tarelki?ProductTypes=5&Categories=36',
+            path: '/Chapter/TovariDlyaDoma/dizaynerskietarelki',
             label: 'Дизайнерские тарелки',
           },
           {
             id: 2,
-            path: '/Chapter/GoodsForHome/Stremyanki?ProductTypes=5&Categories=37',
+            path: '/Chapter/TovariDlyaDoma/stremyankiiskami',
             label: 'Стремянки и скамьи',
           },
           {
             id: 3,
-            path: '/Chapter/GoodsForHome/Sushilki?ProductTypes=5&Categories=38',
+            path: '/Chapter/TovariDlyaDoma/sushilki',
             label: 'Сушилки',
           },
           {
             id: 4,
-            path: '/Chapter/GoodsForHome/Gladilki?ProductTypes=5&Categories=39',
+            path: '/Chapter/TovariDlyaDoma/gladilnyedoski',
             label: 'Гладильные доски',
           },
           {
             id: 5,
-            path: '/Chapter/GoodsForHome/VeshalkiNapolnie?ProductTypes=5&Categories=40',
+            path: '/Chapter/TovariDlyaDoma/veshalkinapolnye',
             label: 'Вешалки напольные',
           },
           {
             id: 6,
-            path: '/Chapter/GoodsForHome/VeshalkiNastennie?ProductTypes=5&Categories=41',
+            path: '/Chapter/TovariDlyaDoma/veshalkinastennye',
             label: 'Вешалки настенные',
           },
           {
             id: 7,
-            path: '/Chapter/GoodsForHome/BathAccess?ProductTypes=5&Categories=42',
+            path: '/Chapter/TovariDlyaDoma/aksessuarydlyavannoy',
             label: 'Аксессуары для ванной',
           },
           {
             id: 8,
-            path: '/Chapter/GoodsForHome/LojkiObuvi?ProductTypes=5&Categories=43',
+            path: '/Chapter/TovariDlyaDoma/lozhkidlyaobuvi',
             label: 'Ложки для обуви',
           },
           {
             id: 10,
-            path: '/Chapter/GoodsForHome/VaziPodsvechniki?ProductTypes=5&Categories=44',
+            path: '/Chapter/TovariDlyaDoma/vazyipodsvechniki',
             label: 'Вазы и подсвечники',
           },
           {
             id: 11,
-            path: '/Chapter/GoodsForHome/Podushki?ProductTypes=5&Categories=45',
+            path: '/Chapter/TovariDlyaDoma/dekorativnyepodushki',
             label: 'Декоративные подушки',
           },
           {
             id: 12,
-            path: '/Chapter/GoodsForHome/Pledi?ProductTypes=5&Categories=46',
+            path: '/Chapter/TovariDlyaDoma/pledy',
             label: 'Пледы',
           },
           {
             id: 13,
-            path: '/Chapter/GoodsForHome/Pokrivala?ProductTypes=5&Categories=47',
+            path: '/Chapter/TovariDlyaDoma/pokryvala',
             label: 'Покрывала',
           },
           // {
@@ -581,7 +575,7 @@ export const siteSettings = {
           // },
           {
             id: 9,
-            path: '/Chapter/GoodsForHome?ProductTypes=5&IsSale=true',
+            path: '/Chapter/TovariDlyaDoma?IsSale=true',
             label: 'Sale',
           }
         ],
@@ -635,57 +629,47 @@ export const siteSettings = {
       },
       {
         id: 6,
-        path: '/Chapter/Accessories?ProductTypes=6',
+        path: '/Chapter/Accessories',
         label: 'Аксессуары',
         subMenu: [
           {
             id: 0,
-            path: '/Chapter/Accessories?ProductTypes=6',
+            path: '/Chapter/Accessories',
             label: 'Все категории',
           },
           {
             id: 1,
-            path: '/Chapter/Accessories/Statuetki?ProductTypes=6&Categories=48',
+            path: '/Chapter/Accessories/sovremennyeigrushki-statuetki',
             label: 'Современные игрушки / статуэтки',
           },
           {
             id: 2,
-            path: '/Chapter/Accessories/Watches?ProductTypes=6&Categories=49',
+            path: '/Chapter/Accessories/chasy',
             label: 'Часы',
           },
           {
             id: 4,
-            path: '/Chapter/Accessories/NastolnieIgri?ProductTypes=6&Categories=50',
+            path: '/Chapter/Accessories/nastolnyeinastennyeigry',
             label: 'Настольные и настенные игры',
           },
           {
             id: 5,
-            path: '/Chapter/Accessories/Zonti?ProductTypes=6&Categories=51',
+            path: '/Chapter/Accessories/zonty',
             label: 'Зонты',
           },
           {
             id: 6,
-            path: '/Chapter/Accessories/PodstavkaDlyaZontov?ProductTypes=6&Categories=52',
+            path: '/Chapter/Accessories/podstavkidlyazontov',
             label: 'Подставки для зонтов',
           },
           {
             id: 7,
-            path: '/Chapter/Accessories/LojkiDlyaObuvi?ProductTypes=6&Categories=53',
-            label: 'Ложки для обуви',
-          },
-          {
-            id: 8,
-            path: '/Chapter/Accessories/DerjateliKnig?ProductTypes=6&Categories=54',
+            path: '/Chapter/Accessories/derzhateliknig',
             label: 'Держатели книг',
           },
-          // {
-          //   id: 10,
-          //   path: '/Chapter/ProductTypes=6&Accessories/DesignAccess',
-          //   label: 'Дизайнерские аксессуары',
-          // },
           {
             id: 9,
-            path: '/Chapter/Accessories/?ProductTypes=6&IsSale=true',
+            path: '/Chapter/Accessories?IsSale=true',
             label: 'Sale',
           }
         ],
@@ -739,47 +723,47 @@ export const siteSettings = {
       },
       {
         id: 7,
-        path: '/Chapter/Paintings?ProductTypes=7',
+        path: '/Chapter/Paints',
         label: 'Картины',
         subMenu: [
           {
             id: 0,
-            path: '/Chapter/Paintings?ProductTypes=7',
+            path: '/Chapter/Paints',
             label: 'Все картины и панно',
           },
           {
             id: 1,
-            path: '/Chapter/Paintings/Artobj?ProductTypes=7&Categories=55',
+            path: '/Chapter/Paints/art-obekty',
             label: 'Арт-объекты',
           },
           {
             id: 2,
-            path: '/Chapter/Paintings/Avtorskie?ProductTypes=7&Categories=56',
+            path: '/Chapter/Paints/kartinyavtorskie',
             label: 'Картины авторские',
           },
           {
             id: 3,
-            path: '/Chapter/Paintings/Posteri?ProductTypes=7&Categories=57',
+            path: '/Chapter/Paints/postery',
             label: 'Постеры',
           },
           {
             id: 4,
-            path: '/Chapter/Paintings/WithLego?ProductTypes=7&Categories=58',
+            path: '/Chapter/Paints/pannoslego',
             label: 'Панно с лего',
           },
           {
             id: 5,
-            path: '/Chapter/Paintings/SportStyle?ProductTypes=7&Categories=59',
+            path: '/Chapter/Paints/panovsportivnomstile',
             label: 'Панно в спортивном стиле',
           },
           {
             id: 6,
-            path: '/Chapter/Paintings/Reproduction?ProductTypes=7&Categories=60',
+            path: '/Chapter/Paints/reproduktsiya',
             label: 'Репродукция',
           },
           {
             id: 9,
-            path: '/Chapter/Paintings?ProductTypes=7&IsSale=true',
+            path: '/Chapter/Paints?IsSale=true',
             label: 'Sale',
           }
         ],
@@ -840,6 +824,11 @@ export const siteSettings = {
      
     ],
     MainMenu: [
+      {
+        id: 1,
+        path: '/Brands',
+        label: 'Бренды',
+      },
       {
         id: 1,
         path: '/AboutUs',

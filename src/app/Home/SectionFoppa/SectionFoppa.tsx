@@ -3,15 +3,20 @@ import React from 'react';
 import s from './SectionFoppa.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
+import {useStore} from "@/hooks/useStore";
+import CategoryCardLoader from "@/components/ui/loaders/category-card-loader";
+import {ROUTES} from "@/utils/routes";
+import {observer} from "mobx-react";
 
-//img
-import scala6 from '../../../assets/img/img/laScala6Orex.jpg';
-import assai from '../../../assets/img/img/assaiWh.jpg';
-import gulliver from '../../../assets/img/img/gulliverNat.jpg';
-import indasatore from '../../../assets/img/img/indasatore.jpg';
-import snake90 from '../../../assets/img/img/Snake90Kan.jpg';
 
-export const SectionFoppa: React.FC = () => {
+export const SectionFoppa: React.FC = observer(() => {
+  const store = useStore();
+
+  const productStore = store.product;
+
+  const product = productStore.foppaBrandProduct;
+
+
   return (
     <section className={s.section_foppa}>
       <Link className={s.foppa_back} href="/">
@@ -26,121 +31,55 @@ export const SectionFoppa: React.FC = () => {
       </Link>
       <h2 className={s.product_heading}>Популярные товары</h2>
       <div className={`${s.foppa_collection__items} container`}>
-        <div className={s.foppa_collection__item}>
-          <Link
-            className={s.foppa_product__link}
-            href="/"
-            title="FoppaPedretti Стемянка laScala6 орех"
-            target="_blank">
-            <div className={s.foppa_product__box}>
-              <Image
-                className={s.foppa_product__image}
-                width="250"
-                height="250"
-                alt=""
-                src={scala6}
-              />
-            </div>
-            <div className={s.foppa_prod_vero}>
-              <p className={s.foppa_product__vendor}>
-                Артикул: <span className={s.foppa_product__vendor_in}> 44.184 </span>
-              </p>
-              <h5 className={s.foppa_product__title}> Стремянка LaScala6 Орех </h5>
-            </div>
-          </Link>
-        </div>
-        <div className={s.foppa_collection__item}>
-          <Link
-            className={s.foppa_product__link}
-            href="/"
-            title="FoppaPeddretti Гл. доска Assai белый"
-            target="_blank">
-            <div className={s.foppa_product__box}>
-              <Image className={s.foppa_product__image} width="250" height="250" alt="" src={assai} />
-            </div>
-            <div className={s.foppa_prod_vero}>
-              <p className={s.foppa_product__vendor}>
-                Артикул: <span className={s.foppa_product__vendor_in}> 44.184 </span>
-              </p>
-              <h5 className={s.foppa_product__title}> Гл. доска Assai белый </h5>
-            </div>
-          </Link>
-        </div>
-        <div className={s.foppa_collection__item}>
-          <Link
-            className={s.foppa_product__link}
-            href="/"
-            title="FoppaPeddretti Сушилка Gulliver натуральный"
-            target="_blank">
-            <div className={s.foppa_product__box}>
-              <Image
-                className={s.foppa_product__image}
-                width="250"
-                height="250"
-                alt=""
-                src={gulliver}
-              />
-            </div>
-            <div className={s.foppa_prod_vero}>
-              <p className={s.foppa_product__vendor}>
-                Артикул: <span className={s.foppa_product__vendor_in}> 44.184 </span>
-              </p>
-              <h5 className={s.foppa_product__title}> Сушилка Gulliver натуральный </h5>
-            </div>
-          </Link>
-        </div>
-        <div className={s.foppa_collection__item}>
-          <Link
-            className={s.foppa_product__link}
-            href="/"
-            title="FoppaPeddretti Вешалка indasatore венге"
-            target="_blank">
-            <div className={s.foppa_product__box}>
-              <Image
-                className={s.foppa_product__image}
-                width="250"
-                height="250"
-                alt=""
-                src={indasatore}
-              />
-            </div>
-            <div className={s.foppa_prod_vero}>
-              <p className={s.foppa_product__vendor}>
-                Артикул: <span className={s.foppa_product__vendor_in}> 44.184 </span>
-              </p>
-              <h5 className={s.foppa_product__title}> Вешалка indasatore венге </h5>
-            </div>
-          </Link>
-        </div>
-        <div className={s.foppa_collection__item}>
-          <Link
-            className={s.foppa_product__link}
-            href="/"
-            title="FoppaPedretti Вешалка Snake90 каналетто"
-            target="_blank">
-            <div className={s.foppa_product__box}>
-              <Image
-                className={s.foppa_product__image}
-                width="250"
-                height="250"
-                alt=""
-                src={snake90}
-              />
-            </div>
-            <div className={s.foppa_prod_vero}>
-              <p className={s.foppa_product__vendor}>
-                Артикул: <span className={s.foppa_product__vendor_in}> 44.184 </span>
-              </p>
-              <h5 className={s.foppa_product__title}> Вешалка Snake90 каналетто </h5>
-            </div>
-          </Link>
-        </div>
+        {productStore.isLoading
+          ? Array.from({ length: 5 }).map((_, idx) => {
+            return (
+              <CategoryCardLoader key={idx} uniqueKey={`category-card-${idx}`} />
+            );
+          })
+        : product?.map((product, i) =>
+          <div
+            key={`ключ-продукта-${product.id}`}
+            className={s.foppa_collection__item}>
+            <Link
+              className={s.foppa_product__link}
+              href={`${ROUTES.PRODUCT}/${product.id}`}
+              target="_blank">
+              <div className={s.foppa_product__box}>
+                <Image
+                  className={s.foppa_product__image}
+                  width="270"
+                  height="230"
+                  alt={product.name || 'Product Image'}
+                  src={
+                  // process.env.NEXT_PUBLIC_PHOTO_URL1 +
+                    product?.files?.[0]?.url}
+                />
+              </div>
+            </Link>
+              <div className={s.foppa_prod_vero}>
+                <p className={s.foppa_product__vendor}>
+                  {product.name} <span className={s.foppa_product__vendor_in}> {product.article} </span>
+                </p>
+                <Link target="_blank"
+                      href={`Brands/${product.brand?.id}/${product.collection?.id}`}
+                      className={s.foppa_product__title}>
+                  Коллекция: {product.collection?.name}
+                </Link>
+              </div>
+          </div>
+        )}
       </div>
-      <Link className={s.foppa_icon_btn} href="/">
-        <span className={s.foppa_icon_desc}>
-          Вся коллекция <span>&gt;</span>
-        </span>
-      </Link>
+      {productStore.isLoading
+        ? (
+          <></>
+        ):
+        <Link className={s.foppa_icon_btn} href={`/Brands/6`}>
+          <span className={s.foppa_icon_desc}>
+            см. больше <span>&gt;</span>
+          </span>
+        </Link>
+      }
     </section>
   );
-};
+});

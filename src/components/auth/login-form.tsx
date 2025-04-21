@@ -16,10 +16,10 @@ import Switch from '../ui/switch';
 import Button from '../ui/button';
 import interl from '../../assets/img/interlight2023.jpg';
 import { AuthStore } from '@/store/authStore';
-import { ISingInReq } from '@/types/Auth/auth.dtos';
+import { ISingInReq, IResendConfirmReq } from '@/types/Auth/auth.dtos';
 import { useStore } from '@/hooks/useStore';
-
-
+import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation';
 
 export interface LoginFormProps {
   isPopup?: boolean;
@@ -29,10 +29,18 @@ export interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
 
   const store = useStore();
-  const authStore = store.auth
+  const authStore = store.auth;
   const { t } = useTranslation();
   const { closeModal, openModal } = useModalAction();
   const [remember, setRemember] = useState(false);
+  const [openResetCode, setOpenResetCode] = useState(false)
+  const [newCode, setNewCode] = useState(false)
+  const [ifCode, setIfCode] = useState(false)
+  const [secEemailError, setSecEemailError] = useState<string | null>(null);
+
+  const router = useRouter();
+
+  const pathname = usePathname();
 
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
@@ -43,6 +51,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
     formState: { errors },
   } = useForm<ISingInReq>();
 
+  const {
+    register: registerSecondForm,
+    handleSubmit: handleSubmitSecondForm,
+    formState: { errors: errorsSecondForm },
+  } = useForm<IResendConfirmReq>();
+
+
   function onSubmit({ email, password }: ISingInReq) {
     authStore.signIn({
       email,
@@ -50,27 +65,60 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
       rememberMe: true,
     })
       .then((data) => {
-        closeModal();
-      })
-      .catch((error) => {
-        if (error.data && error.data.Message) {
-          if (error.data.Message === 'Неверный пароль') {
+
+        if (!data?.message) {
+          closeModal();
+
+          if (pathname === '/CompleteOrder') {
+            router.refresh();
+          }
+          // else {
+          //   router.push('/MyAccount/account-settings');
+          // }
+          // router.push('/MyAccount/account-settings');
+        } else {
+
+          if (data?.message === 'Неверный пароль') {
             setPasswordError('Неверный пароль');
             setEmailError(null);
-          } else if (error.data.Message === 'Пользователь не найден') {
+          }
+          else if (data?.message === 'Неудачная попытка входа') {
+            setEmailError('Неудачная попытка входа');
+            setPasswordError(null);
+          }
+          else if (data?.message === 'Пользователь не найден') {
             setEmailError('Пользователь не найден');
             setPasswordError(null);
           }
-          else if (error.data.Message === 'Почта не подтверждена') {
+          else if (data?.message === 'Почта не подтверждена') {
             setEmailError('Почта не подтверждена');
             setPasswordError(null);
+          } else {
+            setEmailError('Ошибка при входе');
+            setPasswordError('Ошибка при входе');
           }
-        } else {
-          setEmailError('Ошибка при входе');
-          setPasswordError('Ошибка при входе');
         }
       });
   }
+
+  function onResetSubmit({ email }: IResendConfirmReq) {
+    authStore.emailResendConfirm({ email })
+      .then((data) => {
+        if (data?.data?.message === "Запрос выполнен успешно") {
+          setOpenResetCode(false);
+          setIfCode(true);
+          setNewCode(true);
+        } else {
+          if (data?.message === "Пользователь не найден") {
+            setSecEemailError('Пользователь не найден');
+          }
+          else {
+            setSecEemailError("Ошибка при входе");
+          }
+        }
+      });
+  }
+
   function handleSignUp() {
     return openModal('SIGN_UP_VIEW');
   }
@@ -158,8 +206,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
               <div className="relative">
                 <Button
                   type="submit"
-                  loading={authStore.isLoading}
-                  disabled={authStore.isLoading}
+                  // loading={authStore.isLoading}
+                  // disabled={authStore.isLoading}
                   className="h-11 md:h-12 w-full mt-2 font-15px md:font-15px tracking-normal"
                   variant="formButton">
                   {t('Войти')}
@@ -167,6 +215,85 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
               </div>
             </div>
           </form>
+
+          <div className="flex flex-col items-center justify-center relative text-sm text-heading mt-8 sm:mt-10 mb-6 sm:mb-7">
+            <hr className="w-full border-gray-300" />
+            {!newCode &&
+              <span className="absolute -top-2.5 px-2 bg-skin-fill">
+                {t('Если вам не пришла ссылка на почту, то')}
+              </span>}
+          </div>
+
+          {!ifCode && (
+            <div className="text-sm sm:text-15px text-skin-muted text-center">
+              <div onClick={() => {
+                setOpenResetCode(true);
+                setIfCode(true);
+              }}>
+                <button
+                  type="button"
+                  // onClick={onResetSubmit}
+                  className="text-skin-base underline font-700 hover:no-underline focus:outline-none"
+                >
+                  {t('Нажмите сюда чтобы повторно пройти верификацию')}
+                </button>
+              </div>
+            </div>
+          )}
+
+
+
+
+
+
+          {openResetCode && (
+            <form
+              onSubmit={handleSubmitSecondForm((data) => onResetSubmit(data))}
+              className="flex flex-col justify-center"
+              noValidate
+            >
+              <Input
+                label={t('Введите адрес Email на который пришёл код')}
+                type="email"
+                variant="solid"
+                {...registerSecondForm('email', {
+                  required: `${t('Email обязателен')}`,
+                  pattern: {
+                    value:
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: t('Некорректный email'),
+                  },
+                })}
+                error={secEemailError || errorsSecondForm.email?.message}
+              />
+              <Button
+                type="submit"
+                variant="formButton"
+                className="h-11 md:h-12 w-full mt-5"
+              >
+                {t('Получить повторно код подтверждения')}
+              </Button>
+            </form>
+          )}
+
+          {newCode && (
+            <div className="text-sm sm:text-15px text-skin-muted text-center">
+              <span
+                // type="button"
+                className="text-skin-base font-normal font-700 focus:outline-none"
+                style={{ opacity: '0.7' }}
+              >
+                <span className='text-22px font-normal hover:no-underline underline'
+                  style={{ color: 'rgb(2, 178, 144)', opacity: '1' }}
+                >Мы выслали вам повторно код на вашу почту!</span>
+                <br />
+                <br />
+                Пожалуйста проверьте на вашей почте в папке &apos;Входящие&apos; либо в папке &apos;Cпам&apos;.
+                <br />
+                В случае если кода нет ни в одной из папок на указанной почте, то просим связаться с нами по почте &apos;seacocktailinfo@gmail.com&apos;, либо по номеру телефона +7-903-730-30-01.
+              </span>
+            </div>
+          )}
           <div className="flex flex-col items-center justify-center relative text-sm">
             <span className="mt-14 text-sm text-skin-base opacity-70">
               {t('Следите за нами в соцсетях')}
@@ -181,6 +308,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
               <FaTelegramPlane className="h-4 w-4 text-skin-base text-opacity-50 transition-all group-hover:text-skin-primary  focus:text-skin-primary" />
             </button>
           </div>
+
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ function HeaderCartCount() {
   const cartStore = store.cart;
 
   const totalPrice = cartStore.totalPrice;
-  const items = cartStore.items;
+  const items = cartStore.cartItems;
 
   
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);

@@ -2,7 +2,7 @@
   margin-top: 40px;
   margin-bottom: -5px;
 
-  @media (max-width: 1150px) {
+  @media (max-width: 1024px) {
     margin-top: 85px;
   }
 
@@ -13,12 +13,15 @@
   .container {
     max-width: 1460px;
     padding: 0 70px;
-    margin: 0 auto;
+    //margin: 0 auto;
     @media(max-width: 1200px) {
       padding: 0 45px;
     }
     @media(max-width: 1023px) {
       margin-top: 70px;
+    }
+    @media(max-width: 550px) {
+      padding: 0 25px;
     }
   }
 

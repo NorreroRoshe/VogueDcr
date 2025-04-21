@@ -12,6 +12,9 @@ const Carousel = dynamic(() => import('@/components/ui/carousel/carousel'), {
   ssr: false,
 });
 import cls from './Common.module.scss'
+import {useEffect} from "react";
+import {useStore} from "@/hooks/useStore";
+import {observer} from "mobx-react";
 
 interface CategoriesProps {
   className?: string;
@@ -43,13 +46,18 @@ const breakpoints = {
   },
 };
 
-const CategoryGridBlock: React.FC<CategoriesProps> = ({
+const CategoryGridBlock: React.FC<CategoriesProps> = observer(({
   className = 'md:pt-3 lg:pt-0 3xl:pb-2 mb-12 sm:mb-14 md:mb-16 xl:mb-24 2xl:mb-16',
 }) => {
+
+  const store = useStore();
+
+  const productStore = store.product;
 
   const { data, isLoading, error } = useCategoriesQuery({
     limit: LIMITS.CATEGORIES_LIMITS,
   });
+
 
   return (
     <div className={`${className} ${cls.mtfifth}`}>
@@ -59,39 +67,39 @@ const CategoryGridBlock: React.FC<CategoriesProps> = ({
         headingPosition="left"
       />
       <div className="block justify-center flex-wrap 3xl:-mx-3.5">
-        {error ? (
-          <Alert message={error?.message} className="mb-14 3xl:mx-3.5" />
-        ) : (
+        {/*{error ? (*/}
+        {/*  <Alert message={error?.message} className="mb-14 3xl:mx-3.5" />*/}
+        {/*) : (*/}
           <Carousel
             autoplay={false}
             breakpoints={breakpoints}
             buttonGroupClassName="-mt-5 md:-mt-4 lg:-mt-5"
           >
-            {isLoading && !data
-              ? Array.from({ length: 16 }).map((_, idx) => {
+            {productStore.isLoading
+            // && !productStore.newItems
+              ? Array.from({ length: 6 }).map((_, idx) => {
                 return (
                   <SwiperSlide key={`category--key-${idx}`}>
                     <CategoryCardLoader uniqueKey={`category-card-${idx}`} />
                   </SwiperSlide>
                 );
               })
-              : data?.categories?.data?.slice(0, 16)?.map((category) => (
+              : productStore.newItems?.map((category) => (
                 <SwiperSlide key={`category--key-${category.id}`}>
                   <CategoryCard
                     item={category}
                     href={{
-                      pathname: ROUTES.SEARCH,
-                      query: { category: category.slug },
+                      pathname: ROUTES.PRODUCT + '/' + category.id,
                     }}
                   />
                 </SwiperSlide>
               ))}
           </Carousel>
-        )
-        }
+        {/*)*/}
+        {/*}*/}
       </div>
     </div>
   );
-};
+});
 
 export default CategoryGridBlock;

@@ -7,6 +7,7 @@ import { useCart } from '../../hooks/useCart';
 import { Product } from '@/types/Product/product.types';
 import { useStore } from '@/hooks/useStore';
 import {observer} from "mobx-react";
+import {useModalAction} from "@/components/common/modal/modal.context";
 
 interface IFavAddCart {
   product: Product;
@@ -14,9 +15,11 @@ interface IFavAddCart {
 
 export const FavAddCart: React.FC <IFavAddCart> = observer(({ product }) => {
 
-  
+
   const store = useStore();
   const cartStore = store.cart;
+  const authStore = store.auth
+  const { openModal, closeModal } = useModalAction();
 
   const { addToCart, deleteFromCart } = useCart();
 
@@ -30,22 +33,36 @@ export const FavAddCart: React.FC <IFavAddCart> = observer(({ product }) => {
     deleteFromCart(product.id)
   }
 
+  function handleLogin() {
+    openModal("LOGIN_VIEW");
+  }
+
   return (
     <>
-      {cartCount > 0 ? (
-        <div
-          onClick={() => handleDeleteFromCart()}
-          className={cls.item_unit_button}
-          style={{backgroundColor: 'white', color: '#000', cursor: 'auto'}}>
-          Удалить из корзины
-        </div>
-      ) : (
-        <div
-          onClick={() => handleAddToCart()}
-          className={cls.item_unit_button}>
-          Добавить в корзину
-        </div>
-      )}
+      {authStore.isAuth ?
+        (
+          cartCount > 0 ? (
+            <div
+              onClick={() => handleDeleteFromCart()}
+              className={cls.item_unit_button}
+              style={{backgroundColor: 'white', color: '#000', cursor: 'pointer'}}>
+              Удалить из корзины
+            </div>
+          ) : (
+            <div
+              onClick={() => handleAddToCart()}
+              className={cls.item_unit_button}>
+              Добавить в корзину
+            </div>
+          )
+        ):(
+          <div
+            onClick={handleLogin}
+            className={cls.item_unit_button}>
+            Добавить в корзину
+          </div>
+        )
+      }
     </>
   );
 });

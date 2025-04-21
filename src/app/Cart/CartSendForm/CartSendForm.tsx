@@ -36,7 +36,7 @@ export const CartSendForm: React.FC<ICartSendFormProps> = ({ isSent, setSent }) 
   });
 
   // cartStore
-  const cartSelector = cartStore.items.map((cartItem) => {
+  const cartSelector = cartStore.cartItems.map((cartItem) => {
       const count = cartStore.cart.find((countItem) => countItem.id === cartItem?.id)?.count || 0;
       return { ...cartItem, count: count };
   });
@@ -55,19 +55,19 @@ export const CartSendForm: React.FC<ICartSendFormProps> = ({ isSent, setSent }) 
   
   const total = () => {
 
-    const items = cartSelector;
+    const cartItems = cartSelector;
 
-    let totalPrice = items.reduce(
+    let totalPrice = cartItems.reduce(
       (sum, curr) => sum + curr.count * curr.price,
       0
     );
   
-    let totaDiscountPrice = items.reduce((sum, curr) => {
+    let totaDiscountPrice = cartItems.reduce((sum, curr) => {
       const truePrice = curr.price - (curr.price * curr.discount) / 100;
       return truePrice * curr.count + sum;
     }, 0);
   
-    let totalCount = items.reduce((sum, curr) => sum + curr.count, 0);
+    let totalCount = cartItems.reduce((sum, curr) => sum + curr.count, 0);
   
     return {
       totalPrice,
@@ -78,7 +78,7 @@ export const CartSendForm: React.FC<ICartSendFormProps> = ({ isSent, setSent }) 
 
 
 
-  // console.log(cart[0].id.split('-')[0], 'cartcartcart');
+
   function generateRandomCode(length: number) {
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let randomCode = '';
@@ -93,7 +93,7 @@ export const CartSendForm: React.FC<ICartSendFormProps> = ({ isSent, setSent }) 
   
   // Пример использования для генерации кода длиной 8 символов
   const randomCode = generateRandomCode(8);
-  console.log(randomCode,'as');
+
 
 
 
@@ -131,7 +131,7 @@ export const CartSendForm: React.FC<ICartSendFormProps> = ({ isSent, setSent }) 
 
     try {
       const totalData = total();
-      console.log(totalData,'total')
+
       await sendWithTgCart(formData, cart, totalData, randomCode);
       setSent(true);
     } catch (error) {

@@ -37,7 +37,18 @@ const arrayColor = [
   'Черный',
   'Прозрачный',
   'Бежевый',
+  'Голубой',
+  'Желтый',
+  'Зеленый',
+  'Коричневый',
+  'Красный',
+  'Оранжевый',
+  'Розовый',
+  'Серый',
+  'Синий',
+  'Фиолетовый',
 ];
+
 
 export const ProductDetailsTab: React.FC<ProductInfoProps> = ({ detProduct }) => {
 
@@ -82,20 +93,25 @@ export const ProductDetailsTab: React.FC<ProductInfoProps> = ({ detProduct }) =>
         </Tab.List>
         <Tab.Panels className="mt-6 lg:mt-9">
           <Tab.Panel className={`lg:flex ${cls.tab_wrapp}`}>
-            <div className="text-sm sm:text-15px text-skin-muted leading-[2em] space-y-4 lg:space-y-5 xl:space-y-7">
-              <h2>Описание товара: </h2>
+            <div className="text-sm sm:text-15px text-skin-muted leading-[2em] space-y-4 lg:space-y-5 xl:space-y-7 flex-1">
+              <Heading
+                variant="mediumHeading"
+                className="xl:text-lg mb-4 pt-0.5"
+              >
+              Описание товара:
+              </Heading>
               <p>
                 {detProduct.description}
               </p>
-              <h2 className={cls.brandHeader}>Бренд: </h2>
-              <div className={cls.brandWrapp}>
-                <p className={cls.brandTitle}>
-                  НУЖЕН ТЕКСТ О БРенде Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis nesciunt molestiae debitis. Saepe quod cum ipsam sint corrupti perferendis sed. Exercitationem officia rerum nobis excepturi autem itaque inventore vitae quia!
-                </p>
-                <img src={logoButterfly.src} alt='buttlogo' width='100' height='100px' className={cls.brandImg} />
-              </div>
+              {/*<h2 className={cls.brandHeader}>Бренд: </h2>*/}
+              {/*<div className={cls.brandWrapp}>*/}
+              {/*  <p className={cls.brandTitle}>*/}
+              {/*    НУЖЕН ТЕКСТ О БРенде Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis nesciunt molestiae debitis. Saepe quod cum ipsam sint corrupti perferendis sed. Exercitationem officia rerum nobis excepturi autem itaque inventore vitae quia!*/}
+              {/*  </p>*/}
+              {/*  <img src={logoButterfly.src} alt='buttlogo' width='100' height='100px' className={cls.brandImg} />*/}
+              {/*</div>*/}
             </div>
-            <div className="flex-shrink-0 lg:w-[400px] xl:w-[480px] 2xl:w-[550px] 3xl:w-[680px] lg:ps-10 xl:ps-14 2xl:ps-20 pt-5 lg:pt-0">
+            <div className="flex-shrink-0 lg:w-[400px] xl:w-[480px] 2xl:w-[550px] 3xl:w-[680px] lg:ps-10 xl:ps-14 2xl:ps-20 pt-5 lg:pt-0 flex-1">
               <Heading
                 variant="mediumHeading"
                 className="xl:text-lg mb-4 pt-0.5"
@@ -104,108 +120,127 @@ export const ProductDetailsTab: React.FC<ProductInfoProps> = ({ detProduct }) =>
               </Heading>
               <div className="border border-skin-four rounded">
                 <table className="w-full text-skin-base text-15px">
-                <thead>
-                    <tr className="border-b border-skin-four">
-                      <th className="px-4 lg:px-5 xl:px-6 pt-3 pb-4 lg:pb-6 text-start text-sm lg:text-15px xl:text-base font-medium">
-                        <span className="block font-semibold text-lg lg:text-xl xl:text-2xl pt-0.5">
-                          Коллекция:
-                        </span>
-                      </th>
-                      {/* {currCollections && ( */}
-                        <th className={`border-s border-skin-four px-4 lg:px-5 xl:px-6 pt-3 pb-5 text-end w-24 lg:w-28 xl:w-36 font-semibold text-2xl lg:text-3xl xl:text-[36px] ${cls.th_wr}`}>
-                          <Link href={`/Collections/${detProduct?.collection?.id}`}>
-                            {detProduct?.collection?.name}
-                          </Link>
-                        </th>
-                      {/* )} */}
-                    </tr>
-                  </thead>
                   <thead>
-                    <tr className="border-b border-skin-four">
-                      <th className="px-4 lg:px-5 xl:px-6 pt-3 pb-4 lg:pb-6 text-start text-sm lg:text-15px xl:text-base font-medium">
-                        <span className="block font-semibold text-lg lg:text-xl xl:text-2xl pt-0.5">
+                  <tr className="border-b border-skin-four">
+                    <th
+                      className="px-4 lg:px-5 xl:px-6 pt-3 pb-4 lg:pb-6 text-start text-sm lg:text-15px xl:text-base font-medium">
+                        <span className="block font-semibold pt-0.5 ewrvfbe">
                           Бренд:
                         </span>
-                      </th>
-                        <th className={`border-s border-skin-four px-4 lg:px-5 xl:px-6 pt-3 pb-5 text-end w-24 lg:w-28 xl:w-36 font-semibold text-2xl lg:text-3xl xl:text-[36px] ${cls.th_wr}`}>
-                          <Link href={`/Brands/${detProduct?.brand?.id}`}>
-                            {detProduct?.brand?.name}
-                          </Link>
-                        </th>
-                    </tr>
+                    </th>
+                    <th
+                      className={`border-s border-skin-four px-4 lg:px-5 xl:px-6 pt-3 pb-5 text-end w-24 lg:w-28 xl:w-36 font-semibold ewrvfbe ${cls.th_wr}`}>
+                      <Link href={`/Brands/${detProduct?.brand?.id}`}>
+                        {detProduct?.brand?.name}
+                      </Link>
+                    </th>
+                  </tr>
                   </thead>
+
+                  <thead>
+                  <tr className="border-b border-skin-four">
+                    <th
+                      className="px-4 lg:px-5 xl:px-6 pt-3 pb-4 lg:pb-6 text-start text-sm lg:text-15px xl:text-base font-medium">
+                        <span className="block font-semibold pt-0.5 ewrvfbe">
+                          Коллекция:
+                        </span>
+                    </th>
+                    {/* {currCollections && ( */}
+                    <th
+                      className={`border-s border-skin-four px-4 lg:px-5 xl:px-6 pt-3 pb-5 text-end w-24 lg:w-28 xl:w-36 font-semibold ewrvfbe ${cls.th_wr}`}>
+                      <Link href={`/Brands/${detProduct?.brand?.id}/${detProduct?.collection?.id}`}>
+                        {detProduct?.collection?.name}
+                      </Link>
+                    </th>
+                    {/* )} */}
+                  </tr>
+                  </thead>
+
                   <tbody>
+                  <tr className="border-b font-normal border-skin-four last:border-b-0">
+                    <td className="px-4 lg:px-5 xl:px-6 py-3">
+                      Цвет:
+                    </td>
+                    <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
+                      {detProduct.color?.map((colors) => arrayColor[colors]).join(' / ')}
+                    </td>
+                  </tr>
+                  {!!detProduct.height && (
                     <tr className="border-b font-normal border-skin-four last:border-b-0">
                       <td className="px-4 lg:px-5 xl:px-6 py-3">
-                        Цвет:
+                        Высота:
                       </td>
                       <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                        {detProduct.colors?.map((colors) => arrayColor[colors]).join(' / ')}
+                        {detProduct.height} см
                       </td>
                     </tr>
-                    {!!detProduct.height && (
-                      <tr className="border-b font-normal border-skin-four last:border-b-0">
-                        <td className="px-4 lg:px-5 xl:px-6 py-3">
-                          Высота:
-                        </td>
-                        <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                          {detProduct.height} см
-                        </td>
-                      </tr>
-                    )}
-                    {!!detProduct.diameter && (
-                      <tr className="border-b font-normal border-skin-four last:border-b-0">
-                        <td className="px-4 lg:px-5 xl:px-6 py-3">
-                          Диаметр:
-                        </td>
-                        <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                          {detProduct.diameter} см
-                        </td>
-                      </tr>
-                    )}
-                    {!!detProduct.length && (
-                      <tr className="border-b font-normal border-skin-four last:border-b-0">
-                        <td className="px-4 lg:px-5 xl:px-6 py-3">Длинна:</td>
-                        <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                          {detProduct.length} см
-                        </td>
-                      </tr>
-                    )}
-                    {!!detProduct.width && (
-                      <tr className="border-b font-normal border-skin-four last:border-b-0">
-                        <td className="px-4 lg:px-5 xl:px-6 py-3">
-                          Ширина:
-                        </td>
-                        <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                          {detProduct.width} см
-                        </td>
-                      </tr>
-                    )}
-                    {!!detProduct.lampCount && (
-                      <tr className="border-b font-normal border-skin-four last:border-b-0">
-                        <td className="px-4 lg:px-5 xl:px-6 py-3">Лампочки (Количество x Цоколь):</td>
-                        <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                          {detProduct.lampCount} x {detProduct.plinth}
-                        </td>
-                      </tr>
-                    )}
+                  )}
+                  {!!detProduct.diameter && (
+                    <tr className="border-b font-normal border-skin-four last:border-b-0">
+                      <td className="px-4 lg:px-5 xl:px-6 py-3">
+                        Диаметр:
+                      </td>
+                      <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
+                        {detProduct.diameter} см
+                      </td>
+                    </tr>
+                  )}
+                  {!!detProduct.length && (
+                    <tr className="border-b font-normal border-skin-four last:border-b-0">
+                      <td className="px-4 lg:px-5 xl:px-6 py-3">Длинна:</td>
+                      <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
+                        {detProduct.length} см
+                      </td>
+                    </tr>
+                  )}
+                  {!!detProduct.width && (
+                    <tr className="border-b font-normal border-skin-four last:border-b-0">
+                      <td className="px-4 lg:px-5 xl:px-6 py-3">
+                        Ширина:
+                      </td>
+                      <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
+                        {detProduct.width} см
+                      </td>
+                    </tr>
+                  )}
+                  {!!detProduct.indent && (
+                    <tr className="border-b font-normal border-skin-four last:border-b-0">
+                      <td className="px-4 lg:px-5 xl:px-6 py-3">
+                        Ширина:
+                      </td>
+                      <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
+                        {detProduct.indent} см
+                      </td>
+                    </tr>
+                  )}
+                  {!!detProduct.lampCount && (
+                    <tr className="border-b font-normal border-skin-four last:border-b-0">
+                      <td className="px-4 lg:px-5 xl:px-6 py-3">Лампочки (Кол-во x Цоколь):</td>
+                      <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
+                        {detProduct.lampCount} x {detProduct.plinth}
+                      </td>
+                    </tr>
+                  )}
+                  {detProduct?.type?.length ? (
                     <tr className="border-b font-normal border-skin-four last:border-b-0">
                       <td className="px-4 lg:px-5 xl:px-6 py-3">
                         Тип люстры:
                       </td>
                       <td className="border-s border-skin-four px-4 lg:px-5 xl:px-6 py-3 text-end w-24 lg:w-28 xl:w-36">
-                        {detProduct.chandelierTypes
+                        {detProduct.type
                           ?.map((chandelierType) => chandelierTypeArray[chandelierType])
                           .join(' / ')}
                       </td>
                     </tr>
+                  ) : (<span></span>)}
+
                   </tbody>
                 </table>
               </div>
             </div>
           </Tab.Panel>
           <Tab.Panel>
-            <ProductReviewRating />
+            <ProductReviewRating/>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

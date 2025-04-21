@@ -77,14 +77,9 @@ const AccountDetails: React.FC = observer(() => {
     };
 
     fetchData();
-    console.log(authName, 'authname');
 
   }, [authName]);
 
-      useEffect(() => { 
-        console.log(data, 'ads');
-          
-        }, []);
 
   return (
     <div className="w-full flex flex-col">
@@ -109,14 +104,14 @@ const AccountDetails: React.FC = observer(() => {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
+            {/* <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
               Телефон :  &nbsp;
               {data && data.phoneNumber ? (
                 <span style={{ color: 'green' }}>{data.phoneNumber}</span>
               ) : (
                 <span style={{ color: 'red' }}>Телефон не указан, добавьте пожалуйста номер вашего телефона</span>
               )}
-            </div>
+            </div> */}
             <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
               Почта :  &nbsp;
               {data && data.email && (
@@ -147,7 +142,7 @@ const AccountDetails: React.FC = observer(() => {
                     error={errors.name?.message}
                   />
                 </div>
-                <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
+                {/* <div className="flex flex-col sm:flex-row -mx-1.5 md:-mx-2.5 space-y-4 sm:space-y-0">
                   <Input
                     type="tel"
                     label={t('Номер телефона')}
@@ -162,7 +157,7 @@ const AccountDetails: React.FC = observer(() => {
                     className="w-full sm:w-1/2 px-1.5 md:px-2.5"
                     error={errors.phoneNumber?.message}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -170,8 +165,8 @@ const AccountDetails: React.FC = observer(() => {
         <div className="relative flex sm:ms-auto mt-5 pb-2 lg:pb-0">
           <Button
             type="submit"
-            loading={authStore.isLoading}
-            disabled={authStore.isLoading}
+            // loading={authStore.isLoading}
+            // disabled={authStore.isLoading}
             variant="formButton"
             className="w-full sm:w-auto">
             {t('Сохранить изменения')}
